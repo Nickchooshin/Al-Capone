@@ -24,6 +24,8 @@ bool CAreaManager::init()
 	int Inspection[6][6] ;
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
+	m_bMovingMember = false ;
+
 	// 배경 화면 초기화
 	CCSprite *pBackground = CCSprite::create("Image/Area/All_Background.png") ;
 	pBackground->setAnchorPoint(ccp(0, 0)) ;
@@ -92,7 +94,7 @@ bool CAreaManager::init()
 		}
 	}
 
-	AreaLinked(1, 2) ;//
+	AreaLinked(3, 3) ;//
 
 	scheduleUpdate() ;
 
@@ -244,6 +246,11 @@ void CAreaManager::MoveMemberFinish()
 	AreaHighlightOff() ;
 }
 
+bool CAreaManager::isMovingMember()
+{
+	return m_bMovingMember ;
+}
+
 void CAreaManager::AreaLinked(int x, int y)
 {
 	m_Area[y][x]->AreaLinked() ;
@@ -318,6 +325,8 @@ void CAreaManager::MoveEnabled(bool bEnabled)
 	bool Enabled = !bEnabled ;
 	CArea *Area ;
 	CSmugglingRoute *Route ;
+
+	m_bMovingMember = bEnabled ;
 
 	for(i=0; i<4; i++)
 	{

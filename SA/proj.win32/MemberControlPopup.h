@@ -13,10 +13,13 @@ class CMemberControlPopup : public CCScene
 private :
 	CMemberIcon *m_pMemberIcon ;
 	CCSprite *m_pMafia[3] ;
-	CCSprite *m_pItemList[3][3] ;
+	CCMenuItemImage *m_pItemList[3][3] ;
 	CCMenuItemImage *m_pMoveButton[3] ;
 	CCMenuItemImage *m_pPassButton[3] ;
 	CCMenuItemImage *m_pItemBuyButton[3] ;
+
+	bool m_bPassItem ;
+	int m_nSenderIndex, m_nReceiverIndex ;
 
 public :
 	bool init() ;
@@ -35,6 +38,10 @@ private :
 	void SetButtonEnabled(int Index, bool bEnabled, const char* ButtonName) ;
 	void SetMemberEnabled() ;
 	void MemberEnabled(int nIndex, bool bEnabled) ;
+
+	void PassItemSender(int Index) ;
+	void PassItemReceiver(int Index) ;
+	void PassItem(int index) ;
 
 	void Menu_Click(CCObject *pSender) ;
 } ;

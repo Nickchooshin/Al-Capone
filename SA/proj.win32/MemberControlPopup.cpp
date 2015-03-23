@@ -22,6 +22,7 @@ bool CMemberControlPopup::init()
 	int i, j ;
 
 	m_pMemberIcon = NULL ;
+	m_bPassItem = false ;
 
 	// 백그라운드
 	CCSprite *pBackground = CCSprite::create("Image/Member/C_Background.png") ;
@@ -40,11 +41,11 @@ bool CMemberControlPopup::init()
 	CCSprite *pMafia[3] ;
 	for(i=0; i<3; i++)
 	{
-		pMafia[i] = CCSprite::create("Image/Member/Mafia_90.png") ;
+		pMafia[i] = CCSprite::create("Image/Member/Charactor_Space.png") ;
 		pMafia[i]->setPosition(ccp(320, 590 - (i * 145))) ;
 		this->addChild(pMafia[i], 2) ;
 
-		m_pMafia[i] = CCSprite::create("Image/Member/Image_Mafia_90.png") ;
+		m_pMafia[i] = CCSprite::create("Image/Member/Man_1.png") ;
 		m_pMafia[i]->setPosition(ccp(320, 590 - (i * 145))) ;
 		m_pMafia[i]->setVisible(false) ;
 		this->addChild(m_pMafia[i], 3) ;
@@ -60,9 +61,11 @@ bool CMemberControlPopup::init()
 			pItemSpace[i][j]->setPosition(ccp(440 + (j * 100), 590 - (i * 145))) ;
 			this->addChild(pItemSpace[i][j], 2) ;
 
-			m_pItemList[i][j] = CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png") ;
+			m_pItemList[i][j] = CCMenuItemImage::create("Image/UI/BuyMenu/Acohol_Icon.png", "Image/UI/BuyMenu/Acohol_Icon.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
 			m_pItemList[i][j]->setPosition(pItemSpace[i][j]->getPosition()) ;
+			m_pItemList[i][j]->setEnabled(false) ;
 			m_pItemList[i][j]->setVisible(false) ;
+			m_pItemList[i][j]->setTag(-(i*3+j+1)) ;
 			this->addChild(m_pItemList[i][j], 3) ;
 		}
 	}
@@ -130,15 +133,16 @@ void CMemberControlPopup::UpdateItemList()
 				switch(pMember->m_ItemList[j])
 				{
 				case ACOHOL :
-					m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Acohol_Icon.png")) ;
+					//m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Acohol_Icon.png")) ;
+					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
 					break ;
 
 				case ORIGINAL_DRINK :
-					m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
+					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
 					break ;
 
 				case NARCOTIC :
-					m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
+					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
 					break ;
 				}
 			}
@@ -160,32 +164,49 @@ void CMemberControlPopup::UpdateItemList()
 
 void CMemberControlPopup::SetButtonEnabled(int Index, bool bEnabled, const char* cButtonName)
 {
+	bool ButtonEnabled ;
+
 	if(strcmp(cButtonName, "Move")==0)
 	{
-		if(bEnabled)
-			m_pMoveButton[Index]->setNormalImage(CCSprite::create("Image/Member/Move_Button_1.png")) ;
-		else
-			m_pMoveButton[Index]->setNormalImage(CCSprite::create("Image/Member/Move_Button_2.png")) ;
+		ButtonEnabled = m_pMoveButton[Index]->isEnabled() ;
 
-		m_pMoveButton[Index]->setEnabled(bEnabled) ;
+		if(bEnabled!=ButtonEnabled)
+		{
+			if(bEnabled)
+				m_pMoveButton[Index]->setNormalImage(CCSprite::create("Image/Member/Move_Button_1.png")) ;
+			else
+				m_pMoveButton[Index]->setNormalImage(CCSprite::create("Image/Member/Move_Button_2.png")) ;
+
+			m_pMoveButton[Index]->setEnabled(bEnabled) ;
+		}
 	}
 	else if(strcmp(cButtonName, "Pass")==0)
 	{
-		if(bEnabled)
-			m_pPassButton[Index]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_1.png")) ;
-		else
-			m_pPassButton[Index]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+		ButtonEnabled = m_pPassButton[Index]->isEnabled() ;
 
-		m_pPassButton[Index]->setEnabled(bEnabled) ;
+		if(bEnabled!=ButtonEnabled)
+		{
+			if(bEnabled)
+				m_pPassButton[Index]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_1.png")) ;
+			else
+				m_pPassButton[Index]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+
+			m_pPassButton[Index]->setEnabled(bEnabled) ;
+		}
 	}
 	else if(strcmp(cButtonName, "ItemBuy")==0)
 	{
-		if(bEnabled)
-			m_pItemBuyButton[Index]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_1.png")) ;
-		else
-			m_pItemBuyButton[Index]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_2.png")) ;
+		ButtonEnabled = m_pItemBuyButton[Index]->isEnabled() ;
 
-		m_pItemBuyButton[Index]->setEnabled(bEnabled) ;
+		if(bEnabled!=ButtonEnabled)
+		{
+			if(bEnabled)
+				m_pItemBuyButton[Index]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_1.png")) ;
+			else
+				m_pItemBuyButton[Index]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_2.png")) ;
+
+			m_pItemBuyButton[Index]->setEnabled(bEnabled) ;
+		}
 	}
 }
 
@@ -238,18 +259,28 @@ void CMemberControlPopup::SetMemberEnabled()
 	{
 		m_pMafia[i]->setVisible(true) ;
 
-		if((!MoveRoute && m_pMoveButton[i]->isEnabled()) ||
-			m_pMemberIcon->m_Member[i].isMove())
-			SetButtonEnabled(i, false, "Move") ;
-		else
-			SetButtonEnabled(i, true, "Move") ;
+		if(!m_pMemberIcon->m_Member[i].isBuy())
+		{
+			if((!MoveRoute && m_pMoveButton[i]->isEnabled()) ||	// 이동할 수 있는 루트가 없거나
+				m_pMemberIcon->m_Member[i].isMove())				// 이미 이동을 한상태라면
+				SetButtonEnabled(i, false, "Move") ;
+			else
+				SetButtonEnabled(i, true, "Move") ;
 
-		SetButtonEnabled(i, true, "Pass") ;
+			if(num<2)	// 조직원이 2명 미만일때
+				SetButtonEnabled(i, false, "Pass") ;
+			else
+				SetButtonEnabled(i, true, "Pass") ;
 
-		if(!Area->isSmuggling())
-			SetButtonEnabled(i, false, "ItemBuy") ;
+			if(!Area->isSmuggling())		// 구매 가능한 지역이 아닐 때
+				SetButtonEnabled(i, false, "ItemBuy") ;
+			else
+				SetButtonEnabled(i, true, "ItemBuy") ;
+		}
 		else
-			SetButtonEnabled(i, true, "ItemBuy") ;
+		{
+			SetAllButtonEnabled(i, false) ;
+		}
 	}
 }
 
@@ -260,6 +291,48 @@ void CMemberControlPopup::MemberEnabled(int nIndex, bool bEnabled)
 	SetButtonEnabled(nIndex, bEnabled, "Move") ;
 	SetButtonEnabled(nIndex, bEnabled, "Pass") ;
 	SetButtonEnabled(nIndex, bEnabled, "ItemBuy") ;
+}
+
+void CMemberControlPopup::PassItemSender(int Index)
+{
+	int i ;
+	int n = m_pMemberIcon->m_Member.size() ;
+
+	m_nSenderIndex = Index ;
+
+	for(i=0; i<n; i++)
+	{
+		if(i!=m_nSenderIndex)
+		{
+			m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Receipt_Button_1.png")) ;
+			m_pPassButton[i]->setSelectedImage(CCSprite::create("image/Member/Receipt_Button_2.png")) ;
+		}
+		else
+		{
+			SetButtonEnabled(i, false, "Pass") ;
+		}
+	}
+	m_bPassItem = true ;
+}
+
+void CMemberControlPopup::PassItemReceiver(int Index)
+{
+	int i ;
+
+	m_nReceiverIndex = Index ;
+
+	m_pPassButton[m_nReceiverIndex]->setNormalImage(CCSprite::create("Image/Member/Finish_Button_1.png")) ;
+	m_pPassButton[m_nReceiverIndex]->setSelectedImage(CCSprite::create("Image/Member/Finish_Button_2.png")) ;
+
+	for(i=0; i<3; i++)
+		m_pItemList[m_nSenderIndex][i]->setEnabled(true) ;
+}
+
+void CMemberControlPopup::PassItem(int Index)
+{
+	char str[1024] ;
+	sprintf(str, "%d", Index) ;
+	CCMessageBox(str, "d") ;
 }
 
 void CMemberControlPopup::Menu_Click(CCObject *pSender)
@@ -286,6 +359,10 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 	case 1 :
 	case 4 :
 	case 7 :
+		if(!m_bPassItem)
+			PassItemSender(index) ;
+		else
+			PassItemReceiver(index) ;
 		break ;
 
 	case 2 :
@@ -295,6 +372,18 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 
 		pDirector->popScene() ;
 		pDirector->pushScene(g_pItemBuyPopup) ;
+		break ;
+
+	case -1 :
+	case -2 :
+	case -3 :
+	case -4 :
+	case -5 :
+	case -6 :
+	case -7 :
+	case -8 :
+	case -9 :
+		PassItem(-((tag+1)%3)) ;
 		break ;
 
 	case 9 :

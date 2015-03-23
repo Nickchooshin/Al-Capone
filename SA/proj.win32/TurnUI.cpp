@@ -1,6 +1,8 @@
 #include "TurnUI.h"
 #include "Data.h"
 
+#include "AreaManager.h"
+
 bool CTurnUI::init()
 {
 	CCMenuItemImage *pTurnMenu = CCMenuItemImage::create("Image/UI/Play_1.png", "Image/UI/Play_2.png", this, menu_selector(CTurnUI::TurnFlow)) ;
@@ -43,13 +45,16 @@ bool CTurnUI::init()
 
 void CTurnUI::TurnFlow(CCObject *pSender)
 {
-	g_pData->m_User.m_Turn.TurnFlow() ;
+	if(!g_pAreaManager->isMovingMember())
+	{
+		g_pData->m_User.m_Turn.TurnFlow() ;
 
-	char str[12] ;
+		char str[12] ;
 
-	sprintf(str, "%d", g_pData->m_User.m_Turn.GetTurn()) ;
-	pTurnLabel->setString(str) ;
+		sprintf(str, "%d", g_pData->m_User.m_Turn.GetTurn()) ;
+		pTurnLabel->setString(str) ;
 
-	sprintf(str, "%d", g_pData->m_User.m_Turn.GetRound()) ;
-	pRoundLabel->setString(str) ;
+		sprintf(str, "%d", g_pData->m_User.m_Turn.GetRound()) ;
+		pRoundLabel->setString(str) ;
+	}
 }

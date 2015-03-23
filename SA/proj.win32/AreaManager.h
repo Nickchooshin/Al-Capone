@@ -13,6 +13,7 @@ class CAreaManager : public CCNode
 private :
 	CArea *m_Area[4][4] ;
 	CSmugglingRoute *m_SmugglingRoute[3][4][2] ;
+	bool m_bMovingMember ;
 public :
 	static enum ROUTE_WAY { WAY_UP=0, WAY_DOWN, WAY_RIGHT, WAY_LEFT } ;
 
@@ -31,6 +32,8 @@ public :
 	bool MoveRouteCheck(CArea *Area) ;
 	void MoveMemberPrepare(CArea *Area) ;
 	void MoveMemberFinish() ;
+
+	bool isMovingMember() ;
 
 	void AreaLinked(int x, int y) ;
 	void AreaHighlightOn(int x, int y) ;
