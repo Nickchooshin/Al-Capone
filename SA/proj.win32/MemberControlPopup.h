@@ -26,10 +26,13 @@ public :
 	//static CCScene* scene() ;
 
 	void SetMemberData(CMemberIcon *pMemberIcon) ;
+	void SetAllButtonEnabled(int nIndex, bool bEnabled) ;
+
 	void UpdateItemList() ;
 private :
 	CMemberControlPopup() ;
 
+	void SetButtonEnabled(int Index, bool bEnabled, const char* ButtonName) ;
 	void SetMemberEnabled() ;
 	void MemberEnabled(int nIndex, bool bEnabled) ;
 

@@ -81,6 +81,7 @@ bool CMemberManager::MovingData(int Way)
 	CMemberIcon &Member2 = *g_pAreaManager->m_Area[y2][x2]->m_pMemberIcon ;
 
 	CMember Temp = Member1[m_nIndex] ;
+	Temp.setMove(true) ;
 	bSuccess = Member2.AddMember(Temp) ;
 	if(bSuccess)
 	{

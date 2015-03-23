@@ -28,6 +28,8 @@ public :
 
 	void setMove(bool bMove) ;
 	void setEnabled(bool bEnabled) ;
+
+	void TurnFlow() ;
 private :
 	void Icon_Click(CCObject *pSender) ;
 

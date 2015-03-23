@@ -1,15 +1,16 @@
 #ifndef __MEMBER_H__
 #define __MEMBER_H__
 
+#include "ItemData.h"
+
 class CMemberControlPopup ;
 class CItemBuyPopup ;
 
 class CMember
 {
-public :
-	static enum ITEM_TYPE { NOTHING=0, ACOHOL, ORIGINAL_DRINK, NARCOTIC } ;
 private :
 	bool m_bMove ;
+	bool m_bBuy ;
 	ITEM_TYPE m_ItemList[3] ;
 
 public :
@@ -17,8 +18,12 @@ public :
 	~CMember() ;
 
 	void setMove(bool bMove) ;
+	void setBuy(bool bBuy) ;
 
 	bool isMove() ;
+	bool isBuy() ;
+
+	void TurnFlow() ;
 
 	friend CMemberControlPopup ;
 	friend CItemBuyPopup ;

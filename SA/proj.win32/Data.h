@@ -2,11 +2,13 @@
 #define __DATA_H__
 
 #include "UserData.h"
+#include "ItemData.h"
 
 class CData
 {
 public :
 	CUserData m_User ;
+	CItemData m_Item ;
 	int m_nMaxCapacity ;
 	int m_nPayBuilding, m_nPayMember ;
 	int m_nMaintenance, m_nProduction ;
@@ -18,6 +20,9 @@ private :
 				m_nPayBuilding(1), m_nPayMember(1),
 				m_nMaintenance(1), m_nProduction(1)
 	{}
+
+	bool LoadData() ;
+	bool LoadItem() ;
 public :
 	static CData* GetInstance()
 	{

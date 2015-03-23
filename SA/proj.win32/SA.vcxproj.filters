@@ -185,5 +185,8 @@
     <ClInclude Include="LoadManager.h">
       <Filter>Classes\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="ItemData.h">
+      <Filter>Classes\Data</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

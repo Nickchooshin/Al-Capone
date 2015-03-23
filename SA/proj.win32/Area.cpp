@@ -186,6 +186,8 @@ void CArea::TurnFlow()
 	
 	for(i=0; i<2; i++)
 		m_pBuilding[i]->TurnFlow() ;
+
+	m_pMemberIcon->TurnFlow() ;
 }
 
 void CArea::RoundFlow()

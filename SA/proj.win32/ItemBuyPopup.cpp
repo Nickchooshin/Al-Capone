@@ -131,15 +131,16 @@ bool CItemBuyPopup::init()
 	return true ;
 }
 
-void CItemBuyPopup::SetMemberData(CMember *pMember)
+void CItemBuyPopup::SetMemberData(CMember *pMember, int Index)
 {
 	m_pMember = pMember ;
+	m_nMemberIndex = Index ;
 
 	m_ItemList.clear() ;
 
 	for(int i=0; i<3; i++)
 	{
-		if(m_pMember->m_ItemList[i]!=CMember::NOTHING)
+		if(m_pMember->m_ItemList[i]!=NOTHING)
 			m_ItemList.push_back(m_pMember->m_ItemList[i]) ;
 		else
 			break ;
@@ -154,10 +155,10 @@ void CItemBuyPopup::SetItemList()
 	int n = m_ItemList.size() ;
 
 	for(i=0; i<n; i++)
-		m_pMember->m_ItemList[i] = (CMember::ITEM_TYPE)m_ItemList[i] ;
+		m_pMember->m_ItemList[i] = (ITEM_TYPE)m_ItemList[i] ;
 
 	for(i=n; i<3; i++)
-		m_pMember->m_ItemList[i] = CMember::NOTHING ;
+		m_pMember->m_ItemList[i] = NOTHING ;
 }
 
 bool CItemBuyPopup::AddItem(int type)
@@ -179,19 +180,19 @@ void CItemBuyPopup::UpdateItemList()
 	{
 		switch(m_ItemList[i])
 		{
-		case CMember::ACOHOL :
+		case ACOHOL :
 			m_pItem[i]->setVisible(true) ;
 			m_pItem[i]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
 			m_pItem[i]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
 			break ;
 
-		case CMember::ORIGINAL_DRINK :
+		case ORIGINAL_DRINK :
 			m_pItem[i]->setVisible(true) ;
 			m_pItem[i]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
 			m_pItem[i]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
 			break ;
 
-		case CMember::NARCOTIC :
+		case NARCOTIC :
 			m_pItem[i]->setVisible(true) ;
 			m_pItem[i]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
 			m_pItem[i]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
@@ -224,13 +225,16 @@ void CItemBuyPopup::Menu_Click(CCObject *pSender)
 	case 3 :
 	case 4 :
 	case 5 :
-		AddItem(index+1) ;
+		AddItem(index) ;
 		UpdateItemList() ;
 		break ;
 
 	case 6 :
+		m_pMember->setBuy(true) ;
 		SetItemList() ;
 		g_pMemberControlPopup->UpdateItemList() ;
+		g_pMemberControlPopup->SetAllButtonEnabled(m_nMemberIndex, false) ;
+
 		pDirector->popScene() ;
 		pDirector->pushScene(g_pMemberControlPopup) ;
 		break ;

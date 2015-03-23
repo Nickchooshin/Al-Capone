@@ -13,6 +13,7 @@ class CItemBuyPopup : public CCScene
 private :
 	std::vector<int> m_ItemList ;
 	CMember *m_pMember ;
+	int m_nMemberIndex ;
 	CCMenuItemImage *m_pItem[3] ;
 
 public :
@@ -20,7 +21,7 @@ public :
 
 	static CItemBuyPopup* GetInstance() ;
 
-	void SetMemberData(CMember *pMember) ;
+	void SetMemberData(CMember *pMember, int Index) ;
 private :
 	CItemBuyPopup() ;
 

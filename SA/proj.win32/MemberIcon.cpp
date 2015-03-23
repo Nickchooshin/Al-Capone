@@ -7,7 +7,7 @@ bool CMemberIcon::init()
 {
 	m_bMove = false ;
 
-	m_pMemberItem = CCMenuItemImage::create("Image/Member/Man_Icon_1.png", "Image/Member/Man_Icon_2.png", this, menu_selector(CMemberIcon::Icon_Click)) ;
+	m_pMemberItem = CCMenuItemImage::create("Image/Member/Man_Icon_1_1.png", "Image/Member/Man_Icon_1_2.png", this, menu_selector(CMemberIcon::Icon_Click)) ;
 	CCMenu *pMenu = CCMenu::create(m_pMemberItem, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
 	this->addChild(pMenu) ;
@@ -23,6 +23,17 @@ void CMemberIcon::update(float dt)
 		setVisible(true) ;
 	else
 		setVisible(false) ;
+}
+
+void CMemberIcon::TurnFlow()
+{
+	int i ;
+	int n=m_Member.size() ;
+
+	for(i=0; i<n; i++)
+	{
+		m_Member[i].TurnFlow() ;
+	}
 }
 
 void CMemberIcon::Icon_Click(CCObject *pSender)
@@ -54,13 +65,13 @@ void CMemberIcon::setMove(bool bMove)
 {
 	if(bMove && !m_bMove)
 	{
-		m_pMemberItem->setNormalImage(CCSprite::create("Image/Member/Man_Icon_2.png")) ;
-		m_pMemberItem->setSelectedImage(CCSprite::create("Image/Member/Man_Icon_1.png")) ;
+		m_pMemberItem->setNormalImage(CCSprite::create("Image/Member/Man_Icon_2_1.png")) ;
+		m_pMemberItem->setSelectedImage(CCSprite::create("Image/Member/Man_Icon_2_2.png")) ;
 	}
 	else if(!bMove && m_bMove)
 	{
-		m_pMemberItem->setNormalImage(CCSprite::create("Image/Member/Man_Icon_1.png")) ;
-		m_pMemberItem->setSelectedImage(CCSprite::create("Image/Member/Man_Icon_2.png")) ;
+		m_pMemberItem->setNormalImage(CCSprite::create("Image/Member/Man_Icon_1_1.png")) ;
+		m_pMemberItem->setSelectedImage(CCSprite::create("Image/Member/Man_Icon_1_2.png")) ;
 	}
 
 	m_bMove = bMove ;
