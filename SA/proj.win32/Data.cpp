@@ -88,6 +88,10 @@ bool CData::LoadData()
 					case STANDBY_MEMBER :
 						m_User.m_nStandbyMember = value ;
 						break ;
+
+					case END_MONEY :
+						m_nEndMoney = value ;
+						break ;
 					}
 
 					data.clear() ;
@@ -106,6 +110,11 @@ bool CData::LoadData()
 			if(length==5 && data.compare("Money")==0)
 			{
 				type = MONEY ;
+				data.clear() ;
+			}
+			else if(length==8 && data.compare("EndMoney")==0)
+			{
+				type = END_MONEY ;
 				data.clear() ;
 			}
 			else if(length==9 && data.compare("PayMember")==0)

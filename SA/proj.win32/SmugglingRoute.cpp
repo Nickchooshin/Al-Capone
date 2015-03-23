@@ -5,12 +5,14 @@
 
 #include "MemberManager.h"
 
+#include "SimpleAudioEngine.h"
+
 bool CSmugglingRoute::init()
 {
 	m_bOwnership = false ;
 	m_bHighlight = false ;
 
-	m_pIconItem = CCMenuItemImage::create("Image/Building/Circulation_1_1.png", "Image/Building/Circulation_1_2.png", this, menu_selector(CSmugglingRoute::Click_Building)) ;
+	m_pIconItem = CCMenuItemImage::create("Image/Game/Building/Circulation_1_1.png", "Image/Game/Building/Circulation_1_2.png", this, menu_selector(CSmugglingRoute::Click_Building)) ;
 	CCMenu *pMenu = CCMenu::create(m_pIconItem, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
 	m_pIconItem->setVisible(false) ;
@@ -41,11 +43,11 @@ void CSmugglingRoute::Click_Building(CCObject *pSender)
 {
 	if(m_bHighlight)
 	{
-		SetPopupMenu("Image/Building/B_Move_Button_1.png", "Image/Building/B_Move_Button_2.png", 1) ;
+		SetPopupMenu("Image/Game/Building/B_Move_Button_1.png", "Image/Game/Building/B_Move_Button_2.png", 1) ;
 	}
 	else if(!m_bOwnership && !CBuilding::m_bBuyRoute)
 	{
-		SetPopupMenu("Image/Building/B_Buy_Button_1.png", "Image/Building/B_Buy_Button_2.png", 0) ;
+		SetPopupMenu("Image/Game/Building/B_Buy_Button_1.png", "Image/Game/Building/B_Buy_Button_2.png", 0) ;
 	}
 }
 
@@ -66,8 +68,10 @@ void CSmugglingRoute::Click_Menu(CCObject *pSender)
 			CBuilding::m_bBuyRoute = true ;
 			m_bOwnership = true ;
 
-			m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Circulation_2_1.png")) ;
-			m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Circulation_2_2.png")) ;
+			m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Circulation_2_1.png")) ;
+			m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Circulation_2_2.png")) ;
+
+			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_1.mp3") ;
 		}
 		break ;
 
@@ -115,14 +119,14 @@ void CSmugglingRoute::RouteHighlight(bool bEnabled)
 	if(bEnabled && !m_bHighlight)
 	{
 		m_bHighlight = true ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Circulation_3_1.png")) ;
-		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Circulation_3_2.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Circulation_3_1.png")) ;
+		m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Circulation_3_2.png")) ;
 	}
 	else if(!bEnabled && m_bHighlight)
 	{
 		m_bHighlight = false ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Circulation_2_1.png")) ;
-		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Circulation_2_2.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Circulation_2_1.png")) ;
+		m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Circulation_2_2.png")) ;
 	}
 }
 

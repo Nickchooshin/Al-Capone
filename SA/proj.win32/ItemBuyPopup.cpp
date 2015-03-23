@@ -5,15 +5,17 @@
 
 #include "Data.h"
 
+#include "SimpleAudioEngine.h"
+
 CItemBuyPopup::CItemBuyPopup()
 {
 }
 
 CItemBuyPopup* CItemBuyPopup::GetInstance()
 {
-	static CItemBuyPopup ItemBuyPopup ;
+	static CItemBuyPopup Instance ;
 
-	return &ItemBuyPopup ;
+	return &Instance ;
 }
 
 bool CItemBuyPopup::init()
@@ -23,23 +25,23 @@ bool CItemBuyPopup::init()
 	m_pMember = NULL ;
 
 	// 배경
-	CCSprite *pBackground = CCSprite::create("Image/UI/BuyMenu/B_BackGround_2.png") ;
+	CCSprite *pBackground = CCSprite::create("Image/Game/UI/BuyMenu/B_BackGround_2.png") ;
 	pBackground->setPosition(ccp(640, 400)) ;
 	this->addChild(pBackground, 0) ;
 
 	// 아이템 슬롯
-	CCSprite *pItemSlot = CCSprite::create("Image/UI/BuyMenu/B_Item_Slot.png") ;
+	CCSprite *pItemSlot = CCSprite::create("Image/Game/UI/BuyMenu/B_Item_Slot.png") ;
 	pItemSlot->setPosition(ccp(325, 445)) ;
 	this->addChild(pItemSlot, 1) ;
 
-	CCSprite *pCharSpace = CCSprite::create("Image/Member/Charactor_Space.png") ;
+	CCSprite *pCharSpace = CCSprite::create("Image/Game/Member/Charactor_Space.png") ;
 	pCharSpace->setPosition(ccp(325, 590)) ;
 	this->addChild(pCharSpace, 2) ;
 
 	CCSprite *pItemSpace1[3] ;
 	for(i=0; i<3; i++)
 	{
-		pItemSpace1[i] = CCSprite::create("Image/UI/BuyMenu/Item_Space.png") ;
+		pItemSpace1[i] = CCSprite::create("Image/Game/UI/BuyMenu/Item_Space.png") ;
 		pItemSpace1[i]->setPosition(ccp(325, 490 - (i * 95))) ;
 		this->addChild(pItemSpace1[i], 2) ;
 
@@ -53,7 +55,7 @@ bool CItemBuyPopup::init()
 	pItemMenu->setPosition(ccp(0, 0)) ;
 	this->addChild(pItemMenu, 3) ;
 
-	CCSprite *pMan = CCSprite::create("Image/Member/Man_1.png") ;
+	CCSprite *pMan = CCSprite::create("Image/Game/Member/Man_1.png") ;
 	pMan->setPosition(ccp(325, 590)) ;
 	this->addChild(pMan, 3) ;
 
@@ -66,29 +68,29 @@ bool CItemBuyPopup::init()
 
 	for(i=0; i<3; i++)
 	{
-		pBuyButton[i] = CCMenuItemImage::create("Image/UI/BuyMenu/B_Buy_Button.png", "Image/UI/BuyMenu/B_Buy_Button.png", this, menu_selector(CItemBuyPopup::Menu_Click)) ;
+		pBuyButton[i] = CCMenuItemImage::create("Image/Game/UI/BuyMenu/B_Buy_Button.png", "Image/Game/UI/BuyMenu/B_Buy_Button.png", this, menu_selector(CItemBuyPopup::Menu_Click)) ;
 		pBuyButton[i]->setPosition(ccp(710, 590 - (i * 145))) ;
 		pBuyButton[i]->setTag(i+3) ;
 
-		pItemSpace2[i] = CCSprite::create("Image/UI/BuyMenu/Item_Space.png") ;
+		pItemSpace2[i] = CCSprite::create("Image/Game/UI/BuyMenu/Item_Space.png") ;
 		pItemSpace2[i]->setPosition(ccp(470, 590 - (i * 145))) ;
 		this->addChild(pItemSpace2[i], 2) ;
 
-		pName[i] = CCSprite::create("Image/UI/BuyMenu/B_Name.png") ;
+		pName[i] = CCSprite::create("Image/Game/UI/BuyMenu/B_Name.png") ;
 		pName[i]->setPosition(ccp(570, 620 - (i * 145))) ;
 		this->addChild(pName[i], 2) ;
 
-		pExplanation[i] = CCSprite::create("Image/UI/BuyMenu/B_Explanation.png") ;
+		pExplanation[i] = CCSprite::create("Image/Game/UI/BuyMenu/B_Explanation.png") ;
 		pExplanation[i]->setPosition(ccp(670, 571 - (i * 145))) ;
 		this->addChild(pExplanation[i], 2) ;
 
 		for(j=0; j<3; j++)
 		{
-			pNumerical1[i][j] = CCSprite::create("Image/UI/BuyMenu/B_Numerical_1.png") ;
+			pNumerical1[i][j] = CCSprite::create("Image/Game/UI/BuyMenu/B_Numerical_1.png") ;
 			pNumerical1[i][j]->setPosition(ccp(875.5, 620 - (i * 145) - (j * 30))) ;
 			this->addChild(pNumerical1[i][j], 2) ;
 
-			pNumerical2[i][j] = CCSprite::create("Image/UI/BuyMenu/B_Numerical_2.png") ;
+			pNumerical2[i][j] = CCSprite::create("Image/Game/UI/BuyMenu/B_Numerical_2.png") ;
 			pNumerical2[i][j]->setPosition(ccp(965, 620 - (i * 145) - (j * 30))) ;
 			this->addChild(pNumerical2[i][j], 2) ;
 		}
@@ -98,15 +100,15 @@ bool CItemBuyPopup::init()
 	pBuyMenu->setPosition(ccp(0, 0)) ;
 	this->addChild(pBuyMenu, 1) ;
 
-	CCSprite *pAcohol = CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png") ;
+	CCSprite *pAcohol = CCSprite::create("Image/Game/UI/BuyMenu/Acohol_Icon.png") ;
 	pAcohol->setPosition(ccp(470, 590)) ;
 	this->addChild(pAcohol, 3) ;
 
-	CCSprite *pOriginalDrink = CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png") ;
+	CCSprite *pOriginalDrink = CCSprite::create("Image/Game/UI/BuyMenu/Original_Drink_Icon.png") ;
 	pOriginalDrink->setPosition(ccp(470, 445)) ;
 	this->addChild(pOriginalDrink, 3) ;
 
-	CCSprite *pNarcotic = CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png") ;
+	CCSprite *pNarcotic = CCSprite::create("Image/Game/UI/BuyMenu/Narcotic_Icon.png") ;
 	pNarcotic->setPosition(ccp(470, 300)) ;
 	this->addChild(pNarcotic, 3) ;
 
@@ -133,12 +135,12 @@ bool CItemBuyPopup::init()
 
 	// 확인, 취소
 	CCMenuItemImage *pCheck ;
-	pCheck = CCMenuItemImage::create("Image/UI/BuyMenu/B_Check_1.png", "Image/UI/BuyMenu/B_Check_2.png", this, menu_selector(CItemBuyPopup::Menu_Click)) ;
+	pCheck = CCMenuItemImage::create("Image/Game/UI/BuyMenu/B_Check_1.png", "Image/Game/UI/BuyMenu/B_Check_2.png", this, menu_selector(CItemBuyPopup::Menu_Click)) ;
 	pCheck->setPosition(ccp(704, 183)) ;
 	pCheck->setTag(6) ;
 
 	CCMenuItemImage *pCancel ;
-	pCancel = CCMenuItemImage::create("Image/UI/BuyMenu/B_Cancel_1.png", "Image/UI/BuyMenu/B_Cancel_2.png", this, menu_selector(CItemBuyPopup::Menu_Click)) ;
+	pCancel = CCMenuItemImage::create("Image/Game/UI/BuyMenu/B_Cancel_1.png", "Image/Game/UI/BuyMenu/B_Cancel_2.png", this, menu_selector(CItemBuyPopup::Menu_Click)) ;
 	pCancel->setPosition(ccp(914, 183)) ;
 	pCancel->setTag(7) ;
 
@@ -147,7 +149,7 @@ bool CItemBuyPopup::init()
 	this->addChild(pFinalMenu, 3) ;
 
 	// 가격
-	CCSprite *pCostSpace = CCSprite::create("Image/UI/BuyMenu/B_Cost_Space.png") ;
+	CCSprite *pCostSpace = CCSprite::create("Image/Game/UI/BuyMenu/B_Cost_Space.png") ;
 	pCostSpace->setPosition(ccp(325, 183)) ;
 	this->addChild(pCostSpace, 1) ;
 
@@ -213,20 +215,20 @@ void CItemBuyPopup::UpdateItemList()
 		{
 		case ACOHOL :
 			m_pItem[i]->setVisible(true) ;
-			m_pItem[i]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
-			m_pItem[i]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
+			m_pItem[i]->setNormalImage(CCSprite::create("Image/Game/UI/BuyMenu/Acohol_Icon.png")) ;
+			m_pItem[i]->setSelectedImage(CCSprite::create("Image/Game/UI/BuyMenu/Acohol_Icon.png")) ;
 			break ;
 
 		case ORIGINAL_DRINK :
 			m_pItem[i]->setVisible(true) ;
-			m_pItem[i]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
-			m_pItem[i]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
+			m_pItem[i]->setNormalImage(CCSprite::create("Image/Game/UI/BuyMenu/Original_Drink_Icon.png")) ;
+			m_pItem[i]->setSelectedImage(CCSprite::create("Image/Game/UI/BuyMenu/Original_Drink_Icon.png")) ;
 			break ;
 
 		case NARCOTIC :
 			m_pItem[i]->setVisible(true) ;
-			m_pItem[i]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
-			m_pItem[i]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
+			m_pItem[i]->setNormalImage(CCSprite::create("Image/Game/UI/BuyMenu/Narcotic_Icon.png")) ;
+			m_pItem[i]->setSelectedImage(CCSprite::create("Image/Game/UI/BuyMenu/Narcotic_Icon.png")) ;
 			break ;
 		}
 	}
@@ -283,6 +285,8 @@ void CItemBuyPopup::Menu_Click(CCObject *pSender)
 			SetItemList() ;
 			g_pMemberControlPopup->UpdateItemList() ;
 			g_pMemberControlPopup->SetAllButtonEnabled(m_nMemberIndex, false) ;
+
+			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_3.mp3") ;
 
 			pDirector->popScene() ;
 			CCDelayTime::create(0.1f);

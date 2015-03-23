@@ -7,6 +7,8 @@
 
 #include "Data.h"
 
+#include "SimpleAudioEngine.h"
+
 bool CArea::m_bInspectionView[8] ;
 
 bool CArea::init(int Inspection)
@@ -26,29 +28,29 @@ bool CArea::init(int Inspection)
 	switch(m_nBaseInspection)
 	{
 	case 2 :
-		pSprite = CCSprite::create("Image/Area/Eco_City_2.png") ;
+		pSprite = CCSprite::create("Image/Game/Area/Eco_City_2.png") ;
 		break ;
 	case 3 :
-		pSprite = CCSprite::create("Image/Area/House_City_1.png") ;
+		pSprite = CCSprite::create("Image/Game/Area/House_City_1.png") ;
 		break ;
 	case 4 :
-		pSprite = CCSprite::create("Image/Area/House_City_2.png") ;
+		pSprite = CCSprite::create("Image/Game/Area/House_City_2.png") ;
 		break ;
 	case 5 :
-		pSprite = CCSprite::create("Image/Area/Industry_City_1.png") ;
+		pSprite = CCSprite::create("Image/Game/Area/Industry_City_1.png") ;
 		break ;
 	case 6 :
-		pSprite = CCSprite::create("Image/Area/Industry_City_2.png") ;
+		pSprite = CCSprite::create("Image/Game/Area/Industry_City_2.png") ;
 		break ;
 	case 7 :
-		pSprite = CCSprite::create("Image/Area/Building_city_1.png") ;
+		pSprite = CCSprite::create("Image/Game/Area/Building_city_1.png") ;
 		break ;
 	}
 	this->addChild(pSprite, 0) ;
 
 	// 봉쇄 이미지
-	m_pBlockade[0] = CCSprite::create("Image/Area/Check_Icon.png") ;
-	m_pBlockade[1] = CCSprite::create("Image/Area/Lock_Icon.png") ;
+	m_pBlockade[0] = CCSprite::create("Image/Game/Area/Check_Icon.png") ;
+	m_pBlockade[1] = CCSprite::create("Image/Game/Area/Lock_Icon.png") ;
 	for(i=0; i<2; i++)
 	{
 		m_pBlockade[i]->setVisible(false) ;
@@ -61,7 +63,7 @@ bool CArea::init(int Inspection)
 	for(i=0; i<7; i++)
 	{
 		char str[1024] ;
-		sprintf(str, "Image/UI/InspectionCheck/Day_%d.png", i+1) ;
+		sprintf(str, "Image/Game/UI/InspectionCheck/Day_%d.png", i+1) ;
 
 		pTurnMark[i] = CCSprite::create(str) ;
 		pTurnMark[i]->setTag(i+1) ;
@@ -88,7 +90,7 @@ bool CArea::init(int Inspection)
 	this->addChild(m_pTurnMark, 2) ;/////***/////
 
 	// 주목도 수치 표시
-	m_pAttentionSprite = CCSprite::create("Image/UI/InspectionCheck/Attention_Frame.png") ;
+	m_pAttentionSprite = CCSprite::create("Image/Game/UI/InspectionCheck/Attention_Frame.png") ;
 	m_pAttentionSprite->setPosition(ccp( -83, 0 )) ;
 	m_pAttentionSprite->setVisible(false) ;
 	this->addChild(m_pAttentionSprite, 2) ;
@@ -220,6 +222,8 @@ void CArea::AddAttention(int nAttention)
 
 		m_bBlockade = true ;
 		SetAreaBlockade(true) ;
+
+		//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Block.mp3") ;
 	}
 }
 

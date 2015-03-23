@@ -13,9 +13,9 @@ CAreaManager::CAreaManager()
 
 CAreaManager* CAreaManager::GetInstance()
 {
-	static CAreaManager AreaManager ;
+	static CAreaManager Instance ;
 
-	return &AreaManager ;
+	return &Instance ;
 }
 
 bool CAreaManager::init()
@@ -27,7 +27,7 @@ bool CAreaManager::init()
 	m_bMovingMember = false ;
 
 	// 배경 화면 초기화
-	CCSprite *pBackground = CCSprite::create("Image/Area/All_Background.png") ;
+	CCSprite *pBackground = CCSprite::create("Image/Game/Area/All_Background.png") ;
 	pBackground->setAnchorPoint(ccp(0, 0)) ;
 	this->addChild(pBackground, 0) ;
 
@@ -59,6 +59,7 @@ bool CAreaManager::init()
 	{
 		for(j=0; j<4; j++)
 		{
+
 			m_Area[i][j] = CArea::create(Inspection[i+1][j+1]) ;
 			//m_Area[i][j]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 100 )) ;
 			m_Area[i][j]->setPosition(AreaCoord[i][j]) ;

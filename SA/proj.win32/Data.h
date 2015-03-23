@@ -12,13 +12,15 @@ public :
 	int m_nMaxCapacity ;
 	int m_nPayBuilding, m_nPayMember ;
 	int m_nMaintenance, m_nProduction ;
+	int m_nEndMoney ;
 private :
-	enum DATA_TYPE { NOTHING=0, MAX_CAPACITY, PAY_BUILDING, PAY_MEMBER, MAINTENANCE, PRODUCTION, MONEY, STANDBY_MEMBER } ;
+	enum DATA_TYPE { NOTHING=0, MAX_CAPACITY, PAY_BUILDING, PAY_MEMBER, MAINTENANCE, PRODUCTION, MONEY, STANDBY_MEMBER, END_MONEY } ;
 
 private :
 	CData() : m_nMaxCapacity(5),
 				m_nPayBuilding(1), m_nPayMember(1),
-				m_nMaintenance(1), m_nProduction(1)
+				m_nMaintenance(1), m_nProduction(1),
+				m_nEndMoney(500)
 	{}
 
 	bool LoadData() ;

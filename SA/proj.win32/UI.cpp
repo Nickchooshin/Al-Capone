@@ -8,7 +8,7 @@ bool CUI::init()
 {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
-	CCSprite *pUI_1 = CCSprite::create("Image/UI/Background.png") ;
+	CCSprite *pUI_1 = CCSprite::create("Image/Game/UI/Background.png") ;
 	pUI_1->setPosition(ccp(visibleSize.width/2, 40)) ;
 	this->addChild(pUI_1, 0) ;
 

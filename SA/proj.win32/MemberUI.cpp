@@ -1,24 +1,26 @@
 #include "MemberUI.h"
 #include "Data.h"
 
+#include "SimpleAudioEngine.h"
+
 bool CMemberUI::init()
 {
 	m_bVisible = false ;
 	m_nMemberNum = 0 ;
 
-	CCSprite *pFrame1 = CCSprite::create("Image/UI/Space.png") ;
+	CCSprite *pFrame1 = CCSprite::create("Image/Game/UI/Space.png") ;
 	pFrame1->setPosition(ccp(110, 40)) ;
 	this->addChild(pFrame1, 0) ;
 
-	CCSprite *pFrame2 = CCSprite::create("Image/UI/Space.png") ;
+	CCSprite *pFrame2 = CCSprite::create("Image/Game/UI/Space.png") ;
 	pFrame2->setPosition(ccp(320, 40)) ;
 	this->addChild(pFrame2, 0) ;
 
-	CCSprite *pIcon1 = CCSprite::create("Image/UI/Icon_1.png") ;
+	CCSprite *pIcon1 = CCSprite::create("Image/Game/UI/Icon_1.png") ;
 	pIcon1->setPosition(ccp(40, 40)) ;
 	this->addChild(pIcon1, 0) ;
 
-	CCSprite *pIcon2 = CCSprite::create("Image/UI/Icon_2.png") ;
+	CCSprite *pIcon2 = CCSprite::create("Image/Game/UI/Icon_2.png") ;
 	pIcon2->setPosition(ccp(250, 40)) ;
 	this->addChild(pIcon2, 0) ;
 
@@ -35,7 +37,7 @@ bool CMemberUI::init()
 
 
 
-	CCMenuItemImage *pMemberMenu = CCMenuItemImage::create("Image/UI/Man_Buy_1.png", "Image/UI/Man_Buy_2.png", this, menu_selector(CMemberUI::Click_Menu)) ;
+	CCMenuItemImage *pMemberMenu = CCMenuItemImage::create("Image/Game/UI/Man_Buy_1.png", "Image/Game/UI/Man_Buy_2.png", this, menu_selector(CMemberUI::Click_Menu)) ;
 	pMemberMenu->setPosition(ccp(760, 40)) ;
 
 	CCMenu *pMenu = CCMenu::create(pMemberMenu, NULL) ;
@@ -43,18 +45,18 @@ bool CMemberUI::init()
 	this->addChild(pMenu, 0) ;
 
 	// Sprite
-	CCMenuItemImage *pBackgroundItem = CCMenuItemImage::create("Image/UI/ManMenu/Background.png", "Image/UI/ManMenu/Background.png") ;
+	CCMenuItemImage *pBackgroundItem = CCMenuItemImage::create("Image/Game/UI/ManMenu/Background.png", "Image/Game/UI/ManMenu/Background.png") ;
 	pBackgroundItem->setPosition(ccp(760, 210)) ;
 	CCMenu *pBackground = CCMenu::create(pBackgroundItem, NULL) ;
 	pBackground->setPosition(ccp(0, 0)) ;
 
-	CCSprite *pManSpace = CCSprite::create("Image/UI/ManMenu/Charactor_Space.png") ;
+	CCSprite *pManSpace = CCSprite::create("Image/Game/UI/ManMenu/Charactor_Space.png") ;
 	pManSpace->setPosition(ccp(725, 242.5)) ;
 
-	CCSprite *pMan = CCSprite::create("Image/UI/ManMenu/Man_1.png") ;
+	CCSprite *pMan = CCSprite::create("Image/Game/UI/ManMenu/Man_1.png") ;
 	pMan->setPosition(pManSpace->getPosition()) ;
 
-	CCSprite *pNumberSpace = CCSprite::create("Image/UI/ManMenu/Number_Space.png") ;
+	CCSprite *pNumberSpace = CCSprite::create("Image/Game/UI/ManMenu/Number_Space.png") ;
 	pNumberSpace->setPosition(ccp(840, 242.5)) ;
 
 	m_pSprite = CCNode::create() ;
@@ -65,14 +67,14 @@ bool CMemberUI::init()
 	this->addChild(m_pSprite, 1) ;
 
 	// Menu
-	CCMenuItemImage *pBuyButton = CCMenuItemImage::create("Image/UI/ManMenu/Buy_Button_1.png", "Image/UI/ManMenu/Buy_Button_2.png", this, menu_selector(CMemberUI::MemberScout)) ;
+	CCMenuItemImage *pBuyButton = CCMenuItemImage::create("Image/Game/UI/ManMenu/Buy_Button_1.png", "Image/Game/UI/ManMenu/Buy_Button_2.png", this, menu_selector(CMemberUI::MemberScout)) ;
 	pBuyButton->setPosition(ccp(725, 127.5)) ;
 
-	CCMenuItemImage *pUpButton = CCMenuItemImage::create("Image/UI/ManMenu/Up_Button_1.png", "Image/UI/ManMenu/Up_Button_2.png", this, menu_selector(CMemberUI::NumUpDown)) ;
+	CCMenuItemImage *pUpButton = CCMenuItemImage::create("Image/Game/UI/ManMenu/Up_Button_1.png", "Image/Game/UI/ManMenu/Up_Button_2.png", this, menu_selector(CMemberUI::NumUpDown)) ;
 	pUpButton->setPosition(ccp(840, 300)) ;
 	pUpButton->setTag(0) ;
 
-	CCMenuItemImage *pDownButton = CCMenuItemImage::create("Image/UI/ManMenu/Down_Button_1.png", "Image/UI/ManMenu/Down_Button_2.png", this, menu_selector(CMemberUI::NumUpDown)) ;
+	CCMenuItemImage *pDownButton = CCMenuItemImage::create("Image/Game/UI/ManMenu/Down_Button_1.png", "Image/Game/UI/ManMenu/Down_Button_2.png", this, menu_selector(CMemberUI::NumUpDown)) ;
 	pDownButton->setPosition(ccp(840, 185)) ;
 	pDownButton->setTag(1) ;
 
@@ -117,6 +119,8 @@ void CMemberUI::MemberScout(CCObject *pSender)
 		g_pData->m_User.m_nStandbyMember += m_nMemberNum ;
 
 		Click_Menu(NULL) ;
+
+		//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_2.mp3") ;
 	}
 }
 

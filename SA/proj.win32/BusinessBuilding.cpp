@@ -3,6 +3,8 @@
 #include "PopupMenu.h"
 #include "Data.h"
 
+#include "SimpleAudioEngine.h"
+
 bool CBusinessBuilding::init()
 {
 	m_bOwnership = false ;
@@ -10,7 +12,7 @@ bool CBusinessBuilding::init()
 	m_bAllocate = false ;
 	m_bHide = false ;
 
-	m_pIconItem = CCMenuItemImage::create("Image/Building/Business_1_1.png", "Image/Building/Business_1_2.png", this, menu_selector(CBusinessBuilding::Click_Building)) ;
+	m_pIconItem = CCMenuItemImage::create("Image/Game/Building/Business_1_1.png", "Image/Game/Building/Business_1_2.png", this, menu_selector(CBusinessBuilding::Click_Building)) ;
 
 	CCMenu *pMenu = CCMenu::create(m_pIconItem, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
@@ -55,19 +57,19 @@ void CBusinessBuilding::Click_Building(CCObject *pSender)
 {
 	if(!m_bOwnership && !CBuilding::m_bBuyBusiness)
 	{
-		SetPopupMenu("Image/Building/B_Buy_Button_1.png", "Image/Building/B_Buy_Button_2.png", OWN) ;
+		SetPopupMenu("Image/Game/Building/B_Buy_Button_1.png", "Image/Game/Building/B_Buy_Button_2.png", OWN) ;
 	}
 	else if(m_bActive && !m_bAllocate)
 	{
-		SetPopupMenu("Image/Building/B_Allocate_Button_1.png", "Image/Building/B_Allocate_Button_2.png", ALLOCATE) ;
+		SetPopupMenu("Image/Game/Building/B_Allocate_Button_1.png", "Image/Game/Building/B_Allocate_Button_2.png", ALLOCATE) ;
 	}
 	else if(m_bAllocate && !m_bHide)
 	{
-		SetPopupMenu("Image/Building/B_hide_Button_1.png", "Image/Building/B_hide_Button_2.png", HIDE) ;
+		SetPopupMenu("Image/Game/Building/B_hide_Button_1.png", "Image/Game/Building/B_hide_Button_2.png", HIDE) ;
 	}
 	else if(m_bAllocate && m_bHide)
 	{
-		SetPopupMenu("Image/Building/B_Resume_Button_1.png", "Image/Building/B_Resume_Button_2.png", UNHIDE) ;
+		SetPopupMenu("Image/Game/Building/B_Resume_Button_1.png", "Image/Game/Building/B_Resume_Button_2.png", UNHIDE) ;
 	}
 }
 
@@ -88,6 +90,8 @@ void CBusinessBuilding::Click_Menu(CCObject *pSender)
 			CBuilding::m_bBuyBusiness = true ;
 
 			SetState(OWN) ;
+
+			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_1.mp3", false) ;
 		}
 		break ;
 
@@ -98,6 +102,8 @@ void CBusinessBuilding::Click_Menu(CCObject *pSender)
 			g_pData->m_User.m_nStandbyMember -= 1 ;
 
 			SetState(ALLOCATE) ;
+
+			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Man_allo.mp3") ;
 		}
 		break ;
 
@@ -150,26 +156,26 @@ void CBusinessBuilding::SetState(BUSINESS_STATE State)
 		m_bOwnership = true ;
 		m_bAllocate = false ;
 		m_bHide = false ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Business_2_1.png")) ;
-		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Business_2_2.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Business_2_1.png")) ;
+		m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Business_2_2.png")) ;
 		break ;
 
 	case ALLOCATE :
 		m_bAllocate = true ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Business_3_1.png")) ;
-		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Business_3_2.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Business_3_1.png")) ;
+		m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Business_3_2.png")) ;
 		break ;
 
 	case HIDE :
 		m_bHide = true ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Business_4_1.png")) ;
-		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Business_4_2.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Business_4_1.png")) ;
+		m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Business_4_2.png")) ;
 		break ;
 
 	case UNHIDE :
 		m_bHide = false ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Business_3_1.png")) ;
-		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Business_3_2.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Business_3_1.png")) ;
+		m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Business_3_2.png")) ;
 		break ;
 	}
 }

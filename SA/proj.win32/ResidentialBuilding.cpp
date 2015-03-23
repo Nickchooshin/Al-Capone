@@ -4,11 +4,13 @@
 #include "Data.h"
 #include "MemberManager.h"
 
+#include "SimpleAudioEngine.h"
+
 bool CResidentialBuilding::init()
 {
 	m_bOwnership = false ;
 
-	m_pIconItem = CCMenuItemImage::create("Image/Building/Home_1_1.png", "Image/Building/Home_1_2.png", this, menu_selector(CResidentialBuilding::Click_Building)) ;
+	m_pIconItem = CCMenuItemImage::create("Image/Game/Building/Home_1_1.png", "Image/Game/Building/Home_1_2.png", this, menu_selector(CResidentialBuilding::Click_Building)) ;
 	CCMenu *pMenu = CCMenu::create(m_pIconItem, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
 	this->addChild(pMenu) ;
@@ -33,11 +35,11 @@ void CResidentialBuilding::Click_Building(CCObject *pSender)
 {
 	if(!m_bOwnership && !CBuilding::m_bBuyResidential)
 	{
-		SetPopupMenu("Image/Building/B_Buy_Button_1.png", "Image/Building/B_Buy_Button_2.png", 0) ;
+		SetPopupMenu("Image/Game/Building/B_Buy_Button_1.png", "Image/Game/Building/B_Buy_Button_2.png", 0) ;
 	}
 	else if(m_bOwnership)
 	{
-		SetPopupMenu("Image/Building/B_Allocate_Button_1.png", "Image/Building/B_Allocate_Button_2.png", 1) ;
+		SetPopupMenu("Image/Game/Building/B_Allocate_Button_1.png", "Image/Game/Building/B_Allocate_Button_2.png", 1) ;
 	}
 }
 
@@ -58,8 +60,10 @@ void CResidentialBuilding::Click_Menu(CCObject *pSender)
 			CBuilding::m_bBuyResidential = true ;
 			m_bOwnership = true ;
 
-			m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Home_2_1.png")) ;
-			m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Home_2_2.png")) ;
+			m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Home_2_1.png")) ;
+			m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Home_2_2.png")) ;
+
+			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_1.mp3") ;
 		}
 		break ;
 		 

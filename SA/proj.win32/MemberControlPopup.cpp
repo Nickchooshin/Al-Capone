@@ -8,15 +8,17 @@
 
 #include "Data.h"
 
+#include "SimpleAudioEngine.h"
+
 CMemberControlPopup::CMemberControlPopup()
 {
 }
 
 CMemberControlPopup* CMemberControlPopup::GetInstance()
 {
-	static CMemberControlPopup MemberControlPopup ;
+	static CMemberControlPopup Instance ;
 
-	return &MemberControlPopup ;
+	return &Instance ;
 }
 
 bool CMemberControlPopup::init()
@@ -27,14 +29,14 @@ bool CMemberControlPopup::init()
 	m_nPassItemState = 0 ;
 
 	// 백그라운드
-	CCSprite *pBackground = CCSprite::create("Image/Member/C_Background.png") ;
+	CCSprite *pBackground = CCSprite::create("Image/Game/Member/C_Background.png") ;
 	pBackground->setPosition(ccp(640, 400)) ;
 	this->addChild(pBackground, 0) ;
 
 	CCSprite *pListSpace[3] ;
 	for(i=0; i<3; i++)
 	{
-		pListSpace[i] = CCSprite::create("Image/Member/List_Space_1.png") ;
+		pListSpace[i] = CCSprite::create("Image/Game/Member/List_Space_1.png") ;
 		pListSpace[i]->setPosition(ccp(640, 590 - (i * 145))) ;
 		this->addChild(pListSpace[i], 1) ;
 	}
@@ -43,11 +45,11 @@ bool CMemberControlPopup::init()
 	CCSprite *pMafia[3] ;
 	for(i=0; i<3; i++)
 	{
-		pMafia[i] = CCSprite::create("Image/Member/Charactor_Space.png") ;
+		pMafia[i] = CCSprite::create("Image/Game/Member/Charactor_Space.png") ;
 		pMafia[i]->setPosition(ccp(320, 590 - (i * 145))) ;
 		this->addChild(pMafia[i], 2) ;
 
-		m_pMafia[i] = CCSprite::create("Image/Member/Man_1.png") ;
+		m_pMafia[i] = CCSprite::create("Image/Game/Member/Man_1.png") ;
 		m_pMafia[i]->setPosition(ccp(320, 590 - (i * 145))) ;
 		m_pMafia[i]->setVisible(false) ;
 		this->addChild(m_pMafia[i], 3) ;
@@ -59,11 +61,11 @@ bool CMemberControlPopup::init()
 	{
 		for(j=0; j<3; j++)
 		{
-			pItemSpace[i][j] = CCSprite::create("Image/Member/Item_Space.png") ;
+			pItemSpace[i][j] = CCSprite::create("Image/Game/Member/Item_Space.png") ;
 			pItemSpace[i][j]->setPosition(ccp(440 + (j * 100), 590 - (i * 145))) ;
 			this->addChild(pItemSpace[i][j], 2) ;
 
-			m_pItemList[i][j] = CCMenuItemImage::create("Image/UI/BuyMenu/Acohol_Icon.png", "Image/UI/BuyMenu/Acohol_Icon.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
+			m_pItemList[i][j] = CCMenuItemImage::create("Image/Game/UI/BuyMenu/Acohol_Icon.png", "Image/Game/UI/BuyMenu/Acohol_Icon.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
 			m_pItemList[i][j]->setPosition(pItemSpace[i][j]->getPosition()) ;
 			m_pItemList[i][j]->setVisible(false) ;
 			m_pItemList[i][j]->setTag(-(i*3+j+1)) ;
@@ -80,9 +82,9 @@ bool CMemberControlPopup::init()
 	// 버튼
 	for(i=0; i<3; i++)
 	{
-		m_pMoveButton[i] = CCMenuItemImage::create("Image/Member/Move_Button_1.png", "Image/Member/Move_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
-		m_pPassButton[i] = CCMenuItemImage::create("Image/Member/Pass_Button_1.png", "Image/Member/Pass_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
-		m_pItemBuyButton[i] = CCMenuItemImage::create("Image/Member/Item_Buy_Button_1.png", "Image/Member/Item_Buy_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
+		m_pMoveButton[i] = CCMenuItemImage::create("Image/Game/Member/Move_Button_1.png", "Image/Game/Member/Move_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
+		m_pPassButton[i] = CCMenuItemImage::create("Image/Game/Member/Pass_Button_1.png", "Image/Game/Member/Pass_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
+		m_pItemBuyButton[i] = CCMenuItemImage::create("Image/Game/Member/Item_Buy_Button_1.png", "Image/Game/Member/Item_Buy_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
 
 		m_pMoveButton[i]->setPosition(ccp(760, 590 - (i * 145))) ;
 		m_pPassButton[i]->setPosition(ccp(m_pMoveButton[i]->getPosition().x + 100, m_pMoveButton[i]->getPosition().y)) ;
@@ -93,7 +95,7 @@ bool CMemberControlPopup::init()
 		m_pItemBuyButton[i]->setTag(2 + (i*3)) ;
 	}
 
-	m_pCloseButton = CCMenuItemImage::create("Image/Member/Close_Button_1.png", "Image/Member/Close_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
+	m_pCloseButton = CCMenuItemImage::create("Image/Game/Member/Close_Button_1.png", "Image/Game/Member/Close_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
 	m_pCloseButton->setPosition(ccp(934, 182.5)) ;
 	m_pCloseButton->setTag(9) ;
 
@@ -140,19 +142,19 @@ void CMemberControlPopup::UpdateItemList()
 				switch(pMember->m_ItemList[j])
 				{
 				case ACOHOL :
-					//m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Acohol_Icon.png")) ;
-					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
-					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
+					//m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/Game/UI/BuyMenu/Acohol_Icon.png")) ;
+					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/Game/UI/BuyMenu/Acohol_Icon.png")) ;
+					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/Game/UI/BuyMenu/Acohol_Icon.png")) ;
 					break ;
 
 				case ORIGINAL_DRINK :
-					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
-					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
+					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/Game/UI/BuyMenu/Original_Drink_Icon.png")) ;
+					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/Game/UI/BuyMenu/Original_Drink_Icon.png")) ;
 					break ;
 
 				case NARCOTIC :
-					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
-					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
+					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/Game/UI/BuyMenu/Narcotic_Icon.png")) ;
+					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/Game/UI/BuyMenu/Narcotic_Icon.png")) ;
 					break ;
 				}
 			}
@@ -183,9 +185,9 @@ void CMemberControlPopup::SetButtonEnabled(int Index, bool bEnabled, const char*
 		if(bEnabled!=ButtonEnabled)
 		{
 			if(bEnabled)
-				m_pMoveButton[Index]->setNormalImage(CCSprite::create("Image/Member/Move_Button_1.png")) ;
+				m_pMoveButton[Index]->setNormalImage(CCSprite::create("Image/Game/Member/Move_Button_1.png")) ;
 			else
-				m_pMoveButton[Index]->setNormalImage(CCSprite::create("Image/Member/Move_Button_2.png")) ;
+				m_pMoveButton[Index]->setNormalImage(CCSprite::create("Image/Game/Member/Move_Button_2.png")) ;
 
 			m_pMoveButton[Index]->setEnabled(bEnabled) ;
 		}
@@ -197,9 +199,9 @@ void CMemberControlPopup::SetButtonEnabled(int Index, bool bEnabled, const char*
 		if(bEnabled!=ButtonEnabled)
 		{
 			if(bEnabled)
-				m_pPassButton[Index]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_1.png")) ;
+				m_pPassButton[Index]->setNormalImage(CCSprite::create("Image/Game/Member/Pass_Button_1.png")) ;
 			else
-				m_pPassButton[Index]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+				m_pPassButton[Index]->setNormalImage(CCSprite::create("Image/Game/Member/Pass_Button_2.png")) ;
 
 			m_pPassButton[Index]->setEnabled(bEnabled) ;
 		}
@@ -211,9 +213,9 @@ void CMemberControlPopup::SetButtonEnabled(int Index, bool bEnabled, const char*
 		if(bEnabled!=ButtonEnabled)
 		{
 			if(bEnabled)
-				m_pItemBuyButton[Index]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_1.png")) ;
+				m_pItemBuyButton[Index]->setNormalImage(CCSprite::create("Image/Game/Member/Item_Buy_Button_1.png")) ;
 			else
-				m_pItemBuyButton[Index]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_2.png")) ;
+				m_pItemBuyButton[Index]->setNormalImage(CCSprite::create("Image/Game/Member/Item_Buy_Button_2.png")) ;
 
 			m_pItemBuyButton[Index]->setEnabled(bEnabled) ;
 		}
@@ -317,9 +319,9 @@ void CMemberControlPopup::PassItemSender(int Index)
 			bool bEnabled = m_pMemberIcon->m_Member[i].m_ItemList[2]==ITEM_TYPE::NOTHING ;
 
 			if(bEnabled)
-				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Receipt_Button_1.png")) ;
+				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Game/Member/Receipt_Button_1.png")) ;
 			else
-				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Receipt_Button_2.png")) ;
+				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Game/Member/Receipt_Button_2.png")) ;
 			
 			m_pPassButton[i]->setEnabled(bEnabled) ;
 			m_pPassButton[i]->setSelectedImage(CCSprite::create("image/Member/Receipt_Button_2.png")) ;
@@ -335,7 +337,7 @@ void CMemberControlPopup::PassItemSender(int Index)
 		SetButtonEnabled(i, false, "Move") ;
 		SetButtonEnabled(i, false, "Buy") ;
 	}
-	m_pCloseButton->setNormalImage(CCSprite::create("Image/Member/Close_Button_2.png")) ;
+	m_pCloseButton->setNormalImage(CCSprite::create("Image/Game/Member/Close_Button_2.png")) ;
 	m_pCloseButton->setEnabled(false) ;
 	
 	m_nPassItemState = 1 ;
@@ -348,14 +350,14 @@ void CMemberControlPopup::PassItemReceiver(int Index)
 
 	m_nReceiverIndex = Index ;
 
-	m_pPassButton[m_nReceiverIndex]->setNormalImage(CCSprite::create("Image/Member/Finish_Button_1.png")) ;
-	m_pPassButton[m_nReceiverIndex]->setSelectedImage(CCSprite::create("Image/Member/Finish_Button_2.png")) ;
+	m_pPassButton[m_nReceiverIndex]->setNormalImage(CCSprite::create("Image/Game/Member/Finish_Button_1.png")) ;
+	m_pPassButton[m_nReceiverIndex]->setSelectedImage(CCSprite::create("Image/Game/Member/Finish_Button_2.png")) ;
 
 	for(i=0; i<3; i++)
 	{
 		if(i<n && i!=m_nSenderIndex && i!=m_nReceiverIndex)
 		{
-			m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Receipt_Button_2.png")) ;
+			m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Game/Member/Receipt_Button_2.png")) ;
 			m_pPassButton[i]->setEnabled(false) ;
 		}
 	}
@@ -397,8 +399,8 @@ void CMemberControlPopup::PassItemEnd()
 	{
 		if(i==m_nSenderIndex || i==m_nReceiverIndex)
 		{
-			m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_1.png")) ;
-			m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+			m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Game/Member/Pass_Button_1.png")) ;
+			m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Game/Member/Pass_Button_2.png")) ;
 			m_pPassButton[i]->setEnabled(true) ;
 		}
 		else if(i<n)
@@ -407,13 +409,13 @@ void CMemberControlPopup::PassItemEnd()
 
 			if(!bBuy)
 			{
-				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_1.png")) ;
-				m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Game/Member/Pass_Button_1.png")) ;
+				m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Game/Member/Pass_Button_2.png")) ;
 			}
 			else
 			{
-				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
-				m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Game/Member/Pass_Button_2.png")) ;
+				m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Game/Member/Pass_Button_2.png")) ;
 			}
 
 			m_pPassButton[i]->setEnabled(!bBuy) ;
@@ -421,7 +423,7 @@ void CMemberControlPopup::PassItemEnd()
 	}
 
 	SetMemberEnabled() ;
-	m_pCloseButton->setNormalImage(CCSprite::create("Image/Member/Close_Button_1.png")) ;
+	m_pCloseButton->setNormalImage(CCSprite::create("Image/Game/Member/Close_Button_1.png")) ;
 	m_pCloseButton->setEnabled(true) ;
 
 	m_nPassItemState = 0 ;
@@ -509,6 +511,7 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 			{
 				SellItem((-((tag+1)/3)), -((tag+1)%3)) ;
 				UpdateItemList() ;
+				//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Item_sell.wav") ;
 			}
 		}
 		else if(m_nPassItemState==2 && (-((tag+1)/3))==m_nSenderIndex)

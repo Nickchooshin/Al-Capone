@@ -132,16 +132,26 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BusinessBuilding.cpp" />
+    <ClCompile Include="CreditsLayer.cpp" />
+    <ClCompile Include="CreditsScene.cpp" />
     <ClCompile Include="Data.cpp" />
+    <ClCompile Include="EndingLayer.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
+    <ClCompile Include="GameoverLayer.cpp" />
+    <ClCompile Include="GameoverScene.cpp" />
     <ClCompile Include="InspectionCheckUI.cpp" />
     <ClCompile Include="ItemBuyPopup.cpp" />
     <ClCompile Include="LoadManager.cpp" />
+    <ClCompile Include="LogoLayer.cpp" />
+    <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="Member.cpp" />
     <ClCompile Include="MemberControlPopup.cpp" />
     <ClCompile Include="MemberIcon.cpp" />
     <ClCompile Include="MemberManager.cpp" />
     <ClCompile Include="MemberUI.cpp" />
     <ClCompile Include="MoneyUI.cpp" />
+    <ClCompile Include="TitleLayer.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Turn.cpp" />
     <ClCompile Include="TurnUI.cpp" />
     <ClCompile Include="SmugglingRoute.cpp" />
@@ -149,6 +159,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResidentialBuilding.cpp" />
+    <ClCompile Include="TutorialLayer.cpp" />
+    <ClCompile Include="TutorialScene.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,17 +169,27 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="BusinessBuilding.h" />
+    <ClInclude Include="CreditsLayer.h" />
+    <ClInclude Include="CreditsScene.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="EndingLayer.h" />
+    <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="GameoverLayer.h" />
+    <ClInclude Include="GameoverScene.h" />
     <ClInclude Include="InspectionCheckUI.h" />
     <ClInclude Include="ItemBuyPopup.h" />
     <ClInclude Include="ItemData.h" />
     <ClInclude Include="LoadManager.h" />
+    <ClInclude Include="LogoLayer.h" />
+    <ClInclude Include="LogoScene.h" />
     <ClInclude Include="Member.h" />
     <ClInclude Include="MemberControlPopup.h" />
     <ClInclude Include="MemberIcon.h" />
     <ClInclude Include="MemberManager.h" />
     <ClInclude Include="MemberUI.h" />
     <ClInclude Include="MoneyUI.h" />
+    <ClInclude Include="TitleLayer.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Turn.h" />
     <ClInclude Include="TurnUI.h" />
     <ClInclude Include="SmugglingRoute.h" />
@@ -176,6 +198,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="main.h" />
     <ClInclude Include="PopupMenu.h" />
     <ClInclude Include="ResidentialBuilding.h" />
+    <ClInclude Include="TutorialLayer.h" />
+    <ClInclude Include="TutorialScene.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UserData.h" />
   </ItemGroup>

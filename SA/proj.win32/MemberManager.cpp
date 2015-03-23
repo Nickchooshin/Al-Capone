@@ -12,9 +12,9 @@ CMemberManager::CMemberManager()
 
 CMemberManager* CMemberManager::GetInstance()
 {
-	static CMemberManager MemberManager ;
+	static CMemberManager Instance ;
 
-	return &MemberManager ;
+	return &Instance ;
 }
 
 bool CMemberManager::init()

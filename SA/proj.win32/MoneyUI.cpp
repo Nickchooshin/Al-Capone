@@ -4,11 +4,11 @@
 
 bool CMoneyUI::init()
 {
-	CCSprite *pFrame = CCSprite::create("Image/UI/Space.png") ;
+	CCSprite *pFrame = CCSprite::create("Image/Game/UI/Space.png") ;
 	pFrame->setPosition(ccp(530, 40)) ;
 	this->addChild(pFrame, 0) ;
 
-	CCSprite *pIcon = CCSprite::create("Image/UI/Icon_3.png") ;
+	CCSprite *pIcon = CCSprite::create("Image/Game/UI/Icon_3.png") ;
 	pIcon->setPosition(ccp(460, 40)) ;
 	this->addChild(pIcon, 0) ;
 

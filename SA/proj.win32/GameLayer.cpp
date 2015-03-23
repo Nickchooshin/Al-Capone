@@ -10,6 +10,12 @@
 
 #include "AreaManager.h"
 
+#include "EndingScene.h"
+#include "GameoverScene.h"
+
+//
+#include "SimpleAudioEngine.h"
+
 USING_NS_CC;
 
 bool GameLayer::init()
@@ -20,6 +26,20 @@ bool GameLayer::init()
 	}
 
 	srand(time(NULL)) ;
+
+	removeAllChildrenWithCleanup(true) ;
+
+	//
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_1.mp3") ;
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_2.mp3") ;
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_3.mp3") ;
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Man_allo.mp3") ;
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Man_del.mp3") ;
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Item_sell.wav") ;
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Turn.mp3") ;
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Round.mp3") ;
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Block.mp3") ;
+	//
 
 	CCDirector *pDirector = CCDirector::sharedDirector() ;
 	pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true) ;
@@ -45,9 +65,11 @@ bool GameLayer::init()
 	g_pData->init() ;
 
 	g_pAreaManager->init() ;
+	g_pAreaManager->removeFromParentAndCleanup(true) ;
 	this->addChild(g_pAreaManager, 1) ;
 
 	g_pMemberManager->init() ;
+	g_pMemberManager->removeFromParentAndCleanup(true) ;
 	this->addChild(g_pMemberManager, 2) ;
 
 	g_pMemberControlPopup->init() ;
@@ -73,6 +95,17 @@ void GameLayer::update(float dt)
 		g_pAreaManager->TurnFlow() ;
 
 		g_pData->m_User.m_Turn.EndTurnFlow() ;
+
+		if(g_pData->m_User.m_nMoney>=g_pData->m_nEndMoney)
+		{
+			// Ending
+			CCDirector::sharedDirector()->replaceScene(EndingScene::scene()) ;
+		}
+		else if(g_pData->m_User.m_nMoney<0)
+		{
+			// Game_over
+			CCDirector::sharedDirector()->replaceScene(GameoverScene::scene()) ;
+		}
 	}
 }
 

@@ -5,11 +5,13 @@
 
 #include "Data.h"
 
+#include "SimpleAudioEngine.h"
+
 bool CMemberIcon::init()
 {
 	m_bMove = false ;
 
-	m_pMemberItem = CCMenuItemImage::create("Image/Member/Man_Icon_1_1.png", "Image/Member/Man_Icon_1_2.png", this, menu_selector(CMemberIcon::Icon_Click)) ;
+	m_pMemberItem = CCMenuItemImage::create("Image/Game/Member/Man_Icon_1_1.png", "Image/Game/Member/Man_Icon_1_2.png", this, menu_selector(CMemberIcon::Icon_Click)) ;
 	CCMenu *pMenu = CCMenu::create(m_pMemberItem, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
 	this->addChild(pMenu) ;
@@ -40,9 +42,16 @@ void CMemberIcon::TurnFlow()
 
 void CMemberIcon::Inspection()
 {
-	g_pData->m_User.m_nHaveMember -= m_Member.size() ;
+	const int num = m_Member.size() ;
 
-	m_Member.clear() ;
+	g_pData->m_User.m_nHaveMember -= num ;
+
+	if(num!=0)
+	{
+		m_Member.clear() ;
+
+		//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Man_del.mp3") ;
+	}
 }
 
 void CMemberIcon::Icon_Click(CCObject *pSender)
@@ -74,13 +83,13 @@ void CMemberIcon::setMove(bool bMove)
 {
 	if(bMove && !m_bMove)
 	{
-		m_pMemberItem->setNormalImage(CCSprite::create("Image/Member/Man_Icon_2_1.png")) ;
-		m_pMemberItem->setSelectedImage(CCSprite::create("Image/Member/Man_Icon_2_2.png")) ;
+		m_pMemberItem->setNormalImage(CCSprite::create("Image/Game/Member/Man_Icon_2_1.png")) ;
+		m_pMemberItem->setSelectedImage(CCSprite::create("Image/Game/Member/Man_Icon_2_2.png")) ;
 	}
 	else if(!bMove && m_bMove)
 	{
-		m_pMemberItem->setNormalImage(CCSprite::create("Image/Member/Man_Icon_1_1.png")) ;
-		m_pMemberItem->setSelectedImage(CCSprite::create("Image/Member/Man_Icon_1_2.png")) ;
+		m_pMemberItem->setNormalImage(CCSprite::create("Image/Game/Member/Man_Icon_1_1.png")) ;
+		m_pMemberItem->setSelectedImage(CCSprite::create("Image/Game/Member/Man_Icon_1_2.png")) ;
 	}
 
 	m_bMove = bMove ;
