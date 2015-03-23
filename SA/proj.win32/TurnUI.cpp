@@ -1,7 +1,7 @@
 #include "TurnUI.h"
 #include "Data.h"
 
-#include "AreaManager.h"
+#include "Manager.h"
 
 #include "SimpleAudioEngine.h"
 
@@ -47,7 +47,7 @@ bool CTurnUI::init()
 
 void CTurnUI::TurnFlow(CCObject *pSender)
 {
-	if(!g_pAreaManager->isMovingMember())
+	if(!CManager::Area->isMovingMember())
 	{
 		g_pData->m_User.m_Turn.TurnFlow() ;
 

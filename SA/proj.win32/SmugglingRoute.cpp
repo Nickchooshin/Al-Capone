@@ -3,7 +3,7 @@
 #include "PopupMenu.h"
 #include "Data.h"
 
-#include "MemberManager.h"
+#include "Manager.h"
 
 #include "SimpleAudioEngine.h"
 
@@ -76,7 +76,7 @@ void CSmugglingRoute::Click_Menu(CCObject *pSender)
 		break ;
 
 	case 1 :
-		if(g_pMemberManager->MovingData(m_nWay))
+		if(CManager::Member->MovingData(m_nWay))
 		{
 			g_pPopupMenu->Release() ;
 		}

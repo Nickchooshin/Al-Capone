@@ -144,6 +144,9 @@
     <ClCompile Include="GameoverLayer.cpp">
       <Filter>Classes\Layer</Filter>
     </ClCompile>
+    <ClCompile Include="Manager.cpp">
+      <Filter>Classes\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="GameoverLayer.h">
       <Filter>Classes\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.h">
+      <Filter>Classes\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

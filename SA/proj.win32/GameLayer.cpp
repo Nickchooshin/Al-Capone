@@ -10,6 +10,8 @@
 
 #include "AreaManager.h"
 
+#include "Manager.h"
+
 #include "EndingScene.h"
 #include "GameoverScene.h"
 
@@ -64,13 +66,24 @@ bool GameLayer::init()
 	//this->addChild(m_AreaManager, 1) ;
 	g_pData->init() ;
 
-	g_pAreaManager->init() ;
+	/*g_pAreaManager->init() ;
 	g_pAreaManager->removeFromParentAndCleanup(true) ;
 	this->addChild(g_pAreaManager, 1) ;
 
 	g_pMemberManager->init() ;
 	g_pMemberManager->removeFromParentAndCleanup(true) ;
-	this->addChild(g_pMemberManager, 2) ;
+	this->addChild(g_pMemberManager, 2) ;*/
+
+	CAreaManager *pAreaManager ;
+	pAreaManager = CAreaManager::create() ;
+	this->addChild(pAreaManager, 1) ;
+
+	CMemberManager *pMemberManager ;
+	pMemberManager = CMemberManager::create() ;
+	this->addChild(pMemberManager, 2) ;
+
+	CManager::Area = pAreaManager ;
+	CManager::Member = pMemberManager ;
 
 	g_pMemberControlPopup->init() ;
 
@@ -90,9 +103,9 @@ void GameLayer::update(float dt)
 	{
 		if(g_pData->m_User.m_Turn.GetTurn()==1)
 		{
-			g_pAreaManager->RoundFlow() ;
+			CManager::Area->RoundFlow() ;
 		}
-		g_pAreaManager->TurnFlow() ;
+		CManager::Area->TurnFlow() ;
 
 		g_pData->m_User.m_Turn.EndTurnFlow() ;
 

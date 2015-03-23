@@ -3,7 +3,7 @@
 #include "MemberManager.h"
 #include "MemberIcon.h"
 #include "Area.h"
-#include "AreaManager.h"
+#include "Manager.h"
 #include "ItemBuyPopup.h"
 
 #include "Data.h"
@@ -266,7 +266,7 @@ void CMemberControlPopup::SetMemberEnabled()
 	}
 
 	CArea *Area = (CArea*)m_pMemberIcon->getParent() ;
-	bool MoveRoute = g_pAreaManager->MoveRouteCheck(Area) ;
+	bool MoveRoute = CManager::Area->MoveRouteCheck(Area) ;
 	for(i=0; i<num; i++)
 	{
 		m_pMafia[i]->setVisible(true) ;
@@ -462,8 +462,8 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 		m_pMemberIcon->setMove(true) ;
 
 		pArea = (CArea*)m_pMemberIcon->getParent() ;
-		g_pAreaManager->MoveMemberPrepare(pArea) ;
-		g_pMemberManager->MemorizeMovingData(pArea->getTag(), m_pMemberIcon, index) ;
+		CManager::Area->MoveMemberPrepare(pArea) ;
+		CManager::Member->MemorizeMovingData(pArea->getTag(), m_pMemberIcon, index) ;
 		pDirector->popScene() ;
 		break ;
 

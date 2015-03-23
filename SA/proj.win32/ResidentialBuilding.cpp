@@ -2,7 +2,7 @@
 
 #include "PopupMenu.h"
 #include "Data.h"
-#include "MemberManager.h"
+#include "Manager.h"
 
 #include "SimpleAudioEngine.h"
 
@@ -70,7 +70,7 @@ void CResidentialBuilding::Click_Menu(CCObject *pSender)
 	case 1 :
 		if(g_pData->m_User.m_nStandbyMember > 0)
 		{
-			if(g_pMemberManager->AddMember(this))
+			if(CManager::Member->AddMember(this))
 			{
 				bRelease = true ;
 				g_pData->m_User.m_nStandbyMember -= 1 ;

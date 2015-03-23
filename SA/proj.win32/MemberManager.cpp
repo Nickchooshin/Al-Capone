@@ -4,17 +4,10 @@
 #include "MemberControlPopup.h"
 #include "Building.h"
 #include "Area.h"
-#include "AreaManager.h"
+#include "Manager.h"
 
 CMemberManager::CMemberManager()
 {
-}
-
-CMemberManager* CMemberManager::GetInstance()
-{
-	static CMemberManager Instance ;
-
-	return &Instance ;
 }
 
 bool CMemberManager::init()
@@ -77,8 +70,8 @@ bool CMemberManager::MovingData(int Way)
 		break ;
 	}
 
-	std::vector<CMember> &Member1 = g_pAreaManager->m_Area[y1][x1]->m_pMemberIcon->m_Member ;
-	CMemberIcon &Member2 = *g_pAreaManager->m_Area[y2][x2]->m_pMemberIcon ;
+	std::vector<CMember> &Member1 = CManager::Area->m_Area[y1][x1]->m_pMemberIcon->m_Member ;
+	CMemberIcon &Member2 = *CManager::Area->m_Area[y2][x2]->m_pMemberIcon ;
 
 	CMember Temp = Member1[m_nIndex] ;
 	Temp.setMove(true) ;
@@ -87,7 +80,7 @@ bool CMemberManager::MovingData(int Way)
 	{
 		Member1.erase(Member1.begin()+m_nIndex) ;
 
-		g_pAreaManager->MoveMemberFinish() ;
+		CManager::Area->MoveMemberFinish() ;
 		m_pMemberIcon->setMove(false) ;
 
 		m_nTag = -1 ;

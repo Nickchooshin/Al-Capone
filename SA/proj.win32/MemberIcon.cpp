@@ -1,7 +1,7 @@
 #include "MemberIcon.h"
 
 #include "MemberManager.h"
-#include "AreaManager.h"
+#include "Manager.h"
 
 #include "Data.h"
 
@@ -58,11 +58,11 @@ void CMemberIcon::Icon_Click(CCObject *pSender)
 {
 	if(!m_bMove)
 	{
-		g_pMemberManager->ShowMenu(this) ;
+		CManager::Member->ShowMenu(this) ;
 	}
 	else
 	{
-		g_pAreaManager->MoveMemberFinish() ;
+		CManager::Area->MoveMemberFinish() ;
 		setMove(false) ;
 	}
 }

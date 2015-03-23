@@ -18,11 +18,9 @@ public :
 	static enum ROUTE_WAY { WAY_UP=0, WAY_DOWN, WAY_RIGHT, WAY_LEFT } ;
 
 public :
-	static CAreaManager* GetInstance() ;
-
 	bool init() ;
 
-	//CREATE_FUNC(CAreaManager) ;
+	CREATE_FUNC(CAreaManager) ;
 
 	void update(float dt) ;
 
@@ -52,7 +50,5 @@ private :
 
 	friend class CMemberManager ;
 } ;
-
-#define g_pAreaManager CAreaManager::GetInstance()
 
 #endif

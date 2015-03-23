@@ -11,13 +11,6 @@ CAreaManager::CAreaManager()
 {
 }
 
-CAreaManager* CAreaManager::GetInstance()
-{
-	static CAreaManager Instance ;
-
-	return &Instance ;
-}
-
 bool CAreaManager::init()
 {
 	int i, j ;

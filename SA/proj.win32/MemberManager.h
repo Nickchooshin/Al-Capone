@@ -16,9 +16,9 @@ private :
 	int m_nIndex ;
 
 public :
-	static CMemberManager* GetInstance() ;
-
 	bool init() ;
+
+	CREATE_FUNC(CMemberManager) ;
 
 	bool AddMember(CBuilding *Building) ;
 	void ShowMenu(CMemberIcon *pMemberIcon) ;
@@ -27,7 +27,5 @@ public :
 private :
 	CMemberManager() ;
 } ;
-
-#define g_pMemberManager CMemberManager::GetInstance()
 
 #endif
