@@ -1,0 +1,23 @@
+#술
+Acohol
+Name = "술"
+Explanation = "술이다."
+Buy = 1
+Sell = 3
+Attention = 2
+
+#술 원료
+Original_Drink
+Name = "술 원료"
+Explanation = "술 원료다."
+Buy = 3
+Sell = 6
+Attention = 3
+
+#마약
+Narcotic
+Name = "마약"
+Explanation = "마약이다."
+Buy = 6
+Sell = 10
+Attention = 4
