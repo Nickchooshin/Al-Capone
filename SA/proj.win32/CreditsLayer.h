@@ -7,6 +7,10 @@ using namespace cocos2d ;
 
 class CreditsLayer : public CCLayer
 {
+private :
+	CCLabelTTF *m_pLabel ;
+	float m_fTime ;
+
 public:
 	virtual bool init();  
     
@@ -18,6 +22,8 @@ public:
 	void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) ;
 	void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) ;
 	void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) ;
+private :
+	void SetLabel() ;
 };
 
 #endif

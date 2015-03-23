@@ -112,26 +112,76 @@ bool CItemBuyPopup::init()
 	pNarcotic->setPosition(ccp(470, 300)) ;
 	this->addChild(pNarcotic, 3) ;
 
-	/*CCLabelTTF *pBuy[3][2] ;
+	//
+	CCLabelTTF *pLName[3] ;
+	CCLabelTTF *pLExplanation[3] ;
+	CCLabelTTF *pLBuy[3][2] ;
+	CCLabelTTF *pLSell[3][2] ;
+	CCLabelTTF *pLAttention[3][2] ;
 	for(i=0; i<3; i++)
 	{
 		char str[1024] ;
 		WCHAR wstr[1024] ;
 
-		sprintf(str, "가격") ;
+		sprintf(str, g_pData->m_Item.m_sName[i].c_str()) ;
 		MultiByteToWideChar( CP_ACP, 0, str, -1, wstr, 1024 ) ;
 		WideCharToMultiByte( CP_UTF8, 0, wstr, -1, str, 1024, NULL, NULL ) ;
-		pBuy[i][0] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pNumerical1[i][0]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
-		pBuy[i][0]->setColor(ccc3(0, 0, 0)) ;
-		pBuy[i][0]->setPosition(pNumerical1[i][0]->getPosition()) ;
-		this->addChild(pBuy[i][0], 3) ;
+		pLName[i] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pName[i]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
+		pLName[i]->setColor(ccc3(0, 0, 0)) ;
+		pLName[i]->setPosition(pName[i]->getPosition()) ;
+		this->addChild(pLName[i], 3) ;
+
+		sprintf(str, g_pData->m_Item.m_sExplanation[i].c_str()) ;
+		MultiByteToWideChar( CP_ACP, 0, str, -1, wstr, 1024 ) ;
+		WideCharToMultiByte( CP_UTF8, 0, wstr, -1, str, 1024, NULL, NULL ) ;
+		pLExplanation[i] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, CCSize(pExplanation[i]->getContentSize().width-12, pExplanation[i]->getContentSize().height-6), kCCTextAlignmentLeft, kCCVerticalTextAlignmentTop) ;
+		pLExplanation[i]->setColor(ccc3(0, 0, 0)) ;
+		pLExplanation[i]->setPosition(pExplanation[i]->getPosition()) ;
+		this->addChild(pLExplanation[i], 3) ;
+
+		sprintf(str, "구매가격") ;
+		MultiByteToWideChar( CP_ACP, 0, str, -1, wstr, 1024 ) ;
+		WideCharToMultiByte( CP_UTF8, 0, wstr, -1, str, 1024, NULL, NULL ) ;
+		pLBuy[i][0] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pNumerical1[i][0]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
+		pLBuy[i][0]->setColor(ccc3(0, 0, 0)) ;
+		pLBuy[i][0]->setPosition(pNumerical1[i][0]->getPosition()) ;
+		this->addChild(pLBuy[i][0], 3) ;
 
 		sprintf(str, "%d", g_pData->m_Item.m_nBuy[i]) ;
-		pBuy[i][1] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pNumerical2[i][0]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
-		pBuy[i][1]->setColor(ccc3(0, 0, 0)) ;
-		pBuy[i][1]->setPosition(pNumerical2[i][0]->getPosition()) ;
-		this->addChild(pBuy[i][1], 3) ;
-	}*/
+		pLBuy[i][1] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pNumerical2[i][0]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
+		pLBuy[i][1]->setColor(ccc3(0, 0, 0)) ;
+		pLBuy[i][1]->setPosition(pNumerical2[i][0]->getPosition()) ;
+		this->addChild(pLBuy[i][1], 3) ;
+
+		sprintf(str, "판매가격") ;
+		MultiByteToWideChar( CP_ACP, 0, str, -1, wstr, 1024 ) ;
+		WideCharToMultiByte( CP_UTF8, 0, wstr, -1, str, 1024, NULL, NULL ) ;
+		pLSell[i][0] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pNumerical1[i][1]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
+		pLSell[i][0]->setColor(ccc3(0, 0, 0)) ;
+		pLSell[i][0]->setPosition(pNumerical1[i][1]->getPosition()) ;
+		this->addChild(pLSell[i][0], 3) ;
+
+		sprintf(str, "%d", g_pData->m_Item.m_nSell[i]) ;
+		pLSell[i][1] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pNumerical2[i][1]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
+		pLSell[i][1]->setColor(ccc3(0, 0, 0)) ;
+		pLSell[i][1]->setPosition(pNumerical2[i][1]->getPosition()) ;
+		this->addChild(pLSell[i][1], 3) ;
+
+		sprintf(str, "주목도") ;
+		MultiByteToWideChar( CP_ACP, 0, str, -1, wstr, 1024 ) ;
+		WideCharToMultiByte( CP_UTF8, 0, wstr, -1, str, 1024, NULL, NULL ) ;
+		pLAttention[i][0] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pNumerical1[i][2]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
+		pLAttention[i][0]->setColor(ccc3(0, 0, 0)) ;
+		pLAttention[i][0]->setPosition(pNumerical1[i][2]->getPosition()) ;
+		this->addChild(pLAttention[i][0], 3) ;
+
+		sprintf(str, "%d", g_pData->m_Item.m_nAttention[i]) ;
+		pLAttention[i][1] = CCLabelTTF::create(str, "fonts/arial.ttf", 18, pNumerical2[i][2]->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
+		pLAttention[i][1]->setColor(ccc3(0, 0, 0)) ;
+		pLAttention[i][1]->setPosition(pNumerical2[i][2]->getPosition()) ;
+		this->addChild(pLAttention[i][1], 3) ;
+	}
+	//
 
 	// 확인, 취소
 	CCMenuItemImage *pCheck ;

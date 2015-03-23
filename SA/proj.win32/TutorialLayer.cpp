@@ -11,6 +11,9 @@ bool TutorialLayer::init()
 		return false;
 	}
 
+	CCDirector *pDirector = CCDirector::sharedDirector() ;
+	pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true) ;
+
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize() ;
 
 	CCSprite *pTutorialImage = CCSprite::create("Image/Tutorial/Tutorial_Image.png") ;

@@ -22,7 +22,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     // create the application instance
     AppDelegate app;
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
-    eglView->setViewName("SA");
+    eglView->setViewName("Al Capone - 1.00v");
     //eglView->setFrameSize(480, 320);
 	eglView->setFrameSize(1280, 720) ;
     return CCApplication::sharedApplication()->run();

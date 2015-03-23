@@ -166,9 +166,10 @@ bool CData::LoadItem()
 	char key=NULL ;
 	bool next=false ;
 	bool comment=false ;
+	bool string=false ;
 	ITEM_TYPE item_type=ITEM_TYPE::NOTHING ;
 
-	enum INFO_TYPE { NOTHING=0, BUY, SELL, ATTENTION } ;
+	enum INFO_TYPE { NOTHING=0, NAME, EXPLANATION, BUY, SELL, ATTENTION } ;
 	INFO_TYPE info_type=INFO_TYPE::NOTHING ;
 
 	while( key!=EOF )
@@ -192,7 +193,37 @@ bool CData::LoadItem()
 			}
 			else if(next)
 			{
-				if(key>='0' && key<='9')
+				if(key=='"' && (info_type==NAME || info_type==EXPLANATION))
+				{
+					if(!string)
+					{
+						string = true ;
+					}
+					else
+					{
+						switch(info_type)
+						{
+						case NAME :
+							m_Item.m_sName[item_type] = data ;
+							break ;
+
+						case EXPLANATION :
+							m_Item.m_sExplanation[item_type] = data ;
+							break ;
+						}
+
+						string = false ;
+						data.clear() ;
+						info_type = INFO_TYPE::NOTHING ;
+						next = false ;
+					}
+				}
+				else if(string)
+				{
+					char temp[2] = {key, NULL} ;
+					data.append(temp) ;
+				}
+				else if(key>='0' && key<='9')
 				{
 					char temp[2] = {key, NULL} ;
 					data.append(temp) ;
@@ -249,14 +280,27 @@ bool CData::LoadItem()
 				info_type = BUY ;
 				data.clear() ;
 			}
-			else if(length==4 && data.compare("Sell")==0)
+			else if(length==4)
 			{
-				info_type = SELL ;
-				data.clear() ;
+				if(data.compare("Name")==0)
+				{
+					info_type = NAME ;
+					data.clear() ;
+				}
+				else if(data.compare("Sell")==0)
+				{
+					info_type = SELL ;
+					data.clear() ;
+				}
 			}
 			else if(length==9 && data.compare("Attention")==0)
 			{
 				info_type = ATTENTION ;
+				data.clear() ;
+			}
+			else if(length==11 && data.compare("Explanation")==0)
+			{
+				info_type = EXPLANATION ;
 				data.clear() ;
 			}
 		}

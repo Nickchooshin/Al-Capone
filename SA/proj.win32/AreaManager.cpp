@@ -48,18 +48,86 @@ bool CAreaManager::init()
 		return false ;
 
 	// 지역 초기화
-	for(i=0; i<4; i++)
+	/*for(i=0; i<4; i++)
 	{
 		for(j=0; j<4; j++)
 		{
-
 			m_Area[i][j] = CArea::create(Inspection[i+1][j+1]) ;
 			//m_Area[i][j]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 100 )) ;
 			m_Area[i][j]->setPosition(AreaCoord[i][j]) ;
 			m_Area[i][j]->setTag(i*4+j) ;
 			this->addChild(m_Area[i][j], 1) ;
 		}
-	}
+	}*/
+	// 똥 //
+	m_Area[0][0] = CArea::create(Inspection[1][1]) ;
+	m_Area[0][0]->setPosition(AreaCoord[0][0]) ;
+	m_Area[0][0]->setTag(0) ;
+	this->addChild(m_Area[0][0], 1) ;
+	m_Area[0][1] = CArea::create(Inspection[1][2]) ;
+	m_Area[0][1]->setPosition(AreaCoord[0][1]) ;
+	m_Area[0][1]->setTag(1) ;
+	this->addChild(m_Area[0][1], 1) ;
+	m_Area[0][2] = CArea::create(Inspection[1][3]) ;
+	m_Area[0][2]->setPosition(AreaCoord[0][2]) ;
+	m_Area[0][2]->setTag(2) ;
+	this->addChild(m_Area[0][2], 1) ;
+	m_Area[0][3] = CArea::create(Inspection[1][4]) ;
+	m_Area[0][3]->setPosition(AreaCoord[0][3]) ;
+	m_Area[0][3]->setTag(3) ;
+	this->addChild(m_Area[0][3], 1) ;
+
+	m_Area[1][0] = CArea::create(Inspection[2][1]) ;
+	m_Area[1][0]->setPosition(AreaCoord[1][0]) ;
+	m_Area[1][0]->setTag(4) ;
+	this->addChild(m_Area[1][0], 1) ;
+	m_Area[1][1] = CArea::create(Inspection[2][2]) ;
+	m_Area[1][1]->setPosition(AreaCoord[1][1]) ;
+	m_Area[1][1]->setTag(5) ;
+	this->addChild(m_Area[1][1], 1) ;
+	m_Area[1][2] = CArea::create(Inspection[2][3]) ;
+	m_Area[1][2]->setPosition(AreaCoord[1][2]) ;
+	m_Area[1][2]->setTag(6) ;
+	this->addChild(m_Area[1][2], 1) ;
+	m_Area[1][3] = CArea::create(Inspection[2][4]) ;
+	m_Area[1][3]->setPosition(AreaCoord[1][3]) ;
+	m_Area[1][3]->setTag(7) ;
+	this->addChild(m_Area[1][3], 1) ;
+
+	m_Area[2][0] = CArea::create(Inspection[3][1]) ;
+	m_Area[2][0]->setPosition(AreaCoord[2][0]) ;
+	m_Area[2][0]->setTag(8) ;
+	this->addChild(m_Area[2][0], 1) ;
+	m_Area[2][1] = CArea::create(Inspection[3][2]) ;
+	m_Area[2][1]->setPosition(AreaCoord[2][1]) ;
+	m_Area[2][1]->setTag(9) ;
+	this->addChild(m_Area[2][1], 1) ;
+	m_Area[2][2] = CArea::create(Inspection[3][3]) ;
+	m_Area[2][2]->setPosition(AreaCoord[2][2]) ;
+	m_Area[2][2]->setTag(10) ;
+	this->addChild(m_Area[2][2], 1) ;
+	m_Area[2][3] = CArea::create(Inspection[3][4]) ;
+	m_Area[2][3]->setPosition(AreaCoord[2][3]) ;
+	m_Area[2][3]->setTag(11) ;
+	this->addChild(m_Area[2][3], 1) ;
+
+	m_Area[3][0] = CArea::create(Inspection[4][1]) ;
+	m_Area[3][0]->setPosition(AreaCoord[3][0]) ;
+	m_Area[3][0]->setTag(12) ;
+	this->addChild(m_Area[3][0], 1) ;
+	m_Area[3][1] = CArea::create(Inspection[4][2]) ;
+	m_Area[3][1]->setPosition(AreaCoord[3][1]) ;
+	m_Area[3][1]->setTag(13) ;
+	this->addChild(m_Area[3][1], 1) ;
+	m_Area[3][2] = CArea::create(Inspection[4][3]) ;
+	m_Area[3][2]->setPosition(AreaCoord[3][2]) ;
+	m_Area[3][2]->setTag(14) ;
+	this->addChild(m_Area[3][2], 1) ;
+	m_Area[3][3] = CArea::create(Inspection[4][4]) ;
+	m_Area[3][3]->setPosition(AreaCoord[3][3]) ;
+	m_Area[3][3]->setTag(15) ;
+	this->addChild(m_Area[3][3], 1) ;
+	// 똥 //
 
 	// 밀수 가능 지역 초기화
 	m_Area[0][0]->SetSmuggling(true) ;
