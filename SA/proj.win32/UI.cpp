@@ -18,7 +18,7 @@ bool CUI::init()
 
 	CMemberUI *pMemberUI = CMemberUI::create() ;
 	pMemberUI->setPosition(ccp(0, 0)) ;
-	this->addChild(pMemberUI, 1) ;
+	this->addChild(pMemberUI, 1) ;           
 
 	CMoneyUI *pMoneyUI = CMoneyUI::create() ;
 	pMoneyUI->setPosition(ccp(0, 0)) ;

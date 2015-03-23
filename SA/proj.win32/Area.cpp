@@ -114,7 +114,7 @@ void CArea::update(float dt)
 		{
 			if(m_bInspection[i])
 			{
-				CCSprite *pTurnMark = (CCSprite*)m_pTurnMark->getChildByTag(i) ;
+				pTurnMark = (CCSprite*)m_pTurnMark->getChildByTag(i) ;
 				pTurnMark->setColor(ccc3(255, 0, 0)) ;
 			}
 		}
@@ -122,6 +122,16 @@ void CArea::update(float dt)
 	else
 	{
 		m_pTurnMark->setVisible(false) ;
+
+		CCSprite *pTurnMark ;
+		for(i=1; i<8; i++)
+		{
+			if(m_bInspection[i])
+			{
+				pTurnMark = (CCSprite*)m_pTurnMark->getChildByTag(i) ;
+				pTurnMark->setColor(ccc3(255, 255, 255)) ;
+			}
+		}
 	}/////***/////
 }
 
@@ -175,11 +185,6 @@ void CArea::AreaLinked()
 {
 	m_pBuilding[0]->setVisible(true) ;
 	m_pBuilding[1]->setVisible(true) ;
-#ifdef DEBUG
-	CCSprite *pActive = CCSprite::create("Image/Temp/temp_active1.png") ;
-	pActive->setPosition(m_pBlockade->getPosition()) ;
-	this->addChild(pActive) ;
-#endif
 }
 
 bool CArea::GetOwnResidential()

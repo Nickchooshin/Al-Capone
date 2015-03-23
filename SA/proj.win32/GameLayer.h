@@ -9,9 +9,6 @@ class CAreaManager ;
 
 class GameLayer : public CCLayer
 {
-private :
-	CAreaManager *m_AreaManager ;
-
 public:
 	virtual bool init();  
     

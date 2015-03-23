@@ -2,6 +2,11 @@
 #include "AppDelegate.h"
 #include "CCEGLView.h"
 
+#include <crtdbg.h>//
+
+#define CRTDBG_MAP_ALLOC//
+#define new new(_CLIENT_BLOCK, __FILE__, __LINE__)//
+
 USING_NS_CC;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -9,6 +14,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                        LPTSTR    lpCmdLine,
                        int       nCmdShow)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF) ;//
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 

@@ -43,8 +43,10 @@ bool CMemberUI::init()
 	this->addChild(pMenu, 0) ;
 
 	// Sprite
-	CCSprite *pBackground = CCSprite::create("Image/UI/ManMenu/BackGround.png") ;
-	pBackground->setPosition(ccp(760, 210)) ;
+	CCMenuItemImage *pBackgroundItem = CCMenuItemImage::create("Image/UI/ManMenu/Background.png", "Image/UI/ManMenu/Background.png") ;
+	pBackgroundItem->setPosition(ccp(760, 210)) ;
+	CCMenu *pBackground = CCMenu::create(pBackgroundItem, NULL) ;
+	pBackground->setPosition(ccp(0, 0)) ;
 
 	CCSprite *pManSpace = CCSprite::create("Image/UI/ManMenu/Charactor_Space.png") ;
 	pManSpace->setPosition(ccp(725, 242.5)) ;

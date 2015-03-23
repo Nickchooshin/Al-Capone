@@ -15,9 +15,11 @@ private :
 	CSmugglingRoute *m_SmugglingRoute[3][4][2] ;
 
 public :
+	static CAreaManager* GetInstance() ;
+
 	bool init() ;
 
-	CREATE_FUNC(CAreaManager) ;
+	//CREATE_FUNC(CAreaManager) ;
 
 	void update(float dt) ;
 
@@ -27,6 +29,10 @@ public :
 	void AreaLinked(int x, int y) ;
 
 	int GetOwnResidentialNumber() ;
+private :
+	CAreaManager() ;
 } ;
+
+#define g_pAreaManager CAreaManager::GetInstance()
 
 #endif

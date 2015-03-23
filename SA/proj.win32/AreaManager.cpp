@@ -4,6 +4,17 @@
 
 #include "Data.h"
 
+CAreaManager::CAreaManager()
+{
+}
+
+CAreaManager* CAreaManager::GetInstance()
+{
+	static CAreaManager AreaManager ;
+
+	return &AreaManager ;
+}
+
 bool CAreaManager::init()
 {
 	int i, j ;
@@ -36,6 +47,7 @@ bool CAreaManager::init()
 			m_Area[i][j] = CArea::create() ;
 			m_Area[i][j]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 100 )) ;
 			m_Area[i][j]->SetBaseInspection(Inspection[i+1][j+1]) ;
+			m_Area[i][j]->setTag(i*4+j) ;
 			this->addChild(m_Area[i][j]) ;
 		}
 	}
@@ -114,6 +126,10 @@ void CAreaManager::TurnFlow()
 			m_SmugglingRoute[i][j][1]->TurnFlow() ;
 		}
 	}
+
+	CBuilding::m_bBuyBusiness = false ;
+	CBuilding::m_bBuyResidential = false ;
+	CBuilding::m_bBuyRoute = false ;
 }
 
 void CAreaManager::RoundFlow()
@@ -136,10 +152,6 @@ void CAreaManager::RoundFlow()
 			m_SmugglingRoute[i][j][1]->RoundFlow() ;
 		}
 	}
-
-	CBuilding::m_bBuyBusiness = false ;
-	CBuilding::m_bBuyResidential = false ;
-	CBuilding::m_bBuyRoute = false ;
 }
 
 void CAreaManager::AreaLinked(int x, int y)

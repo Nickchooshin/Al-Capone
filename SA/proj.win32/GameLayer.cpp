@@ -4,6 +4,7 @@
 #include "UI.h"
 #include "PopupMenu.h"
 #include "Data.h"
+#include "MemberManager.h"
 
 #include "AreaManager.h"
 
@@ -23,6 +24,8 @@ bool GameLayer::init()
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+	g_pPopupMenu->m_pNode = this ;
 	
 	/*WCHAR strACP[1024] ;//
 	MultiByteToWideChar( CP_ACP, 0, m_Information.c_str(), -1, strACP, 1024 ) ;//
@@ -35,8 +38,13 @@ bool GameLayer::init()
 	m_pLabelInformation->setVisible(m_bInformation) ;
 	this->addChild(m_pLabelInformation, 1) ;*/
 
-	m_AreaManager = CAreaManager::create() ;
-	this->addChild(m_AreaManager, 2) ;
+	//m_AreaManager = CAreaManager::create() ;
+	//this->addChild(m_AreaManager, 1) ;
+	g_pAreaManager->init() ;
+	this->addChild(g_pAreaManager, 1) ;
+
+	g_pMemberManager->init() ;
+	this->addChild(g_pMemberManager, 2) ;
 
 	CUI *UI = CUI::create() ;
 	this->addChild(UI, 3) ;
@@ -52,9 +60,9 @@ void GameLayer::update(float dt)
 	{
 		if(g_pData->m_User.m_Turn.GetTurn()==1)
 		{
-			m_AreaManager->RoundFlow() ;
+			g_pAreaManager->RoundFlow() ;
 		}
-		m_AreaManager->TurnFlow() ;
+		g_pAreaManager->TurnFlow() ;
 
 		g_pData->m_User.m_Turn.EndTurnFlow() ;
 	}

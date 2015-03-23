@@ -133,6 +133,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BusinessBuilding.cpp" />
     <ClCompile Include="InspectionCheckUI.cpp" />
+    <ClCompile Include="Member.cpp" />
+    <ClCompile Include="MemberControlUI.cpp" />
+    <ClCompile Include="MemberIcon.cpp" />
+    <ClCompile Include="MemberManager.cpp" />
     <ClCompile Include="MemberUI.cpp" />
     <ClCompile Include="MoneyUI.cpp" />
     <ClCompile Include="Turn.cpp" />
@@ -152,6 +156,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="BusinessBuilding.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="InspectionCheckUI.h" />
+    <ClInclude Include="Member.h" />
+    <ClInclude Include="MemberControlUI.h" />
+    <ClInclude Include="MemberIcon.h" />
+    <ClInclude Include="MemberManager.h" />
     <ClInclude Include="MemberUI.h" />
     <ClInclude Include="MoneyUI.h" />
     <ClInclude Include="Turn.h" />

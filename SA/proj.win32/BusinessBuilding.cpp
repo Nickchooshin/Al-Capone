@@ -55,13 +55,13 @@ bool CBusinessBuilding::Inspection()
 
 void CBusinessBuilding::Click_Building(CCObject *pSender)
 {
-	if(!m_bOwnership)
+	if(!m_bOwnership && !CBuilding::m_bBuyBusiness)
 	{
-		SetPopupMenu("Image/Temp/temp_menu_buy.png", "Image/Temp/temp_menu_buy.png", OWN) ;
+		SetPopupMenu("Image/Building/B_Buy_Button_1.png", "Image/Building/B_Buy_Button_2.png", OWN) ;
 	}
 	else if(m_bActive && !m_bAllocate)
 	{
-		SetPopupMenu("Image/Temp/temp_menu_allocate.png", "Image/Temp/temp_menu_allocate.png", ALLOCATE) ;
+		SetPopupMenu("Image/Building/B_Allocate_Button_1.png", "Image/Building/B_Allocate_Button_2.png", ALLOCATE) ;
 	}
 	else if(m_bAllocate && !m_bHide)
 	{
@@ -69,7 +69,7 @@ void CBusinessBuilding::Click_Building(CCObject *pSender)
 	}
 	else if(m_bAllocate && m_bHide)
 	{
-		SetPopupMenu("Image/Temp/temp_menu_allocate.png", "Image/Temp/temp_menu_allocate.png", UNHIDE) ;
+		SetPopupMenu("Image/Building/B_Allocate_Button_1.png", "Image/Building/B_Allocate_Button_2.png", UNHIDE) ;
 	}
 }
 

@@ -8,6 +8,7 @@ using namespace cocos2d ;
 class CPopupMenu
 {
 public :
+	CCNode *m_pNode ;
 	CCMenu *m_pMenu ;
 
 private :

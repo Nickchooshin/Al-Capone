@@ -16,6 +16,7 @@ public:
 private :
 	void Click_Building(CCObject *pSender) ;
 	void Click_Menu(CCObject *pSender) ;
+	void SetPopupMenu(const char *normalImage, const char *selectedImage, const int tag) ;
 } ;
 
 #endif

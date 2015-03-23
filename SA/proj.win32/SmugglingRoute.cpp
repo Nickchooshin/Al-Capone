@@ -32,9 +32,9 @@ void CSmugglingRoute::RoundFlow()
 
 void CSmugglingRoute::Click_Building(CCObject *pSender)
 {
-	if(!m_bOwnership)
+	if(!m_bOwnership && !CBuilding::m_bBuyRoute)
 	{
-		CCMenuItemImage *pMenuItem = CCMenuItemImage::create("Image/Temp/temp_menu_buy.png", "Image/Temp/temp_menu_buy.png", this, menu_selector(CSmugglingRoute::Click_Menu)) ;
+		CCMenuItemImage *pMenuItem = CCMenuItemImage::create("Image/Building/B_Buy_Button_1.png", "Image/Building/B_Buy_Button_2.png", this, menu_selector(CSmugglingRoute::Click_Menu)) ;
 		pMenuItem->setAnchorPoint(ccp(0, 0)) ;
 		pMenuItem->setPosition(ccp( m_pIconItem->getPosition().x + m_pIconItem->getContentSize().width/2,
 									m_pIconItem->getPosition().y )) ;
@@ -64,9 +64,4 @@ void CSmugglingRoute::Click_Menu(CCObject *pSender)
 void CSmugglingRoute::RouteLinked()
 {
 	m_pIconItem->setVisible(true) ;
-#ifdef DEBUG
-	CCSprite *pActive = CCSprite::create("Image/Temp/temp_active2.png") ;
-	pActive->setPosition(m_pIconItem->getPosition()) ;
-	this->addChild(pActive) ;
-#endif
 }
