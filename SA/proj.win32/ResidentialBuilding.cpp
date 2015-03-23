@@ -50,7 +50,8 @@ void CResidentialBuilding::Click_Menu(CCObject *pSender)
 		g_pPopupMenu->Release() ;
 
 		g_pData->m_User.m_nMoney -= g_pData->m_nPayBuilding ;
-		g_pData->m_bBuyBuilding = true ;
+		CBuilding::m_bBuyBuilding = true ;
+		CBuilding::m_bBuyResidential = true ;
 		m_bOwnership = true ;
 
 		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/hom_2.png")) ;

@@ -13,6 +13,9 @@ public :
 	void TurnFlow() ;
 	void RoundFlow() ;
 
+	void RouteLinked() ;
+
+private :
 	void Click_Building(CCObject *pSender) ;
 	void Click_Menu(CCObject *pSender) ;
 } ;

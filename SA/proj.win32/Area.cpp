@@ -6,6 +6,8 @@
 
 #include "Data.h"
 
+bool CArea::m_bInspectionView[8] ;
+
 bool CArea::init()
 {
 	m_nAttention = 0 ;
@@ -50,7 +52,8 @@ bool CArea::init()
 									 pSprite->getPosition().y + pSprite->getContentSize().height/2 - m_pBuilding[0]->getIconSize().height/2 )) ;
 	m_pBuilding[1]->setPosition(ccp( m_pBuilding[0]->getPosition().x - m_pBuilding[0]->getIconSize().width,
 									 m_pBuilding[0]->getPositionY() )) ;
-
+	m_pBuilding[0]->setVisible(false) ;
+	m_pBuilding[1]->setVisible(false) ;
 	this->addChild(m_pBuilding[0], 1) ;
 	this->addChild(m_pBuilding[1], 1) ;
 
@@ -101,6 +104,17 @@ void CArea::RoundFlow()
 
 	if(m_nAttention>0)
 		m_nAttention -= 1 ;
+}
+
+void CArea::AreaLinked()
+{
+	m_pBuilding[0]->setVisible(true) ;
+	m_pBuilding[1]->setVisible(true) ;
+#ifdef DEBUG
+	CCSprite *pActive = CCSprite::create("Image/Temp/temp_active1.png") ;
+	pActive->setPosition(m_pBlockade->getPosition()) ;
+	this->addChild(pActive) ;
+#endif
 }
 
 bool CArea::GetOwnResidential()

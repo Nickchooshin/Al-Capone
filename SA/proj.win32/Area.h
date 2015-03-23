@@ -15,6 +15,8 @@ private :
 	bool m_bInspection[8] ;
 	CCSprite *m_pBlockade ;
 	CBuilding *m_pBuilding[2] ;
+public :
+	static bool m_bInspectionView[8] ;
 
 public :
 	bool init() ;
@@ -26,6 +28,8 @@ public :
 
 	void TurnFlow() ;
 	void RoundFlow() ;
+
+	void AreaLinked() ;
 
 	bool GetOwnResidential() ;
 } ;

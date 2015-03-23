@@ -121,9 +121,9 @@ void CMemberUI::MemberScout(CCObject *pSender)
 void CMemberUI::NumUpDown(CCObject *pSender)
 {
 	CCMenuItem *pMenuItem = (CCMenuItem*)pSender ;
-	int i = pMenuItem->getTag() ;
+	int tag = pMenuItem->getTag() ;
 
-	switch(i)
+	switch(tag)
 	{
 	case 0 :
 		m_nMemberNum += 1 ;

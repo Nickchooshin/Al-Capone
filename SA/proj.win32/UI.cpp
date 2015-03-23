@@ -2,6 +2,7 @@
 #include "TurnUI.h"
 #include "MemberUI.h"
 #include "MoneyUI.h"
+#include "InspectionCheckUI.h"
 
 bool CUI::init()
 {
@@ -22,6 +23,10 @@ bool CUI::init()
 	CMoneyUI *pMoneyUI = CMoneyUI::create() ;
 	pMoneyUI->setPosition(ccp(0, 0)) ;
 	this->addChild(pMoneyUI) ;
+
+	CInspectionCheckUI *pInspectionCheckUI = CInspectionCheckUI::create() ;
+	pInspectionCheckUI->setPosition(ccp(0, 0)) ;
+	this->addChild(pInspectionCheckUI) ;
 
 	return true ;
 }

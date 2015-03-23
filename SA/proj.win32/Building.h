@@ -10,6 +10,8 @@ class CBuilding : public CCNode
 protected :
 	bool m_bOwnership ;
 	CCMenuItemImage *m_pIconItem ;
+public :
+	static bool m_bBuyBuilding, m_bBuyBusiness, m_bBuyResidential, m_bBuyRoute ;
 
 public :
 	virtual bool init() = 0 ;

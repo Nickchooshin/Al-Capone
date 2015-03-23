@@ -75,6 +75,12 @@
     <ClCompile Include="SmugglingRoute.cpp">
       <Filter>Classes\Object\Building</Filter>
     </ClCompile>
+    <ClCompile Include="InspectionCheckUI.cpp">
+      <Filter>Classes\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Classes\Object\Building</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -130,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="SmugglingRoute.h">
       <Filter>Classes\Object\Building</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectionCheckUI.h">
+      <Filter>Classes\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

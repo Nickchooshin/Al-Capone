@@ -76,16 +76,18 @@ void CBusinessBuilding::Click_Building(CCObject *pSender)
 void CBusinessBuilding::Click_Menu(CCObject *pSender)
 {
 	CCMenuItem *Item = (CCMenuItem *)pSender ;
-	int i = Item->getTag() ;
+	int tag = Item->getTag() ;
 	bool bRelease=false ;
 
-	switch(i)
+	switch(tag)
 	{
 	case OWN :
 		if(g_pData->m_User.m_nMoney >= g_pData->m_nPayBuilding)
 		{
 			bRelease = true ;
 			g_pData->m_User.m_nMoney -= g_pData->m_nPayBuilding ;
+			CBuilding::m_bBuyBuilding = true ;
+			CBuilding::m_bBuyBusiness = true ;
 
 			SetState(OWN) ;
 		}

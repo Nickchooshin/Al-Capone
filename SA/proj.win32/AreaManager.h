@@ -6,11 +6,13 @@
 using namespace cocos2d ;
 
 class CArea ;
+class CSmugglingRoute ;
 
 class CAreaManager : public CCNode
 {
 private :
 	CArea *m_Area[4][4] ;
+	CSmugglingRoute *m_SmugglingRoute[3][4][2] ;
 
 public :
 	bool init() ;
@@ -21,6 +23,8 @@ public :
 
 	void TurnFlow() ;
 	void RoundFlow() ;
+
+	void AreaLinked(int x, int y) ;
 
 	int GetOwnResidentialNumber() ;
 } ;

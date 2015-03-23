@@ -20,13 +20,13 @@ public :
 
 	CREATE_FUNC(CMemberUI) ;
 
+	void update(float dt) ;
+
+private :
 	void Click_Menu(CCObject *pSender) ;
 	void MemberScout(CCObject *pSender) ;
 	void NumUpDown(CCObject *pSender) ;
 
-	void update(float dt) ;
-
-private :
 	void SetMenuVisible(bool bVisible) ;
 	void SetString() ;
 } ;
