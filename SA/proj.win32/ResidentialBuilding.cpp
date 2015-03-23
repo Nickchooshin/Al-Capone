@@ -87,9 +87,19 @@ void CResidentialBuilding::SetPopupMenu(const char *normalImage, const char *sel
 								m_pIconItem->getPosition().y )) ;
 	pMenuItem->setTag(tag) ;
 
-	g_pPopupMenu->Release() ;
+	/*g_pPopupMenu->Release() ;
 	g_pPopupMenu->m_pMenu = CCMenu::create(pMenuItem, NULL) ;
 	g_pPopupMenu->m_pMenu->setPosition(ccp(0, 0)) ;
 
-	this->addChild(g_pPopupMenu->m_pMenu) ;
+	this->addChild(g_pPopupMenu->m_pMenu) ;*/
+
+	CCNode *Parent = this->getParent()->getParent() ;
+	CCPoint Point ;
+	Point = this->getPosition() + this->getParent()->getPosition() ;
+
+	g_pPopupMenu->Release() ;
+	g_pPopupMenu->m_pMenu = CCMenu::create(pMenuItem, NULL) ;
+	g_pPopupMenu->m_pMenu->setPosition(Point) ;
+
+	Parent->addChild(g_pPopupMenu->m_pMenu, 2) ;
 }

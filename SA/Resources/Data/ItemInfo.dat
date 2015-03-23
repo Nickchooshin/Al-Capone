@@ -1,17 +1,17 @@
 #술
 Acohol
 Buy = 1
-Sell = 2
-Attention = 3
+Sell = 3
+Attention = 2
 
 #술 원료
 Original_Drink
-Buy = 4
-Sell = 5
-Attention = 6
+Buy = 3
+Sell = 6
+Attention = 3
 
 #마약
 Narcotic
-Buy = 7
-Sell = 8
-Attention = 9
+Buy = 6
+Sell = 10
+Attention = 4

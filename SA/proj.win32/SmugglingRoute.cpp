@@ -88,11 +88,21 @@ void CSmugglingRoute::SetPopupMenu(const char *normalImage, const char *selected
 								m_pIconItem->getPosition().y )) ;
 	pMenuItem->setTag(tag) ;
 
+	/*g_pPopupMenu->Release() ;
+	g_pPopupMenu->m_pMenu = CCMenu::create(pMenuItem, NULL) ;
+	g_pPopupMenu->m_pMenu->setPosition(this->getPosition()) ;
+
+	this->getParent()->addChild(g_pPopupMenu->m_pMenu, 2) ;*/
+
+	CCNode *Parent = this->getParent() ;
+	CCPoint Point ;
+	Point = this->getPosition() ;
+
 	g_pPopupMenu->Release() ;
 	g_pPopupMenu->m_pMenu = CCMenu::create(pMenuItem, NULL) ;
-	g_pPopupMenu->m_pMenu->setPosition(ccp(0, 0)) ;
+	g_pPopupMenu->m_pMenu->setPosition(Point) ;
 
-	this->addChild(g_pPopupMenu->m_pMenu) ;
+	Parent->addChild(g_pPopupMenu->m_pMenu, 2) ;
 }
 
 void CSmugglingRoute::RouteLinked()

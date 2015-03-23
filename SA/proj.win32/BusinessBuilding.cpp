@@ -41,7 +41,7 @@ void CBusinessBuilding::RoundFlow()
 	}
 }
 
-bool CBusinessBuilding::Inspection()
+void CBusinessBuilding::Inspection()
 {
 	if(m_bAllocate && !m_bHide)
 	{
@@ -49,8 +49,6 @@ bool CBusinessBuilding::Inspection()
 
 		SetState(OWN) ;
 	}
-
-	return true ;
 }
 
 void CBusinessBuilding::Click_Building(CCObject *pSender)
@@ -127,11 +125,21 @@ void CBusinessBuilding::SetPopupMenu(const char *normalImage, const char *select
 								m_pIconItem->getPosition().y )) ;
 	pMenuItem->setTag(tag) ;
 
-	g_pPopupMenu->Release() ;
+	/*g_pPopupMenu->Release() ;
 	g_pPopupMenu->m_pMenu = CCMenu::create(pMenuItem, NULL) ;
 	g_pPopupMenu->m_pMenu->setPosition(ccp(0, 0)) ;
 
-	this->addChild(g_pPopupMenu->m_pMenu) ;
+	this->addChild(g_pPopupMenu->m_pMenu) ;*/
+
+	CCNode *Parent = this->getParent()->getParent() ;
+	CCPoint Point ;
+	Point = this->getPosition() + this->getParent()->getPosition() ;
+
+	g_pPopupMenu->Release() ;
+	g_pPopupMenu->m_pMenu = CCMenu::create(pMenuItem, NULL) ;
+	g_pPopupMenu->m_pMenu->setPosition(Point) ;
+
+	Parent->addChild(g_pPopupMenu->m_pMenu, 2) ;
 }
 
 void CBusinessBuilding::SetState(BUSINESS_STATE State)

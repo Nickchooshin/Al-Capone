@@ -21,7 +21,7 @@ public :
 	void TurnFlow() ;
 	void RoundFlow() ;
 
-	bool Inspection() ;
+	void Inspection() ;
 private :
 	void Click_Building(CCObject *pSender) ;
 	void Click_Menu(CCObject *pSender) ;

@@ -16,6 +16,9 @@ private :
 	int m_nMemberIndex ;
 	CCMenuItemImage *m_pItem[3] ;
 
+	CCLabelTTF *m_pPriceLabel ;
+	int m_nTotalPrice ;
+
 public :
 	bool init() ;
 
@@ -29,6 +32,7 @@ private :
 	bool AddItem(int type) ;
 
 	void UpdateItemList() ;
+	void UpdateItemPrice(int Price=0) ;
 
 	void Menu_Click(CCObject *pSender) ;
 } ;

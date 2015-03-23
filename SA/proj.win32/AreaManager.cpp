@@ -59,10 +59,9 @@ bool CAreaManager::init()
 	{
 		for(j=0; j<4; j++)
 		{
-			m_Area[i][j] = CArea::create() ;
+			m_Area[i][j] = CArea::create(Inspection[i+1][j+1]) ;
 			//m_Area[i][j]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 100 )) ;
 			m_Area[i][j]->setPosition(AreaCoord[i][j]) ;
-			m_Area[i][j]->SetBaseInspection(Inspection[i+1][j+1]) ;
 			m_Area[i][j]->setTag(i*4+j) ;
 			this->addChild(m_Area[i][j], 1) ;
 		}
@@ -94,7 +93,8 @@ bool CAreaManager::init()
 		}
 	}
 
-	AreaLinked(3, 3) ;//
+	//AreaLinked(1, 2) ;//
+	AreaLinked(3, 3) ;
 
 	scheduleUpdate() ;
 

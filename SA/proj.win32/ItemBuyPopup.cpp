@@ -151,6 +151,11 @@ bool CItemBuyPopup::init()
 	pCostSpace->setPosition(ccp(325, 183)) ;
 	this->addChild(pCostSpace, 1) ;
 
+	m_pPriceLabel = CCLabelTTF::create("0", "fonts/arial.ttf", 30, pCostSpace->getContentSize(), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter) ;
+	m_pPriceLabel->setColor(ccc3(0, 0, 0)) ;
+	m_pPriceLabel->setPosition(pCostSpace->getPosition()) ;
+	this->addChild(m_pPriceLabel, 2) ;
+
 	return true ;
 }
 
@@ -158,6 +163,8 @@ void CItemBuyPopup::SetMemberData(CMember *pMember, int Index)
 {
 	m_pMember = pMember ;
 	m_nMemberIndex = Index ;
+
+	m_nTotalPrice = 0 ;
 
 	m_ItemList.clear() ;
 
@@ -170,6 +177,7 @@ void CItemBuyPopup::SetMemberData(CMember *pMember, int Index)
 	}
 
 	UpdateItemList() ;
+	UpdateItemPrice() ;
 }
 
 void CItemBuyPopup::SetItemList()
@@ -229,6 +237,16 @@ void CItemBuyPopup::UpdateItemList()
 	}
 }
 
+void CItemBuyPopup::UpdateItemPrice(int Price)
+{
+	char str[100] ;
+
+	m_nTotalPrice += Price ;
+
+	sprintf(str, "%d", m_nTotalPrice) ;
+	m_pPriceLabel->setString(str) ;
+}
+
 void CItemBuyPopup::Menu_Click(CCObject *pSender)
 {
 	CCDirector *pDirector = CCDirector::sharedDirector() ;
@@ -241,6 +259,7 @@ void CItemBuyPopup::Menu_Click(CCObject *pSender)
 	case 0 :
 	case 1 :
 	case 2 :
+		UpdateItemPrice( - ( g_pData->m_Item.m_nBuy[m_ItemList[index]] ) ) ;
 		m_ItemList.erase(m_ItemList.begin() + index) ;
 		UpdateItemList() ;
 		break ;
@@ -248,18 +267,27 @@ void CItemBuyPopup::Menu_Click(CCObject *pSender)
 	case 3 :
 	case 4 :
 	case 5 :
-		AddItem(index) ;
-		UpdateItemList() ;
+		if(AddItem(index))
+		{
+			UpdateItemList() ;
+			UpdateItemPrice(g_pData->m_Item.m_nBuy[index]) ;
+		}
 		break ;
 
 	case 6 :
-		m_pMember->setBuy(true) ;
-		SetItemList() ;
-		g_pMemberControlPopup->UpdateItemList() ;
-		g_pMemberControlPopup->SetAllButtonEnabled(m_nMemberIndex, false) ;
+		if(g_pData->m_User.m_nMoney >= m_nTotalPrice)
+		{
+			g_pData->m_User.m_nMoney -= m_nTotalPrice ;
 
-		pDirector->popScene() ;
-		pDirector->pushScene(g_pMemberControlPopup) ;
+			m_pMember->setBuy(true) ;
+			SetItemList() ;
+			g_pMemberControlPopup->UpdateItemList() ;
+			g_pMemberControlPopup->SetAllButtonEnabled(m_nMemberIndex, false) ;
+
+			pDirector->popScene() ;
+			CCDelayTime::create(0.1f);
+			pDirector->pushScene(g_pMemberControlPopup) ;
+		}
 		break ;
 
 	case 7 :

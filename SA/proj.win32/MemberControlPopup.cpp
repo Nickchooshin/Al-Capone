@@ -6,6 +6,8 @@
 #include "AreaManager.h"
 #include "ItemBuyPopup.h"
 
+#include "Data.h"
+
 CMemberControlPopup::CMemberControlPopup()
 {
 }
@@ -22,7 +24,7 @@ bool CMemberControlPopup::init()
 	int i, j ;
 
 	m_pMemberIcon = NULL ;
-	m_bPassItem = false ;
+	m_nPassItemState = 0 ;
 
 	// 백그라운드
 	CCSprite *pBackground = CCSprite::create("Image/Member/C_Background.png") ;
@@ -63,12 +65,17 @@ bool CMemberControlPopup::init()
 
 			m_pItemList[i][j] = CCMenuItemImage::create("Image/UI/BuyMenu/Acohol_Icon.png", "Image/UI/BuyMenu/Acohol_Icon.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
 			m_pItemList[i][j]->setPosition(pItemSpace[i][j]->getPosition()) ;
-			m_pItemList[i][j]->setEnabled(false) ;
 			m_pItemList[i][j]->setVisible(false) ;
 			m_pItemList[i][j]->setTag(-(i*3+j+1)) ;
-			this->addChild(m_pItemList[i][j], 3) ;
 		}
 	}
+
+	CCMenu *pItemMenu = CCMenu::create( m_pItemList[0][0], m_pItemList[0][1], m_pItemList[0][2],
+										m_pItemList[1][0], m_pItemList[1][1], m_pItemList[1][2],
+										m_pItemList[2][0], m_pItemList[2][1], m_pItemList[2][2],
+										NULL ) ;
+	pItemMenu->setPosition(ccp(0, 0)) ;
+	this->addChild(pItemMenu, 3) ;
 
 	// 버튼
 	for(i=0; i<3; i++)
@@ -86,14 +93,14 @@ bool CMemberControlPopup::init()
 		m_pItemBuyButton[i]->setTag(2 + (i*3)) ;
 	}
 
-	CCMenuItemImage *pCloseButton = CCMenuItemImage::create("Image/Member/Close_Button_1.png", "Image/Member/Close_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
-	pCloseButton->setPosition(ccp(934, 182.5)) ;
-	pCloseButton->setTag(9) ;
+	m_pCloseButton = CCMenuItemImage::create("Image/Member/Close_Button_1.png", "Image/Member/Close_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
+	m_pCloseButton->setPosition(ccp(934, 182.5)) ;
+	m_pCloseButton->setTag(9) ;
 
 	CCMenu *pMenu = CCMenu::create(m_pMoveButton[0], m_pPassButton[0], m_pItemBuyButton[0],
 								   m_pMoveButton[1], m_pPassButton[1], m_pItemBuyButton[1],
 								   m_pMoveButton[2], m_pPassButton[2], m_pItemBuyButton[2],
-								   pCloseButton, NULL) ;
+								   m_pCloseButton, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
 	this->addChild(pMenu, 2) ;
 
@@ -135,14 +142,17 @@ void CMemberControlPopup::UpdateItemList()
 				case ACOHOL :
 					//m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Acohol_Icon.png")) ;
 					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
+					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png")) ;
 					break ;
 
 				case ORIGINAL_DRINK :
 					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
+					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
 					break ;
 
 				case NARCOTIC :
 					m_pItemList[i][j]->setNormalImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
+					m_pItemList[i][j]->setSelectedImage(CCSprite::create("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
 					break ;
 				}
 			}
@@ -261,7 +271,7 @@ void CMemberControlPopup::SetMemberEnabled()
 
 		if(!m_pMemberIcon->m_Member[i].isBuy())
 		{
-			if((!MoveRoute && m_pMoveButton[i]->isEnabled()) ||	// 이동할 수 있는 루트가 없거나
+			if(!MoveRoute ||	// 이동할 수 있는 루트가 없거나		(!MoveRoute && m_pMoveButton[i]->isEnabled())
 				m_pMemberIcon->m_Member[i].isMove())				// 이미 이동을 한상태라면
 				SetButtonEnabled(i, false, "Move") ;
 			else
@@ -296,7 +306,7 @@ void CMemberControlPopup::MemberEnabled(int nIndex, bool bEnabled)
 void CMemberControlPopup::PassItemSender(int Index)
 {
 	int i ;
-	int n = m_pMemberIcon->m_Member.size() ;
+	const int n = m_pMemberIcon->m_Member.size() ;
 
 	m_nSenderIndex = Index ;
 
@@ -304,7 +314,14 @@ void CMemberControlPopup::PassItemSender(int Index)
 	{
 		if(i!=m_nSenderIndex)
 		{
-			m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Receipt_Button_1.png")) ;
+			bool bEnabled = m_pMemberIcon->m_Member[i].m_ItemList[2]==ITEM_TYPE::NOTHING ;
+
+			if(bEnabled)
+				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Receipt_Button_1.png")) ;
+			else
+				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Receipt_Button_2.png")) ;
+			
+			m_pPassButton[i]->setEnabled(bEnabled) ;
 			m_pPassButton[i]->setSelectedImage(CCSprite::create("image/Member/Receipt_Button_2.png")) ;
 		}
 		else
@@ -312,12 +329,22 @@ void CMemberControlPopup::PassItemSender(int Index)
 			SetButtonEnabled(i, false, "Pass") ;
 		}
 	}
-	m_bPassItem = true ;
+
+	for(i=0; i<3; i++)
+	{
+		SetButtonEnabled(i, false, "Move") ;
+		SetButtonEnabled(i, false, "Buy") ;
+	}
+	m_pCloseButton->setNormalImage(CCSprite::create("Image/Member/Close_Button_2.png")) ;
+	m_pCloseButton->setEnabled(false) ;
+	
+	m_nPassItemState = 1 ;
 }
 
 void CMemberControlPopup::PassItemReceiver(int Index)
 {
 	int i ;
+	const int n = m_pMemberIcon->m_Member.size() ;
 
 	m_nReceiverIndex = Index ;
 
@@ -325,14 +352,96 @@ void CMemberControlPopup::PassItemReceiver(int Index)
 	m_pPassButton[m_nReceiverIndex]->setSelectedImage(CCSprite::create("Image/Member/Finish_Button_2.png")) ;
 
 	for(i=0; i<3; i++)
-		m_pItemList[m_nSenderIndex][i]->setEnabled(true) ;
+	{
+		if(i<n && i!=m_nSenderIndex && i!=m_nReceiverIndex)
+		{
+			m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Receipt_Button_2.png")) ;
+			m_pPassButton[i]->setEnabled(false) ;
+		}
+	}
+
+	m_nPassItemState = 2 ;
 }
 
 void CMemberControlPopup::PassItem(int Index)
 {
-	char str[1024] ;
+	/*char str[1024] ;
 	sprintf(str, "%d", Index) ;
-	CCMessageBox(str, "d") ;
+	CCMessageBox(str, "d") ;*/
+	int i, j ;
+
+	ITEM_TYPE *ItemListS = m_pMemberIcon->m_Member[m_nSenderIndex].m_ItemList ;
+	ITEM_TYPE *ItemListR = m_pMemberIcon->m_Member[m_nReceiverIndex].m_ItemList ;
+	for(i=0; i<3; i++)
+	{
+		if(ItemListR[i]==ITEM_TYPE::NOTHING)
+		{
+			ItemListR[i] = ItemListS[Index] ;
+
+			for(j=Index; j<2; j++)
+				ItemListS[j] = ItemListS[j+1] ;
+			ItemListS[j] = ITEM_TYPE::NOTHING ;
+
+			UpdateItemList() ;
+			break ;
+		}
+	}
+}
+
+void CMemberControlPopup::PassItemEnd()
+{
+	int i ;
+	const int n = m_pMemberIcon->m_Member.size() ;
+
+	for(i=0; i<3; i++)
+	{
+		if(i==m_nSenderIndex || i==m_nReceiverIndex)
+		{
+			m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_1.png")) ;
+			m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+			m_pPassButton[i]->setEnabled(true) ;
+		}
+		else if(i<n)
+		{
+			bool bBuy = m_pMemberIcon->m_Member[i].isBuy() ;
+
+			if(!bBuy)
+			{
+				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_1.png")) ;
+				m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+			}
+			else
+			{
+				m_pPassButton[i]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+				m_pPassButton[i]->setSelectedImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+			}
+
+			m_pPassButton[i]->setEnabled(!bBuy) ;
+		}
+	}
+
+	SetMemberEnabled() ;
+	m_pCloseButton->setNormalImage(CCSprite::create("Image/Member/Close_Button_1.png")) ;
+	m_pCloseButton->setEnabled(true) ;
+
+	m_nPassItemState = 0 ;
+}
+
+void CMemberControlPopup::SellItem(int mIndex, int iIndex)
+{
+	int i ;
+	ITEM_TYPE *ItemList = m_pMemberIcon->m_Member[mIndex].m_ItemList ;
+	
+	int Price = g_pData->m_Item.m_nSell[ ItemList[iIndex] ] ;
+	g_pData->m_User.m_nMoney += Price ;
+
+	int Attention = g_pData->m_Item.m_nAttention[ ItemList[iIndex] ] ;
+	CArea *pArea = (CArea*)m_pMemberIcon->getParent() ;
+	pArea->AddAttention(Attention) ;
+
+	for(i=iIndex; i<2; i++)
+		ItemList[i] = ItemList[i+1] ;
+	ItemList[i] = ITEM_TYPE::NOTHING ;
 }
 
 void CMemberControlPopup::Menu_Click(CCObject *pSender)
@@ -359,10 +468,20 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 	case 1 :
 	case 4 :
 	case 7 :
-		if(!m_bPassItem)
+		switch(m_nPassItemState)
+		{
+		case 0 :
 			PassItemSender(index) ;
-		else
+			break ;
+
+		case 1 :
 			PassItemReceiver(index) ;
+			break ;
+
+		case 2 :
+			PassItemEnd() ;
+			break ;
+		}
 		break ;
 
 	case 2 :
@@ -383,7 +502,19 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 	case -7 :
 	case -8 :
 	case -9 :
-		PassItem(-((tag+1)%3)) ;
+		if(m_nPassItemState==0)
+		{
+			pArea = (CArea*)m_pMemberIcon->getParent() ;
+			if(pArea->GetOwnBusiness())
+			{
+				SellItem((-((tag+1)/3)), -((tag+1)%3)) ;
+				UpdateItemList() ;
+			}
+		}
+		else if(m_nPassItemState==2 && (-((tag+1)/3))==m_nSenderIndex)
+		{
+			PassItem(-((tag+1)%3)) ;
+		}
 		break ;
 
 	case 9 :

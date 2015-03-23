@@ -17,8 +17,9 @@ private :
 	CCMenuItemImage *m_pMoveButton[3] ;
 	CCMenuItemImage *m_pPassButton[3] ;
 	CCMenuItemImage *m_pItemBuyButton[3] ;
+	CCMenuItemImage *m_pCloseButton ;
 
-	bool m_bPassItem ;
+	int m_nPassItemState ;
 	int m_nSenderIndex, m_nReceiverIndex ;
 
 public :
@@ -42,6 +43,9 @@ private :
 	void PassItemSender(int Index) ;
 	void PassItemReceiver(int Index) ;
 	void PassItem(int index) ;
+	void PassItemEnd() ;
+
+	void SellItem(int mIndex, int iIndex) ;
 
 	void Menu_Click(CCObject *pSender) ;
 } ;

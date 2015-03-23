@@ -3,6 +3,8 @@
 #include "MemberManager.h"
 #include "AreaManager.h"
 
+#include "Data.h"
+
 bool CMemberIcon::init()
 {
 	m_bMove = false ;
@@ -34,6 +36,13 @@ void CMemberIcon::TurnFlow()
 	{
 		m_Member[i].TurnFlow() ;
 	}
+}
+
+void CMemberIcon::Inspection()
+{
+	g_pData->m_User.m_nHaveMember -= m_Member.size() ;
+
+	m_Member.clear() ;
 }
 
 void CMemberIcon::Icon_Click(CCObject *pSender)

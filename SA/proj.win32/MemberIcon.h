@@ -30,6 +30,8 @@ public :
 	void setEnabled(bool bEnabled) ;
 
 	void TurnFlow() ;
+
+	void Inspection() ;
 private :
 	void Icon_Click(CCObject *pSender) ;
 

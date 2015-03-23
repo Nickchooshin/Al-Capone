@@ -15,22 +15,41 @@ private :
 	int m_nAttention ;
 	int m_nBaseInspection ;
 	bool m_bInspection[8] ;
-	CCSprite *m_pBlockade ;
+	bool m_bBlockade ;
+	CCSprite *m_pBlockade[2] ;
 	CCNode *m_pTurnMark ;
+	CCSprite *m_pAttentionSprite ;
+	CCLabelTTF *m_pAttentionLabel ;
 	CBuilding *m_pBuilding[2] ;
 public :
 	static bool m_bInspectionView[8] ;
 	CMemberIcon *m_pMemberIcon ;
 
 public :
-	bool init() ;
+	bool init(int Inspection) ;
 
-	CREATE_FUNC(CArea) ;
+	static CArea* create(int Inspection)
+	{
+		CArea *pRet = new CArea() ;
+		if (pRet && pRet->init(Inspection))
+		{
+			pRet->autorelease() ;
+		}
+		else
+		{
+			delete pRet ;
+			pRet = NULL ;
+			return NULL ;
+		}
+	}
 
 	void SetSmuggling(bool bSmuggling) ;
-	void SetBaseInspection(int turn) ;
-	void SetInspection(int turn) ;
+	//void SetBaseInspection(int turn) ;
+	//void SetInspection(int turn) ;
 	void setEnabled(bool bEnabled) ;
+	void SetAreaBlockade(bool bEnabled) ;
+
+	void AddAttention(int nAttention) ;
 
 	void TurnFlow() ;
 	void RoundFlow() ;
@@ -38,6 +57,7 @@ public :
 	void AreaLinked() ;
 
 	bool GetOwnResidential() ;
+	bool GetOwnBusiness() ;
 	bool isSmuggling() ;
 	bool isInspection() ;
 private :
