@@ -14,6 +14,17 @@ bool CMemberIcon::init()
 
 void CMemberIcon::Icon_Click(CCObject *pSender)
 {
-	//g_pMemberManager->ShowMenu(true) ;
-	g_pMemberManager->ShowMenu() ;
+	g_pMemberManager->ShowMenu(m_Member) ;
+}
+
+bool CMemberIcon::AddMember(CMember &Member)
+{
+	const int num = m_Member.size() ;
+
+	if(num==3)
+		return false ;
+
+	m_Member.push_back(Member) ;
+
+	return true ;
 }

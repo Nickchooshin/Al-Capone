@@ -26,7 +26,7 @@ bool CInspectionCheckUI::init()
 void CInspectionCheckUI::Click_Menu(CCObject *pSender)
 {
 	CCMenuItem *Item = (CCMenuItem *)pSender ;
-	int tag = Item->getTag() ;
+	const int tag = Item->getTag() ;
 
 	switch(tag)
 	{

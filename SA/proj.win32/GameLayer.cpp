@@ -5,6 +5,7 @@
 #include "PopupMenu.h"
 #include "Data.h"
 #include "MemberManager.h"
+#include "MemberControlPopup.h"
 
 #include "AreaManager.h"
 
@@ -45,6 +46,8 @@ bool GameLayer::init()
 
 	g_pMemberManager->init() ;
 	this->addChild(g_pMemberManager, 2) ;
+
+	g_pMemberControlPopup->init() ;
 
 	CUI *UI = CUI::create() ;
 	this->addChild(UI, 3) ;

@@ -44,7 +44,7 @@ void CResidentialBuilding::Click_Building(CCObject *pSender)
 void CResidentialBuilding::Click_Menu(CCObject *pSender)
 {
 	CCMenuItem *Item = (CCMenuItem *)pSender ;
-	int tag = Item->getTag() ;
+	const int tag = Item->getTag() ;
 	bool bRelease=false ;
 
 	switch(tag)
@@ -66,10 +66,11 @@ void CResidentialBuilding::Click_Menu(CCObject *pSender)
 	case 1 :
 		if(g_pData->m_User.m_nStandbyMember > 0)
 		{
-			bRelease = true ;
-			g_pData->m_User.m_nStandbyMember -= 1 ;
-
-			g_pMemberManager->AddMember(this) ;
+			if(g_pMemberManager->AddMember(this))
+			{
+				bRelease = true ;
+				g_pData->m_User.m_nStandbyMember -= 1 ;
+			}
 		}
 		break ;
 	}

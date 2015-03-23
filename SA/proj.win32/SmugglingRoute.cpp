@@ -7,7 +7,7 @@ bool CSmugglingRoute::init()
 {
 	m_bOwnership = false ;
 
-	m_pIconItem = CCMenuItemImage::create("Image/Temp/temp_icon_d.png", "Image/Temp/temp_icon_dL.png", this, menu_selector(CSmugglingRoute::Click_Building)) ;
+	m_pIconItem = CCMenuItemImage::create("Image/Building/Circulation_1.png", "Image/Building/Circulation_2.png", this, menu_selector(CSmugglingRoute::Click_Building)) ;
 	CCMenu *pMenu = CCMenu::create(m_pIconItem, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
 	m_pIconItem->setVisible(false) ;
@@ -56,8 +56,8 @@ void CSmugglingRoute::Click_Menu(CCObject *pSender)
 		CBuilding::m_bBuyRoute = true ;
 		m_bOwnership = true ;
 
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Temp/temp_icon_dL.png")) ;
-		m_pIconItem->setSelectedImage(CCSprite::create("Image/Temp/temp_icon_d.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Circulation_2.png")) ;
+		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Circulation_1.png")) ;
 	}
 }
 

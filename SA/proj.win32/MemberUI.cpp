@@ -123,7 +123,8 @@ void CMemberUI::MemberScout(CCObject *pSender)
 void CMemberUI::NumUpDown(CCObject *pSender)
 {
 	CCMenuItem *pMenuItem = (CCMenuItem*)pSender ;
-	int tag = pMenuItem->getTag() ;
+	const int tag = pMenuItem->getTag() ;
+	const int MemberMax = (g_pData->m_User.m_nOwnResidential * g_pData->m_nMaxCapacity) - g_pData->m_User.m_nHaveMember ;
 
 	switch(tag)
 	{
@@ -136,10 +137,10 @@ void CMemberUI::NumUpDown(CCObject *pSender)
 		break ;
 	}
 
-	if(m_nMemberNum<0)
+	if(m_nMemberNum < 0)
 		m_nMemberNum = 0 ;
-	if(m_nMemberNum>g_pData->m_User.m_nOwnResidential * g_pData->m_nMaxCapacity)
-		m_nMemberNum = g_pData->m_User.m_nOwnResidential * g_pData->m_nMaxCapacity ;
+	if(m_nMemberNum > MemberMax)
+		m_nMemberNum = MemberMax ;
 
 	SetString() ;
 }

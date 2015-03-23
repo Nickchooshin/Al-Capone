@@ -5,6 +5,7 @@
 
 using namespace cocos2d ;
 
+class CMember ;
 class CMemberIcon ;
 class CMemberControlUI ;
 class CBuilding ;
@@ -20,8 +21,8 @@ public :
 
 	bool init() ;
 
-	void AddMember(CBuilding *Building) ;
-	void ShowMenu() ;
+	bool AddMember(CBuilding *Building) ;
+	void ShowMenu(std::vector<CMember> &Member) ;
 private :
 	CMemberManager() ;
 } ;

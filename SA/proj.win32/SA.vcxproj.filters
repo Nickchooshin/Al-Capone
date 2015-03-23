@@ -93,7 +93,7 @@
     <ClCompile Include="MemberIcon.cpp">
       <Filter>Classes\Object\Member</Filter>
     </ClCompile>
-    <ClCompile Include="MemberControlUI.cpp">
+    <ClCompile Include="MemberControlPopup.cpp">
       <Filter>Classes\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -164,7 +164,7 @@
     <ClInclude Include="MemberIcon.h">
       <Filter>Classes\Object\Member</Filter>
     </ClInclude>
-    <ClInclude Include="MemberControlUI.h">
+    <ClInclude Include="MemberControlPopup.h">
       <Filter>Classes\UI</Filter>
     </ClInclude>
   </ItemGroup>

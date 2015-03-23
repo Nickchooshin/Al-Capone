@@ -65,7 +65,7 @@ void CBusinessBuilding::Click_Building(CCObject *pSender)
 	}
 	else if(m_bAllocate && !m_bHide)
 	{
-		SetPopupMenu("Image/Temp/temp_menu_hide.png", "Image/Temp/temp_menu_hide.png", HIDE) ;
+		SetPopupMenu("Image/Building/B_hide_Button_1.png", "Image/Building/B_hide_Button_2.png", HIDE) ;
 	}
 	else if(m_bAllocate && m_bHide)
 	{
@@ -76,7 +76,7 @@ void CBusinessBuilding::Click_Building(CCObject *pSender)
 void CBusinessBuilding::Click_Menu(CCObject *pSender)
 {
 	CCMenuItem *Item = (CCMenuItem *)pSender ;
-	int tag = Item->getTag() ;
+	const int tag = Item->getTag() ;
 	bool bRelease=false ;
 
 	switch(tag)

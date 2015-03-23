@@ -1,7 +1,8 @@
 #include "MemberManager.h"
 
+#include "Member.h"
 #include "MemberIcon.h"
-#include "MemberControlUI.h"
+#include "MemberControlPopup.h"
 #include "Building.h"
 #include "Area.h"
 
@@ -39,17 +40,23 @@ bool CMemberManager::init()
 	return true ;
 }
 
-void CMemberManager::AddMember(CBuilding *Building)
+bool CMemberManager::AddMember(CBuilding *Building)
 {
 	CArea *pArea = (CArea*)Building->getParent() ;
 	const int tag = pArea->getTag() ;
 
+	CMember Temp ;
+	if(m_pMemberIcon[tag/4][tag%4]->AddMember(Temp) == false)
+		return false ;
+
 	m_pMemberIcon[tag/4][tag%4]->setVisible(true) ;
+
+	return true ;
 }
 
-void CMemberManager::ShowMenu()
+void CMemberManager::ShowMenu(std::vector<CMember> &Member)
 {
-	//m_pControlUI->setVisible(bVisible) ;
 	CCDirector *pDirector = CCDirector::sharedDirector() ;
-	pDirector->pushScene(CMemberControlUI::create()) ;
+	g_pMemberControlPopup->SetMemberData(Member) ;
+	pDirector->pushScene(g_pMemberControlPopup) ;
 }
