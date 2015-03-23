@@ -50,7 +50,7 @@ void CMemberIcon::Inspection()
 	{
 		m_Member.clear() ;
 
-		//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Man_del.mp3") ;
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Man_del.wav") ;
 	}
 }
 

@@ -511,7 +511,7 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 			{
 				SellItem((-((tag+1)/3)), -((tag+1)%3)) ;
 				UpdateItemList() ;
-				//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Item_sell.wav") ;
+				CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Item_sell.wav") ;
 			}
 		}
 		else if(m_nPassItemState==2 && (-((tag+1)/3))==m_nSenderIndex)

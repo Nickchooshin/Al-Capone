@@ -223,7 +223,7 @@ void CArea::AddAttention(int nAttention)
 		m_bBlockade = true ;
 		SetAreaBlockade(true) ;
 
-		//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Block.mp3") ;
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Block.wav") ;
 	}
 }
 

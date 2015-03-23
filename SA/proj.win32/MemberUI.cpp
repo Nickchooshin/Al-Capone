@@ -120,7 +120,7 @@ void CMemberUI::MemberScout(CCObject *pSender)
 
 		Click_Menu(NULL) ;
 
-		//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_2.mp3") ;
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_2.wav") ;
 	}
 }
 

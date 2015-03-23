@@ -32,15 +32,15 @@ bool GameLayer::init()
 	removeAllChildrenWithCleanup(true) ;
 
 	//
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_1.mp3") ;
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_2.mp3") ;
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_3.mp3") ;
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Man_allo.mp3") ;
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Man_del.mp3") ;
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Item_sell.wav") ;
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Turn.mp3") ;
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Round.mp3") ;
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Block.mp3") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_1.wav") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_2.wav") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Buy_3.wav") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Man_allo.wav") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Man_del.wav") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Item_sell.wav") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Turn.wav") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Round.wav") ;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("Sound/Block.wav") ;
 	//
 
 	CCDirector *pDirector = CCDirector::sharedDirector() ;

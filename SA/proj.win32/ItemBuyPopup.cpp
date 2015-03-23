@@ -336,7 +336,7 @@ void CItemBuyPopup::Menu_Click(CCObject *pSender)
 			g_pMemberControlPopup->UpdateItemList() ;
 			g_pMemberControlPopup->SetAllButtonEnabled(m_nMemberIndex, false) ;
 
-			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_3.mp3") ;
+			CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_3.wav") ;
 
 			pDirector->popScene() ;
 			CCDelayTime::create(0.1f);

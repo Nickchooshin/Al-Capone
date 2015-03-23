@@ -71,7 +71,7 @@ void CSmugglingRoute::Click_Menu(CCObject *pSender)
 			m_pIconItem->setNormalImage(CCSprite::create("Image/Game/Building/Circulation_2_1.png")) ;
 			m_pIconItem->setSelectedImage(CCSprite::create("Image/Game/Building/Circulation_2_2.png")) ;
 
-			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_1.mp3") ;
+			CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_1.wav") ;
 		}
 		break ;
 

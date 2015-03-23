@@ -61,11 +61,11 @@ void CTurnUI::TurnFlow(CCObject *pSender)
 
 		if(g_pData->m_User.m_Turn.GetTurn()!=0)
 		{
-			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Turn.mp3") ;
+			CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Turn.wav") ;
 		}
 		else
 		{
-			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Round.mp3") ;
+			CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Round.wav") ;
 		}
 	}
 }

@@ -91,7 +91,7 @@ void CBusinessBuilding::Click_Menu(CCObject *pSender)
 
 			SetState(OWN) ;
 
-			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_1.mp3", false) ;
+			CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Buy_1.wav", false) ;
 		}
 		break ;
 
@@ -103,7 +103,7 @@ void CBusinessBuilding::Click_Menu(CCObject *pSender)
 
 			SetState(ALLOCATE) ;
 
-			//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Man_allo.mp3") ;
+			CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sound/Man_allo.wav") ;
 		}
 		break ;
 
