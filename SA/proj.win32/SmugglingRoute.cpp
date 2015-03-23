@@ -3,6 +3,8 @@
 #include "PopupMenu.h"
 #include "Data.h"
 
+#include "MemberManager.h"
+
 bool CSmugglingRoute::init()
 {
 	m_bOwnership = false ;
@@ -70,6 +72,10 @@ void CSmugglingRoute::Click_Menu(CCObject *pSender)
 		break ;
 
 	case 1 :
+		if(g_pMemberManager->MovingData(m_nWay))
+		{
+			g_pPopupMenu->Release() ;
+		}
 		break ;
 	}
 }
@@ -94,8 +100,21 @@ void CSmugglingRoute::RouteLinked()
 	m_pIconItem->setVisible(true) ;
 }
 
-void CSmugglingRoute::RouteHighlight()
+void CSmugglingRoute::RouteHighlight(bool bEnabled)
 {
-	m_bHighlight = true ;
-	m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Circulation_3.png")) ;
+	if(bEnabled && !m_bHighlight)
+	{
+		m_bHighlight = true ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Circulation_3.png")) ;
+	}
+	else if(!bEnabled && m_bHighlight)
+	{
+		m_bHighlight = false ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Circulation_2.png")) ;
+	}
+}
+
+void CSmugglingRoute::SetRouteWay(int Way)
+{
+	m_nWay = Way ;
 }

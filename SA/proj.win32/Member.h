@@ -12,6 +12,10 @@ private :
 public :
 	CMember() ;
 	~CMember() ;
+
+	void setMove(bool bMove) ;
+
+	bool isMove() ;
 } ;
 
 #endif

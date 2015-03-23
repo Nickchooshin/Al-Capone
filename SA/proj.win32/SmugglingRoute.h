@@ -7,6 +7,7 @@ class CSmugglingRoute : public CBuilding
 {
 private :
 	bool m_bHighlight ;
+	int m_nWay ;
 
 public :
 	bool init() ;
@@ -19,7 +20,8 @@ public :
 	void setEnabled(bool bEnabled) ;
 
 	void RouteLinked() ;
-	void RouteHighlight() ;
+	void RouteHighlight(bool bEnabled) ;
+	void SetRouteWay(int Way) ;
 private :
 	void Click_Building(CCObject *pSender) ;
 	void Click_Menu(CCObject *pSender) ;

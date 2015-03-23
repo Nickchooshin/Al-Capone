@@ -13,6 +13,8 @@ class CAreaManager : public CCNode
 private :
 	CArea *m_Area[4][4] ;
 	CSmugglingRoute *m_SmugglingRoute[3][4][2] ;
+public :
+	static enum ROUTE_WAY { WAY_UP=0, WAY_DOWN, WAY_RIGHT, WAY_LEFT } ;
 
 public :
 	static CAreaManager* GetInstance() ;
@@ -27,16 +29,22 @@ public :
 	void RoundFlow() ;
 
 	bool MoveRouteCheck(CArea *Area) ;
-	void MoveMember(CArea *Area) ;
+	void MoveMemberPrepare(CArea *Area) ;
+	void MoveMemberFinish() ;
 
 	void AreaLinked(int x, int y) ;
-	void AreaHighlight(int x, int y) ;
+	void AreaHighlightOn(int x, int y) ;
+	void AreaHighlightOff() ;
 
 	int GetOwnResidentialNumber() ;
 private :
 	CAreaManager() ;
 
-	void RouteHighlight(CSmugglingRoute *Route, CArea *Area) ;
+	void MoveEnabled(bool bEnabled) ;
+
+	void RouteHighlight(CSmugglingRoute *Route, CArea *Area, ROUTE_WAY Way) ;
+
+	friend class CMemberManager ;
 } ;
 
 #define g_pAreaManager CAreaManager::GetInstance()

@@ -2,6 +2,7 @@
 
 #include "MemberManager.h"
 #include "MemberIcon.h"
+#include "Area.h"
 #include "AreaManager.h"
 
 CMemberControlPopup::CMemberControlPopup()
@@ -20,7 +21,6 @@ bool CMemberControlPopup::init()
 	int i, j ;
 
 	m_pMemberIcon = NULL ;
-	m_nTargetIndex = -1 ;
 
 	// 백그라운드
 	CCMenuItemImage *pBackgroundItem = CCMenuItemImage::create("Image/Member/Background.png", "Image/Member/Background.png") ;
@@ -128,6 +128,11 @@ void CMemberControlPopup::SetMemberEnabled()
 
 void CMemberControlPopup::MemberEnabled(int nIndex, bool bEnabled)
 {
+	/*if(!bEnabled || m_pMemberIcon->m_Member[nIndex].isMove())
+	{
+		m_pMoveButton[nIndex]->setNormalImage(CCSprite::create("Image/Member/Move_Button_2.png")) ;
+	}*/
+
 	if(bEnabled)
 	{
 		m_pMoveButton[nIndex]->setNormalImage(CCSprite::create("Image/Member/Move_Button_1.png")) ;
@@ -152,17 +157,19 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 	CCDirector *pDirector = CCDirector::sharedDirector() ;
 	CCMenuItem *Item = (CCMenuItem *)pSender ;
 	const int tag = Item->getTag() ;
-	CArea *Area ;
-
-	m_nTargetIndex = tag/3 ;
+	const int index = tag/3 ;
+	CArea *pArea ;
 
 	switch(tag)
 	{
 	case 0 :
 	case 3 :
 	case 6 :
-		Area = (CArea*)m_pMemberIcon->getParent() ;
-		g_pAreaManager->MoveMember(Area) ;
+		m_pMemberIcon->setMove(true) ;
+
+		pArea = (CArea*)m_pMemberIcon->getParent() ;
+		g_pAreaManager->MoveMemberPrepare(pArea) ;
+		g_pMemberManager->MemorizeMovingData(pArea->getTag(), m_pMemberIcon, index) ;
 		pDirector->popScene() ;
 		break ;
 

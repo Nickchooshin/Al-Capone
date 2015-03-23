@@ -11,6 +11,9 @@ class CBuilding ;
 class CMemberManager : public CCNode
 {
 private :
+	int m_nTag ;
+	CMemberIcon *m_pMemberIcon ;
+	int m_nIndex ;
 
 public :
 	static CMemberManager* GetInstance() ;
@@ -19,6 +22,8 @@ public :
 
 	bool AddMember(CBuilding *Building) ;
 	void ShowMenu(CMemberIcon *pMemberIcon) ;
+	void MemorizeMovingData(int nTag, CMemberIcon *pMemberIcon, int nIndex) ;
+	bool MovingData(int Way) ;
 private :
 	CMemberManager() ;
 } ;

@@ -7,6 +7,7 @@
 
 using namespace cocos2d ;
 
+class CMemberManager ;
 class CMemberControlPopup ;
 
 class CMemberIcon : public CCNode
@@ -14,6 +15,7 @@ class CMemberIcon : public CCNode
 private :
 	CCMenuItemImage *m_pMemberItem ;
 	std::vector<CMember> m_Member ;
+	bool m_bMove ;
 
 public :
 	bool init() ;
@@ -22,12 +24,14 @@ public :
 
 	void update(float dt) ;
 
-	void setEnabled(bool bEnabled) ;
-
 	bool AddMember(CMember &Member) ;
+
+	void setMove(bool bMove) ;
+	void setEnabled(bool bEnabled) ;
 private :
 	void Icon_Click(CCObject *pSender) ;
 
+	friend CMemberManager ;
 	friend CMemberControlPopup ;
 } ;
 

@@ -202,34 +202,22 @@ bool CAreaManager::MoveRouteCheck(CArea *Area)
 	return bActivationRoute ;
 }
 
-void CAreaManager::MoveMember(CArea *Area)
+void CAreaManager::MoveMemberPrepare(CArea *Area)
 {
-	int i, j, k ;
 	const int tag = Area->getTag() ;
 	const int x = tag%4 ;
 	const int y = tag/4 ;
 
-	for(i=0; i<4; i++)
-	{
-		for(j=0; j<4; j++)
-		{
-			m_Area[i][j]->setEnabled(false) ;
-		}
-	}
+	MoveEnabled(true) ;
 
-	for(i=0; i<3; i++)
-	{
-		for(j=0; j<4; j++)
-		{
-			for(k=0; k<2; k++)
-			{
-				if(m_SmugglingRoute[i][j][k]->isVisible())
-					m_SmugglingRoute[i][j][k]->setEnabled(false) ;
-			}
-		}
-	}
+	AreaHighlightOn(x, y) ;
+}
 
-	AreaHighlight(x, y) ;
+void CAreaManager::MoveMemberFinish()
+{
+	MoveEnabled(false) ;
+
+	AreaHighlightOff() ;
 }
 
 void CAreaManager::AreaLinked(int x, int y)
@@ -247,25 +235,82 @@ void CAreaManager::AreaLinked(int x, int y)
 		m_SmugglingRoute[y][x][1]->RouteLinked() ;
 }
 
-void CAreaManager::AreaHighlight(int x, int y)
+void CAreaManager::AreaHighlightOn(int x, int y)
 {
 	if(x>0)
-		RouteHighlight(m_SmugglingRoute[x-1][y][0], m_Area[y][x-1]) ;
+		RouteHighlight(m_SmugglingRoute[x-1][y][0], m_Area[y][x-1], WAY_LEFT) ;
 	if(x<3)
-		RouteHighlight(m_SmugglingRoute[x][y][0], m_Area[y][x+1]) ;
+		RouteHighlight(m_SmugglingRoute[x][y][0], m_Area[y][x+1], WAY_RIGHT) ;
 
 	if(y>0)
-		RouteHighlight(m_SmugglingRoute[y-1][x][1], m_Area[y-1][x]) ;
+		RouteHighlight(m_SmugglingRoute[y-1][x][1], m_Area[y-1][x], WAY_UP) ;
 	if(y<3)
-		RouteHighlight(m_SmugglingRoute[y][x][1], m_Area[y+1][x]) ;
+		RouteHighlight(m_SmugglingRoute[y][x][1], m_Area[y+1][x], WAY_DOWN) ;
 }
 
-void CAreaManager::RouteHighlight(CSmugglingRoute *Route, CArea *Area)
+void CAreaManager::AreaHighlightOff()
+{
+	int i, j, k ;
+	CSmugglingRoute *Route ;
+
+	for(i=0; i<3; i++)
+	{
+		for(j=0; j<4; j++)
+		{
+			for(k=0; k<2; k++)
+			{
+				Route = m_SmugglingRoute[i][j][k] ;
+
+				if(Route->isVisible())
+				{
+					Route->setEnabled(true) ;
+					Route->RouteHighlight(false) ;
+				}
+			}
+		}
+	}
+}
+
+void CAreaManager::MoveEnabled(bool bEnabled)
+{
+	int i, j, k ;
+	bool Enabled = !bEnabled ;
+	CArea *Area ;
+	CSmugglingRoute *Route ;
+
+	for(i=0; i<4; i++)
+	{
+		for(j=0; j<4; j++)
+		{
+			Area = m_Area[i][j] ;
+
+			if(!Area->isInspection())
+				Area->setEnabled(Enabled) ;
+		}
+	}
+
+	for(i=0; i<3; i++)
+	{
+		for(j=0; j<4; j++)
+		{
+			for(k=0; k<2; k++)
+			{
+				Route = m_SmugglingRoute[i][j][k] ;
+
+				if(Route->isVisible())
+					Route->setEnabled(Enabled) ;
+			}
+		}
+	}
+}
+
+void CAreaManager::RouteHighlight(CSmugglingRoute *Route, CArea *Area, ROUTE_WAY Way)
 {
 	if( Route->getOwnership() && !Area->isInspection() )
 	{
 		Route->setEnabled(true) ;
-		Route->RouteHighlight() ;
+		Route->SetRouteWay(Way) ;
+		Route->RouteHighlight(true) ;
 	}
 }
 

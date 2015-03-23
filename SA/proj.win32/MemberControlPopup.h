@@ -15,7 +15,6 @@ private :
 	CCMenuItemImage *m_pMoveButton[3] ;
 	CCMenuItemImage *m_pPassButton[3] ;
 	CCMenuItemImage *m_pItemBuyButton[3] ;
-	int m_nTargetIndex ;
 
 public :
 	bool init() ;
