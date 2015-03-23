@@ -5,26 +5,31 @@
 
 using namespace cocos2d ;
 
-class CMember ;
+class CMemberIcon ;
 
 class CMemberControlPopup : public CCScene
 {
 private :
+	CMemberIcon *m_pMemberIcon ;
 	CCSprite *m_pMafia[3] ;
 	CCMenuItemImage *m_pMoveButton[3] ;
 	CCMenuItemImage *m_pPassButton[3] ;
 	CCMenuItemImage *m_pItemBuyButton[3] ;
+	int m_nTargetIndex ;
 
 public :
 	bool init() ;
 
 	static CMemberControlPopup* GetInstance() ;
 
-	static CCScene* scene() ;
+	//static CCScene* scene() ;
 
-	void SetMemberData(std::vector<CMember> &Member) ;
+	void SetMemberData(CMemberIcon *pMemberIcon) ;
 private :
 	CMemberControlPopup() ;
+
+	void SetMemberEnabled() ;
+	void MemberEnabled(int nIndex, bool bEnabled) ;
 
 	void Menu_Click(CCObject *pSender) ;
 } ;

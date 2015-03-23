@@ -10,7 +10,7 @@ bool CBusinessBuilding::init()
 	m_bAllocate = false ;
 	m_bHide = false ;
 
-	m_pIconItem = CCMenuItemImage::create("Image/Building/business_1.png", "Image/Building/business_2.png", this, menu_selector(CBusinessBuilding::Click_Building)) ;
+	m_pIconItem = CCMenuItemImage::create("Image/Building/Business_1.png", "Image/Building/Business_2.png", this, menu_selector(CBusinessBuilding::Click_Building)) ;
 
 	CCMenu *pMenu = CCMenu::create(m_pIconItem, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
@@ -142,23 +142,23 @@ void CBusinessBuilding::SetState(BUSINESS_STATE State)
 		m_bOwnership = true ;
 		m_bAllocate = false ;
 		m_bHide = false ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/business_2.png")) ;
-		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/business_1.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Business_2.png")) ;
+		m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Business_1.png")) ;
 		break ;
 
 	case ALLOCATE :
 		m_bAllocate = true ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/business_3.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Business_3.png")) ;
 		break ;
 
 	case HIDE :
 		m_bHide = true ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/business_4.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Business_4.png")) ;
 		break ;
 
 	case UNHIDE :
 		m_bHide = false ;
-		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/business_3.png")) ;
+		m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Business_3.png")) ;
 		break ;
 	}
 }

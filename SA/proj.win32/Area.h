@@ -6,6 +6,7 @@
 using namespace cocos2d ;
 
 class CBuilding ;
+class CMemberIcon ;
 
 class CArea : public CCNode
 {
@@ -18,6 +19,7 @@ private :
 	CBuilding *m_pBuilding[2] ;
 public :
 	static bool m_bInspectionView[8] ;
+	CMemberIcon *m_pMemberIcon ;
 
 public :
 	bool init() ;
@@ -26,6 +28,7 @@ public :
 
 	void SetBaseInspection(int turn) ;
 	void SetInspection(int turn) ;
+	void setEnabled(bool bEnabled) ;
 
 	void TurnFlow() ;
 	void RoundFlow() ;
@@ -33,6 +36,7 @@ public :
 	void AreaLinked() ;
 
 	bool GetOwnResidential() ;
+	bool isInspection() ;
 private :
 	void update(float dt) ;
 } ;

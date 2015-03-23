@@ -8,7 +8,7 @@ bool CResidentialBuilding::init()
 {
 	m_bOwnership = false ;
 
-	m_pIconItem = CCMenuItemImage::create("Image/Building/hom_1.png", "Image/Building/hom_2.png", this, menu_selector(CResidentialBuilding::Click_Building)) ;
+	m_pIconItem = CCMenuItemImage::create("Image/Building/Home_1.png", "Image/Building/Home_2.png", this, menu_selector(CResidentialBuilding::Click_Building)) ;
 	CCMenu *pMenu = CCMenu::create(m_pIconItem, NULL) ;
 	pMenu->setPosition(ccp(0, 0)) ;
 	this->addChild(pMenu) ;
@@ -58,8 +58,8 @@ void CResidentialBuilding::Click_Menu(CCObject *pSender)
 			CBuilding::m_bBuyResidential = true ;
 			m_bOwnership = true ;
 
-			m_pIconItem->setNormalImage(CCSprite::create("Image/Building/hom_2.png")) ;
-			m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/hom_1.png")) ;
+			m_pIconItem->setNormalImage(CCSprite::create("Image/Building/Home_2.png")) ;
+			m_pIconItem->setSelectedImage(CCSprite::create("Image/Building/Home_1.png")) ;
 		}
 		break ;
 		 

@@ -3,6 +3,7 @@
 #include "SmugglingRoute.h"
 
 #include "Data.h"
+#include "MemberControlPopup.h"
 
 CAreaManager::CAreaManager()
 {
@@ -76,6 +77,8 @@ bool CAreaManager::init()
 
 void CAreaManager::update(float dt)
 {
+	int i, j ;
+
 	if(CBuilding::m_bBuyBuilding)
 	{
 		if(CBuilding::m_bBuyResidential)
@@ -84,9 +87,9 @@ void CAreaManager::update(float dt)
 		}
 		if(CBuilding::m_bBuyRoute)
 		{
-			for(int i=0; i<3; i++)
+			for(i=0; i<3; i++)
 			{
-				for(int j=0; j<4; j++)
+				for(j=0; j<4; j++)
 				{
 					if(m_SmugglingRoute[i][j][0]->getOwnership())
 					{
@@ -154,6 +157,81 @@ void CAreaManager::RoundFlow()
 	}
 }
 
+bool CAreaManager::MoveRouteCheck(CArea *Area)
+{
+	//
+	bool bActivationRoute=false ;
+	const int tag = Area->getTag() ;
+	const int x = tag%4 ;
+	const int y = tag/4 ;
+
+	if(!bActivationRoute && x>0)
+	{
+		if(m_SmugglingRoute[x-1][y][0]->getOwnership())
+		{
+			if(!m_Area[y][x-1]->isInspection())
+				bActivationRoute = true ;
+		}
+	}
+	if(!bActivationRoute && x<3)
+	{
+		if(m_SmugglingRoute[x][y][0]->getOwnership())
+		{
+			if(!m_Area[y][x+1]->isInspection())
+				bActivationRoute = true ;
+		}
+	}
+
+	if(!bActivationRoute && y>0)
+	{
+		if(m_SmugglingRoute[y-1][x][1]->getOwnership())
+		{
+			if(!m_Area[y-1][x]->isInspection())
+				bActivationRoute = true ;
+		}
+	}
+	if(!bActivationRoute && y<3)
+	{
+		if(m_SmugglingRoute[y][x][1]->getOwnership())
+		{
+			if(!m_Area[y+1][x]->isInspection())
+				bActivationRoute = true ;
+		}
+	}
+
+	return bActivationRoute ;
+}
+
+void CAreaManager::MoveMember(CArea *Area)
+{
+	int i, j, k ;
+	const int tag = Area->getTag() ;
+	const int x = tag%4 ;
+	const int y = tag/4 ;
+
+	for(i=0; i<4; i++)
+	{
+		for(j=0; j<4; j++)
+		{
+			m_Area[i][j]->setEnabled(false) ;
+		}
+	}
+
+	for(i=0; i<3; i++)
+	{
+		for(j=0; j<4; j++)
+		{
+			for(k=0; k<2; k++)
+			{
+				if(m_SmugglingRoute[i][j][k]->isVisible())
+					m_SmugglingRoute[i][j][k]->setEnabled(false) ;
+			}
+		}
+	}
+
+	AreaHighlight(x, y) ;
+}
+
 void CAreaManager::AreaLinked(int x, int y)
 {
 	m_Area[y][x]->AreaLinked() ;
@@ -167,6 +245,28 @@ void CAreaManager::AreaLinked(int x, int y)
 		m_SmugglingRoute[y-1][x][1]->RouteLinked() ;
 	if(y<3)
 		m_SmugglingRoute[y][x][1]->RouteLinked() ;
+}
+
+void CAreaManager::AreaHighlight(int x, int y)
+{
+	if(x>0)
+		RouteHighlight(m_SmugglingRoute[x-1][y][0], m_Area[y][x-1]) ;
+	if(x<3)
+		RouteHighlight(m_SmugglingRoute[x][y][0], m_Area[y][x+1]) ;
+
+	if(y>0)
+		RouteHighlight(m_SmugglingRoute[y-1][x][1], m_Area[y-1][x]) ;
+	if(y<3)
+		RouteHighlight(m_SmugglingRoute[y][x][1], m_Area[y+1][x]) ;
+}
+
+void CAreaManager::RouteHighlight(CSmugglingRoute *Route, CArea *Area)
+{
+	if( Route->getOwnership() && !Area->isInspection() )
+	{
+		Route->setEnabled(true) ;
+		Route->RouteHighlight() ;
+	}
 }
 
 int CAreaManager::GetOwnResidentialNumber()

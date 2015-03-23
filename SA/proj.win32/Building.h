@@ -19,7 +19,7 @@ public :
 	virtual void TurnFlow() = 0 ;
 	virtual void RoundFlow() = 0 ;
 
-	void setEnabled(bool Enabled) { m_pIconItem->setEnabled(Enabled) ; }
+	void setEnabled(bool bEnabled) { m_pIconItem->setEnabled(bEnabled) ; }
 
 	CCSize getIconSize() { return m_pIconItem->getContentSize() ; }
 	bool getOwnership() { return m_bOwnership ; }

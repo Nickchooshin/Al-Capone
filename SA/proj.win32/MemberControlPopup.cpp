@@ -1,7 +1,8 @@
 #include "MemberControlPopup.h"
 
 #include "MemberManager.h"
-#include "Member.h"
+#include "MemberIcon.h"
+#include "AreaManager.h"
 
 CMemberControlPopup::CMemberControlPopup()
 {
@@ -18,6 +19,10 @@ bool CMemberControlPopup::init()
 {
 	int i, j ;
 
+	m_pMemberIcon = NULL ;
+	m_nTargetIndex = -1 ;
+
+	// 백그라운드
 	CCMenuItemImage *pBackgroundItem = CCMenuItemImage::create("Image/Member/Background.png", "Image/Member/Background.png") ;
 	pBackgroundItem->setPosition(ccp(640, 400)) ;
 	CCMenu *pBackground = CCMenu::create(pBackgroundItem, NULL) ;
@@ -32,6 +37,7 @@ bool CMemberControlPopup::init()
 		this->addChild(pListSpace[i], 1) ;
 	}
 
+	// 마피아 초상화
 	CCSprite *pMafia[3] ;
 	for(i=0; i<3; i++)
 	{
@@ -45,6 +51,7 @@ bool CMemberControlPopup::init()
 		this->addChild(m_pMafia[i], 2) ;
 	}
 
+	// 아이템 공백
 	CCSprite *pItemSpace[3][3] ;
 	for(i=0; i<3; i++)
 	{
@@ -56,6 +63,7 @@ bool CMemberControlPopup::init()
 		}
 	}
 
+	// 버튼
 	for(i=0; i<3; i++)
 	{
 		m_pMoveButton[i] = CCMenuItemImage::create("Image/Member/Move_Button_1.png", "Image/Member/Move_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
@@ -65,10 +73,15 @@ bool CMemberControlPopup::init()
 		m_pMoveButton[i]->setPosition(ccp(760, 590 - (i * 145))) ;
 		m_pPassButton[i]->setPosition(ccp(m_pMoveButton[i]->getPosition().x + 100, m_pMoveButton[i]->getPosition().y)) ;
 		m_pItemBuyButton[i]->setPosition(ccp(m_pPassButton[i]->getPosition().x + 100, m_pPassButton[i]->getPosition().y)) ;
+
+		m_pMoveButton[i]->setTag(0 + (i*3)) ;
+		m_pPassButton[i]->setTag(1 + (i*3)) ;
+		m_pItemBuyButton[i]->setTag(2 + (i*3)) ;
 	}
 
 	CCMenuItemImage *pCloseButton = CCMenuItemImage::create("Image/Member/Close_Button_1.png", "Image/Member/Close_Button_2.png", this, menu_selector(CMemberControlPopup::Menu_Click)) ;
 	pCloseButton->setPosition(ccp(934, 182.5)) ;
+	pCloseButton->setTag(9) ;
 
 	CCMenu *pMenu = CCMenu::create(m_pMoveButton[0], m_pPassButton[0], m_pItemBuyButton[0],
 								   m_pMoveButton[1], m_pPassButton[1], m_pItemBuyButton[1],
@@ -80,30 +93,91 @@ bool CMemberControlPopup::init()
 	return true ;
 }
 
-void CMemberControlPopup::SetMemberData(std::vector<CMember> &Member)
+void CMemberControlPopup::SetMemberData(CMemberIcon *pMemberIcon)
+{
+	m_pMemberIcon = pMemberIcon ;
+	SetMemberEnabled() ;
+}
+
+void CMemberControlPopup::SetMemberEnabled()
 {
 	int i ;
-	int num = Member.size() ;
+	const int num = m_pMemberIcon->m_Member.size() ;
 
-	for(i=0; i<3; i++)
-	{
-		m_pMafia[i]->setVisible(false) ;
-		m_pMoveButton[i]->setEnabled(false) ;
-		m_pPassButton[i]->setEnabled(false) ;
-		m_pItemBuyButton[i]->setEnabled(false) ;
-	}
+	for(i=num; i<3; i++)
+		MemberEnabled(i, false) ;
 
 	for(i=0; i<num; i++)
+		MemberEnabled(i, true) ;
+
+	////
+	CArea *Area = (CArea*)m_pMemberIcon->getParent() ;
+	if(!g_pAreaManager->MoveRouteCheck(Area))
 	{
-		m_pMafia[i]->setVisible(true) ;
-		m_pMoveButton[i]->setEnabled(true) ;
-		m_pPassButton[i]->setEnabled(true) ;
-		m_pItemBuyButton[i]->setEnabled(true) ;
+		for(i=0; i<num; i++)
+		{
+			if(m_pMoveButton[i]->isEnabled())
+			{
+				m_pMoveButton[i]->setNormalImage(CCSprite::create("Image/Member/Move_Button_2.png")) ;
+				m_pMoveButton[i]->setEnabled(false) ;
+			}
+		}
 	}
+	////
+}
+
+void CMemberControlPopup::MemberEnabled(int nIndex, bool bEnabled)
+{
+	if(bEnabled)
+	{
+		m_pMoveButton[nIndex]->setNormalImage(CCSprite::create("Image/Member/Move_Button_1.png")) ;
+		m_pPassButton[nIndex]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_1.png")) ;
+		m_pItemBuyButton[nIndex]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_1.png")) ;
+	}
+	else
+	{
+		m_pMoveButton[nIndex]->setNormalImage(CCSprite::create("Image/Member/Move_Button_2.png")) ;
+		m_pPassButton[nIndex]->setNormalImage(CCSprite::create("Image/Member/Pass_Button_2.png")) ;
+		m_pItemBuyButton[nIndex]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_2.png")) ;
+	}
+
+	m_pMafia[nIndex]->setVisible(bEnabled) ;
+	m_pMoveButton[nIndex]->setEnabled(bEnabled) ;
+	m_pPassButton[nIndex]->setEnabled(bEnabled) ;
+	m_pItemBuyButton[nIndex]->setEnabled(bEnabled) ;
 }
 
 void CMemberControlPopup::Menu_Click(CCObject *pSender)
 {
 	CCDirector *pDirector = CCDirector::sharedDirector() ;
-	pDirector->popScene() ;
+	CCMenuItem *Item = (CCMenuItem *)pSender ;
+	const int tag = Item->getTag() ;
+	CArea *Area ;
+
+	m_nTargetIndex = tag/3 ;
+
+	switch(tag)
+	{
+	case 0 :
+	case 3 :
+	case 6 :
+		Area = (CArea*)m_pMemberIcon->getParent() ;
+		g_pAreaManager->MoveMember(Area) ;
+		pDirector->popScene() ;
+		break ;
+
+	case 1 :
+	case 4 :
+	case 7 :
+		break ;
+
+	case 2 :
+	case 5 :
+	case 8 :
+		break ;
+
+	case 9 :
+		pDirector->popScene() ;
+		break ;
+	}
 }

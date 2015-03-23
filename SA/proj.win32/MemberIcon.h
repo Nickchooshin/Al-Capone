@@ -7,22 +7,28 @@
 
 using namespace cocos2d ;
 
-class CMemberControlUI ;
+class CMemberControlPopup ;
 
 class CMemberIcon : public CCNode
 {
 private :
+	CCMenuItemImage *m_pMemberItem ;
 	std::vector<CMember> m_Member ;
-	static CMemberControlUI *m_pControlUI ;
 
 public :
 	bool init() ;
 
 	CREATE_FUNC(CMemberIcon) ;
 
+	void update(float dt) ;
+
+	void setEnabled(bool bEnabled) ;
+
 	bool AddMember(CMember &Member) ;
 private :
 	void Icon_Click(CCObject *pSender) ;
+
+	friend CMemberControlPopup ;
 } ;
 
 #endif

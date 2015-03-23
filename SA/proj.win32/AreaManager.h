@@ -26,11 +26,17 @@ public :
 	void TurnFlow() ;
 	void RoundFlow() ;
 
+	bool MoveRouteCheck(CArea *Area) ;
+	void MoveMember(CArea *Area) ;
+
 	void AreaLinked(int x, int y) ;
+	void AreaHighlight(int x, int y) ;
 
 	int GetOwnResidentialNumber() ;
 private :
 	CAreaManager() ;
+
+	void RouteHighlight(CSmugglingRoute *Route, CArea *Area) ;
 } ;
 
 #define g_pAreaManager CAreaManager::GetInstance()

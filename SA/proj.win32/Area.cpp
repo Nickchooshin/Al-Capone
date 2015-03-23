@@ -1,5 +1,6 @@
 #include "Area.h"
 #include "Building.h"
+#include "MemberIcon.h"
 
 #include "BusinessBuilding.h"
 #include "ResidentialBuilding.h"
@@ -47,7 +48,7 @@ bool CArea::init()
 	// ºÀ¼â ÀÌ¹ÌÁö
 	m_pBlockade = CCSprite::create("Image/Temp/temp_blockade.png") ;
 	m_pBlockade->setVisible(false) ;
-	this->addChild(m_pBlockade, 2) ;
+	this->addChild(m_pBlockade, 3) ;
 
 	// ÅÏ ¾ÆÀÌÄÜ
 	CCSprite *pTurnMark[7] ;/////***/////
@@ -85,6 +86,10 @@ bool CArea::init()
 	m_pBuilding[1]->setVisible(false) ;
 	this->addChild(m_pBuilding[0], 1) ;
 	this->addChild(m_pBuilding[1], 1) ;
+
+	// ¸â¹ö ¾ÆÀÌÄÜ
+	m_pMemberIcon = CMemberIcon::create() ;
+	this->addChild(m_pMemberIcon, 2) ;
 
 	scheduleUpdate() ;
 
@@ -145,6 +150,13 @@ void CArea::SetInspection(int turn)
 	m_bInspection[turn] = true ;
 }
 
+void CArea::setEnabled(bool bEnabled)
+{
+	for(int i=0; i<2; i++)
+		m_pBuilding[i]->setEnabled(bEnabled) ;
+	m_pMemberIcon->setEnabled(bEnabled) ;
+}
+
 void CArea::TurnFlow()
 {
 	int i ;
@@ -190,4 +202,9 @@ void CArea::AreaLinked()
 bool CArea::GetOwnResidential()
 {
 	return m_pBuilding[1]->getOwnership() ;
+}
+
+bool CArea::isInspection()
+{
+	return m_pBlockade->isVisible() ;
 }
