@@ -10,9 +10,11 @@ bool CArea::m_bInspectionView[8] ;
 
 bool CArea::init()
 {
+	int i ;
+
 	m_nAttention = 0 ;
 	m_nBaseInspection = 0 ;
-	for(int i=1; i<=7; i++)
+	for(i=1; i<=7; i++)
 		m_bInspection[i] = false ;
 
 	CCSprite *pSprite ;/*****아마 수정? 해야할듯*****/
@@ -42,10 +44,37 @@ bool CArea::init()
 	}
 	this->addChild(pSprite, 0) ;/*****아마 수정? 해야할듯*****/
 
+	// 봉쇄 이미지
 	m_pBlockade = CCSprite::create("Image/Temp/temp_blockade.png") ;
 	m_pBlockade->setVisible(false) ;
 	this->addChild(m_pBlockade, 2) ;
 
+	// 턴 아이콘
+	CCSprite *pTurnMark[7] ;/////***/////
+	m_pTurnMark = CCNode::create() ;
+	for(i=0; i<7; i++)
+	{
+		if(i>0)
+			pTurnMark[i] = CCSprite::create("Image/Temp/temp_turn_mark2.png") ;
+		else
+			pTurnMark[i] = CCSprite::create("Image/Temp/temp_turn_mark1.png") ;
+
+		pTurnMark[i]->setTag(i+1) ;
+		m_pTurnMark->addChild(pTurnMark[i]) ;
+	}
+
+	pTurnMark[3]->setPosition(ccp( pSprite->getPosition().x, pSprite->getPosition().y - 30 )) ;
+	for(i=1; i<=3; i++)
+	{
+		pTurnMark[3-i]->setPosition(ccp( pTurnMark[3-(i-1)]->getPosition().x - (pTurnMark[3-(i-1)]->getContentSize().width - 1),
+										 pTurnMark[3-(i-1)]->getPosition().y )) ;
+		pTurnMark[3+i]->setPosition(ccp( pTurnMark[3+(i-1)]->getPosition().x + (pTurnMark[3+(i-1)]->getContentSize().width - 1),
+										 pTurnMark[3+(i-1)]->getPosition().y )) ;
+	}
+	m_pTurnMark->setVisible(false) ;
+	this->addChild(m_pTurnMark, 2) ;/////***/////
+
+	// 빌딩
 	m_pBuilding[0] = CBusinessBuilding::create() ;
 	m_pBuilding[1] = CResidentialBuilding::create() ;
 	m_pBuilding[0]->setPosition(ccp( pSprite->getPosition().x + pSprite->getContentSize().width/2 - m_pBuilding[0]->getIconSize().width/2,
@@ -57,7 +86,43 @@ bool CArea::init()
 	this->addChild(m_pBuilding[0], 1) ;
 	this->addChild(m_pBuilding[1], 1) ;
 
+	scheduleUpdate() ;
+
 	return true ;
+}
+
+void CArea::update(float dt)
+{
+	int i ;/////***/////
+	bool bView=false ;
+
+	if(m_bInspectionView[m_nBaseInspection])
+		bView = true ;
+	for(i=1; !bView && i<8; i++)
+	{
+		if(m_bInspection[i] && m_bInspectionView[i])
+			bView = true ;
+	}
+
+	if(bView)
+	{
+		m_pTurnMark->setVisible(true) ;
+
+		CCSprite *pTurnMark = (CCSprite*)m_pTurnMark->getChildByTag(m_nBaseInspection) ;
+		pTurnMark->setColor(ccc3(255, 0, 0)) ;
+		for(i=1; i<8; i++)
+		{
+			if(m_bInspection[i])
+			{
+				CCSprite *pTurnMark = (CCSprite*)m_pTurnMark->getChildByTag(i) ;
+				pTurnMark->setColor(ccc3(255, 0, 0)) ;
+			}
+		}
+	}
+	else
+	{
+		m_pTurnMark->setVisible(false) ;
+	}/////***/////
 }
 
 void CArea::SetBaseInspection(int turn)

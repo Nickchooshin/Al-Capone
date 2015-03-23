@@ -8,7 +8,7 @@ using namespace cocos2d ;
 class CMemberUI : public CCNode
 {
 private :
-	CCSprite *m_pSprite ;
+	CCNode *m_pSprite ;
 	CCMenu *m_pMenu ;
 	CCLabelTTF *m_pNumberLabel, *m_pPriceLabel ;
 	CCLabelTTF *m_pMaxMemberLabel, *m_pUnallocatedMemberLabel ;

@@ -36,7 +36,7 @@ void CInspectionCheckUI::Click_Menu(CCObject *pSender)
 		break ;
 
 	default :
-		CArea::m_bInspectionView[tag] = true ;
+		CArea::m_bInspectionView[tag] = !CArea::m_bInspectionView[tag] ;
 		break ;
 	}
 }

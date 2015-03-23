@@ -55,7 +55,7 @@ bool CMemberUI::init()
 	CCSprite *pNumberSpace = CCSprite::create("Image/UI/ManMenu/Number_Space.png") ;
 	pNumberSpace->setPosition(ccp(840, 242.5)) ;
 
-	m_pSprite = CCSprite::create() ;
+	m_pSprite = CCNode::create() ;
 	m_pSprite->addChild(pBackground) ;
 	m_pSprite->addChild(pManSpace) ;
 	m_pSprite->addChild(pMan) ;

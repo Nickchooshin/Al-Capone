@@ -14,6 +14,7 @@ private :
 	int m_nBaseInspection ;
 	bool m_bInspection[8] ;
 	CCSprite *m_pBlockade ;
+	CCNode *m_pTurnMark ;
 	CBuilding *m_pBuilding[2] ;
 public :
 	static bool m_bInspectionView[8] ;
@@ -32,6 +33,8 @@ public :
 	void AreaLinked() ;
 
 	bool GetOwnResidential() ;
+private :
+	void update(float dt) ;
 } ;
 
 #endif
