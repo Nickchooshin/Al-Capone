@@ -3,7 +3,7 @@
 
 bool CTurnUI::init()
 {
-	CCMenuItemImage *pTurnMenu = CCMenuItemImage::create("Image/UI/Play.png", "Image/UI/Play.png", this, menu_selector(CTurnUI::TurnFlow)) ;
+	CCMenuItemImage *pTurnMenu = CCMenuItemImage::create("Image/UI/Play_1.png", "Image/UI/Play_2.png", this, menu_selector(CTurnUI::TurnFlow)) ;
 	pTurnMenu->setAnchorPoint(ccp(0, 0.5)) ;
 	pTurnMenu->setPosition(ccp( 0, 0 )) ;
 	CCMenu *pMenu = CCMenu::create(pTurnMenu, NULL) ;

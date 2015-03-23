@@ -22,6 +22,11 @@ bool CAreaManager::init()
 	int Inspection[6][6] ;
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
+	// 배경 화면 초기화
+	CCSprite *pBackground = CCSprite::create("Image/Area/All_Background.png") ;
+	pBackground->setAnchorPoint(ccp(0, 0)) ;
+	this->addChild(pBackground) ;
+
 	// 정기 검문 초기화
 	for(i=1; i<=4; i++)
 	{
@@ -40,18 +45,33 @@ bool CAreaManager::init()
 		}
 	}
 
+	// 지역 좌표 불러오기
+	CCPoint AreaCoord[4][4] ;
+	if(!LoadAreaCoord(AreaCoord))
+		return false ;
+
 	// 지역 초기화
 	for(i=0; i<4; i++)
 	{
 		for(j=0; j<4; j++)
 		{
 			m_Area[i][j] = CArea::create() ;
-			m_Area[i][j]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 100 )) ;
+			//m_Area[i][j]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 100 )) ;
+			m_Area[i][j]->setPosition(AreaCoord[i][j]) ;
 			m_Area[i][j]->SetBaseInspection(Inspection[i+1][j+1]) ;
 			m_Area[i][j]->setTag(i*4+j) ;
 			this->addChild(m_Area[i][j]) ;
 		}
 	}
+
+	// 밀수 가능 지역 초기화
+	m_Area[0][0]->SetSmuggling(true) ;
+	m_Area[3][3]->SetSmuggling(true) ;
+
+	// 경로 좌표 불러오기
+	CCPoint RouteCoord[3][4][2] ;
+	if(!LoadRouteCoord(RouteCoord))
+		return false ;
 
 	// 경로 초기화
 	for(i=0; i<3; i++)
@@ -59,11 +79,13 @@ bool CAreaManager::init()
 		for(j=0; j<4; j++)
 		{
 			m_SmugglingRoute[i][j][0] = CSmugglingRoute::create() ;
-			m_SmugglingRoute[i][j][0]->setPosition(ccp( i * 200 + 250, visibleSize.height - (j * 150) - 100 )) ;
+			//m_SmugglingRoute[i][j][0]->setPosition(ccp( i * 200 + 250, visibleSize.height - (j * 150) - 100 )) ;
+			m_SmugglingRoute[i][j][0]->setPosition(RouteCoord[i][j][0]) ;
 			this->addChild(m_SmugglingRoute[i][j][0]) ;
 
 			m_SmugglingRoute[i][j][1] = CSmugglingRoute::create() ;
-			m_SmugglingRoute[i][j][1]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 175 )) ;
+			//m_SmugglingRoute[i][j][1]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 175 )) ;
+			m_SmugglingRoute[i][j][1]->setPosition(RouteCoord[i][j][1]) ;
 			this->addChild(m_SmugglingRoute[i][j][1]) ;
 		}
 	}
@@ -271,6 +293,23 @@ void CAreaManager::AreaHighlightOff()
 	}
 }
 
+int CAreaManager::GetOwnResidentialNumber()
+{
+	int i, j ;
+	int num=0 ;
+
+	for(i=0; i<4; i++)
+	{
+		for(j=0; j<4; j++)
+		{
+			if(m_Area[i][j]->GetOwnResidential())
+				num += 1 ;
+		}
+	}
+
+	return num ;
+}
+
 void CAreaManager::MoveEnabled(bool bEnabled)
 {
 	int i, j, k ;
@@ -314,19 +353,181 @@ void CAreaManager::RouteHighlight(CSmugglingRoute *Route, CArea *Area, ROUTE_WAY
 	}
 }
 
-int CAreaManager::GetOwnResidentialNumber()
+bool CAreaManager::LoadAreaCoord(CCPoint AreaCoord[][4])
 {
 	int i, j ;
-	int num=0 ;
+	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize() ;
 
-	for(i=0; i<4; i++)
+	//std::string FilePath = CCFileUtils::sharedFileUtils()->getWritablePath() ;
+	//FilePath.append("Data\\AreaCoord.dat") ;
+	std::string FilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename("Data/AreaCoord.dat") ;
+
+	FILE *File = fopen(FilePath.c_str(), "r") ;
+	if(File==NULL)	// 파일을 성공적으로 불러오지 못하면, 종료한다
 	{
-		for(j=0; j<4; j++)
+		//
+		std::string Message = "Can not find " ;
+		Message.append(FilePath) ;
+
+		CCMessageBox(Message.c_str(), "Error");
+		CCDirector::sharedDirector()->end() ;
+		#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		exit(0) ;
+		#endif
+
+		return false ;
+	}
+
+	std::string data="" ;
+	char key=NULL ;
+	bool next=false ;
+	bool comment=false ;
+
+	i = j = 0 ;
+	while( key!=EOF && (i<4 && j<4) )
+	{
+		key = fgetc(File) ;
+
+		if(comment)
 		{
-			if(m_Area[i][j]->GetOwnResidential())
-				num += 1 ;
+			if(key==10)
+				comment = false ;
+		}
+		else if(key=='#')
+		{
+			comment = true ;
+		}
+		else if(key>='0' && key<='9')
+		{
+			char temp[2] = {key, NULL} ;
+			data.append(temp) ;
+		}
+		else if(key==',' || (next && data.size()!=0))
+		{
+			if(!next)
+			{
+				AreaCoord[i][j].x = atoi(data.c_str()) ;
+			}
+			else
+			{
+				AreaCoord[i][j].y = visibleSize.height - atoi(data.c_str()) ;
+
+				j += 1 ;
+				i += j/4 ;
+				j = j%4 ;
+			}
+
+			data.clear() ;
+			next = !next ;
 		}
 	}
 
-	return num ;
+	return true ;
+}
+
+bool CAreaManager::LoadRouteCoord(CCPoint RouteCoord[][4][2])
+{
+	int i, j, k=-1 ;
+	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize() ;
+
+	std::string FilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename("Data/RouteCoord.dat") ;
+
+	FILE *File = fopen(FilePath.c_str(), "r") ;
+	if(File==NULL)	// 파일을 성공적으로 불러오지 못하면, 종료한다
+	{
+		//
+		std::string Message = "Can not find " ;
+		Message.append(FilePath) ;
+
+		CCMessageBox(Message.c_str(), "Error");
+		CCDirector::sharedDirector()->end() ;
+		#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		exit(0) ;
+		#endif
+
+		return false ;
+	}
+
+	std::string data="" ;
+	char key=NULL ;
+	bool next=false ;
+	bool comment=false ;
+	bool h=false, v=false ;
+
+	//Horizontally
+	//Vertically
+
+	i = j = 0 ;
+	while( key!=EOF && !(h && v) )
+	{
+		key = fgetc(File) ;
+
+		if(comment)
+		{
+			if(key==10)
+				comment = false ;
+		}
+		else if(key=='#')
+		{
+			comment = true ;
+		}
+		else if( k==-1 &&
+				 ((key>='a' && key<='z') || (key>='A' && key<='Z')) )
+		{
+			char temp[2] = {key, NULL} ;
+			data.append(temp) ;
+
+			if(data.length()==12 &&
+			   (data.compare("Horizontally")==0 || data.compare("horizontally")==0 || data.compare("HORIZONTALLY")==0))
+			{
+				i = j = 0 ;
+				k = 0 ;
+				data.clear() ;
+			}
+			else if(data.length()==10 &&
+					(data.compare("Vertically")==0 || data.compare("vertically")==0 || data.compare("VERTICALLY")==0))
+			{
+				i = j = 0 ;
+				k = 1 ;
+				data.clear() ;
+			}
+		}
+		else if(k!=-1 &&
+				(key>='0' && key<='9'))
+		{
+			char temp[2] = {key, NULL} ;
+			data.append(temp) ;
+		}
+		else if(k!=-1 &&
+				(key==',' || (next && data.size()!=0)))
+		{
+			if(!next)
+			{
+				RouteCoord[i][j][k].x = atoi(data.c_str()) ;
+			}
+			else
+			{
+				RouteCoord[i][j][k].y = visibleSize.height - atoi(data.c_str()) ;
+
+				j += 1 ;
+				i += j/4 ;
+				j = j%4 ;
+
+				if(i>=3)
+				{
+					if(k==0)
+						h = true ;
+					else
+						v = true ;
+
+					k = -1 ;
+				}
+			}
+
+			data.clear() ;
+			next = !next ;
+		}
+	}
+	
+	return true ;
 }

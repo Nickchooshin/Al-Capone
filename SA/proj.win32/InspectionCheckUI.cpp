@@ -6,12 +6,14 @@ bool CInspectionCheckUI::init()
 {
 	CCMenuItemImage *pIconItem[8] ;
 
-	pIconItem[0] = CCMenuItemImage::create("Image/Temp/temp_inspection_all.png", "Image/Temp/temp_inspection_allL.png", this, menu_selector(CInspectionCheckUI::Click_Menu)) ;
+	pIconItem[0] = CCMenuItemImage::create("Image/UI/InspectionCheck/Police.png", "Image/UI/InspectionCheck/Police.png", this, menu_selector(CInspectionCheckUI::Click_Menu)) ;
 	pIconItem[0]->setTag(0) ;
 
 	for(int i=1; i<8; i++)
 	{
-		pIconItem[i] = CCMenuItemImage::create("Image/Temp/temp_inspection_turn.png", "Image/Temp/temp_inspection_turnL.png", this, menu_selector(CInspectionCheckUI::Click_Menu)) ;
+		char str[1024] ;
+		sprintf(str, "Image/UI/InspectionCheck/Num_%d_Button.png", i) ;
+		pIconItem[i] = CCMenuItemImage::create(str, str, this, menu_selector(CInspectionCheckUI::Click_Menu)) ;
 		pIconItem[i]->setTag(i) ;
 	}
 

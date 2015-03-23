@@ -11,6 +11,7 @@ class CMemberIcon ;
 class CArea : public CCNode
 {
 private :
+	bool m_bSmuggling ;
 	int m_nAttention ;
 	int m_nBaseInspection ;
 	bool m_bInspection[8] ;
@@ -26,6 +27,7 @@ public :
 
 	CREATE_FUNC(CArea) ;
 
+	void SetSmuggling(bool bSmuggling) ;
 	void SetBaseInspection(int turn) ;
 	void SetInspection(int turn) ;
 	void setEnabled(bool bEnabled) ;
@@ -36,6 +38,7 @@ public :
 	void AreaLinked() ;
 
 	bool GetOwnResidential() ;
+	bool isSmuggling() ;
 	bool isInspection() ;
 private :
 	void update(float dt) ;

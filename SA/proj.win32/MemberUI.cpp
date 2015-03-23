@@ -35,7 +35,7 @@ bool CMemberUI::init()
 
 
 
-	CCMenuItemImage *pMemberMenu = CCMenuItemImage::create("Image/UI/Man_Buy.png", "Image/UI/Man_Buy.png", this, menu_selector(CMemberUI::Click_Menu)) ;
+	CCMenuItemImage *pMemberMenu = CCMenuItemImage::create("Image/UI/Man_Buy_1.png", "Image/UI/Man_Buy_2.png", this, menu_selector(CMemberUI::Click_Menu)) ;
 	pMemberMenu->setPosition(ccp(760, 40)) ;
 
 	CCMenu *pMenu = CCMenu::create(pMemberMenu, NULL) ;

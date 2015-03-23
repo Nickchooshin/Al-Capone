@@ -13,6 +13,7 @@ bool CArea::init()
 {
 	int i ;
 
+	m_bSmuggling = false ;
 	m_nAttention = 0 ;
 	m_nBaseInspection = 0 ;
 	for(i=1; i<=7; i++)
@@ -140,6 +141,11 @@ void CArea::update(float dt)
 	}/////***/////
 }
 
+void CArea::SetSmuggling(bool bSmuggling)
+{
+	m_bSmuggling = bSmuggling ;
+}
+
 void CArea::SetBaseInspection(int turn)
 {
 	m_nBaseInspection = turn ;
@@ -202,6 +208,11 @@ void CArea::AreaLinked()
 bool CArea::GetOwnResidential()
 {
 	return m_pBuilding[1]->getOwnership() ;
+}
+
+bool CArea::isSmuggling()
+{
+	return m_bSmuggling ;
 }
 
 bool CArea::isInspection()

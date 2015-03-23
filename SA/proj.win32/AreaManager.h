@@ -44,6 +44,9 @@ private :
 
 	void RouteHighlight(CSmugglingRoute *Route, CArea *Area, ROUTE_WAY Way) ;
 
+	bool LoadAreaCoord(CCPoint AreaCoord[][4]) ; // CCPoint AreaCoord[][4] or CCPoint (*AreaCoord)[4]
+	bool LoadRouteCoord(CCPoint RouteCoord[][4][2]) ;
+
 	friend class CMemberManager ;
 } ;
 

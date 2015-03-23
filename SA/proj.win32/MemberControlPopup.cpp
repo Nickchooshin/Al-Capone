@@ -111,6 +111,8 @@ void CMemberControlPopup::SetMemberEnabled()
 		MemberEnabled(i, true) ;
 
 	////
+	// 길이 연결이 안되었거나 봉쇄되었을 때 이동할 수 있는 지역이 없다면
+	// 버튼을 비활성화 시킨다
 	CArea *Area = (CArea*)m_pMemberIcon->getParent() ;
 	if(!g_pAreaManager->MoveRouteCheck(Area))
 	{
@@ -121,6 +123,15 @@ void CMemberControlPopup::SetMemberEnabled()
 				m_pMoveButton[i]->setNormalImage(CCSprite::create("Image/Member/Move_Button_2.png")) ;
 				m_pMoveButton[i]->setEnabled(false) ;
 			}
+		}
+	}
+
+	if(!Area->isSmuggling())
+	{
+		for(i=0; i<3; i++)
+		{
+			m_pItemBuyButton[i]->setNormalImage(CCSprite::create("Image/Member/Item_Buy_Button_2.png")) ;
+			m_pItemBuyButton[i]->setEnabled(false) ;
 		}
 	}
 	////
