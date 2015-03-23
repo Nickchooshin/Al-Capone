@@ -7,6 +7,10 @@ using namespace cocos2d ;
 
 class TutorialLayer : public CCLayer
 {
+private :
+	int m_nPage ;
+	CCSprite *m_pTutorialImage[2] ;
+
 public:
 	virtual bool init();  
     

@@ -16,9 +16,19 @@ bool TutorialLayer::init()
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize() ;
 
-	CCSprite *pTutorialImage = CCSprite::create("Image/Tutorial/Tutorial_Image.png") ;
-	pTutorialImage->setPosition(ccp(visibleSize.width/2, visibleSize.height/2)) ;
-	this->addChild(pTutorialImage, 0) ;
+	m_nPage = 0 ;
+
+	for(int i=0; i<2; i++)
+	{
+		char str[1024] ; 
+		sprintf(str, "Image/Tutorial/Tutorial_Image%d.png", i+1) ;
+		m_pTutorialImage[i] = CCSprite::create(str) ;
+		m_pTutorialImage[i]->setPosition(ccp(visibleSize.width/2, visibleSize.height/2)) ;
+		this->addChild(m_pTutorialImage[i], 0) ;
+	}
+
+	m_pTutorialImage[0]->setVisible(true) ;
+	m_pTutorialImage[1]->setVisible(false) ;
     
 	return true;
 }
@@ -38,8 +48,18 @@ void TutorialLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 
 void TutorialLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-	CCDirector *pDirector = CCDirector::sharedDirector() ;
-	pDirector->replaceScene(GameScene::scene()) ;
+	m_pTutorialImage[m_nPage]->setVisible(false) ;
+	m_nPage += 1 ;
+
+	if(m_nPage>=2)
+	{
+		CCDirector *pDirector = CCDirector::sharedDirector() ;
+		pDirector->replaceScene(GameScene::scene()) ;
+	}
+	else
+	{
+		m_pTutorialImage[m_nPage]->setVisible(true) ;
+	}
 }
 
 void TutorialLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)

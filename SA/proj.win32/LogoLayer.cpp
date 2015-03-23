@@ -16,7 +16,8 @@ bool LogoLayer::init()
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize() ;
 
-	m_bCreator = true ;
+	//m_bCreator = true ;
+	m_bCreator = false ;
 	m_nLogoState = 0 ;
 
 	m_pCreator = CCSprite::create("Image/Logo/Team_Creator.png") ;
