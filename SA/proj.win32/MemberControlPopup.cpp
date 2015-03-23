@@ -4,6 +4,7 @@
 #include "MemberIcon.h"
 #include "Area.h"
 #include "AreaManager.h"
+#include "ItemBuyPopup.h"
 
 CMemberControlPopup::CMemberControlPopup()
 {
@@ -23,10 +24,8 @@ bool CMemberControlPopup::init()
 	m_pMemberIcon = NULL ;
 
 	// 백그라운드
-	CCMenuItemImage *pBackgroundItem = CCMenuItemImage::create("Image/Member/Background.png", "Image/Member/Background.png") ;
-	pBackgroundItem->setPosition(ccp(640, 400)) ;
-	CCMenu *pBackground = CCMenu::create(pBackgroundItem, NULL) ;
-	pBackground->setPosition(ccp(0, 0)) ;
+	CCSprite *pBackground = CCSprite::create("Image/Member/Background.png") ;
+	pBackground->setPosition(ccp(640, 400)) ;
 	this->addChild(pBackground, 0) ;
 
 	CCSprite *pListSpace[3] ;
@@ -48,10 +47,10 @@ bool CMemberControlPopup::init()
 		m_pMafia[i] = CCSprite::create("Image/Member/Image_Mafia_90.png") ;
 		m_pMafia[i]->setPosition(ccp(320, 590 - (i * 145))) ;
 		m_pMafia[i]->setVisible(false) ;
-		this->addChild(m_pMafia[i], 2) ;
+		this->addChild(m_pMafia[i], 3) ;
 	}
 
-	// 아이템 공백
+	// 아이템
 	CCSprite *pItemSpace[3][3] ;
 	for(i=0; i<3; i++)
 	{
@@ -60,6 +59,11 @@ bool CMemberControlPopup::init()
 			pItemSpace[i][j] = CCSprite::create("Image/Member/Item_Space.png") ;
 			pItemSpace[i][j]->setPosition(ccp(440 + (j * 100), 590 - (i * 145))) ;
 			this->addChild(pItemSpace[i][j], 2) ;
+
+			m_pItemList[i][j] = CCSprite::create("Image/UI/BuyMenu/Acohol_Icon.png") ;
+			m_pItemList[i][j]->setPosition(pItemSpace[i][j]->getPosition()) ;
+			m_pItemList[i][j]->setVisible(false) ;
+			this->addChild(m_pItemList[i][j], 3) ;
 		}
 	}
 
@@ -97,6 +101,54 @@ void CMemberControlPopup::SetMemberData(CMemberIcon *pMemberIcon)
 {
 	m_pMemberIcon = pMemberIcon ;
 	SetMemberEnabled() ;
+	UpdateItemList() ;
+}
+
+void CMemberControlPopup::UpdateItemList()
+{
+	int i, j ;
+	int n = m_pMemberIcon->m_Member.size() ;
+	CMember *pMember ;
+
+	for(i=0; i<n; i++)
+	{
+		pMember = &m_pMemberIcon->m_Member[i] ;
+
+		for(j=0; j<3; j++)
+		{
+			if(pMember->m_ItemList[j]!=CMember::NOTHING)
+			{
+				m_pItemList[i][j]->setVisible(true) ;
+
+				switch(pMember->m_ItemList[j])
+				{
+				case CMember::ACOHOL :
+					m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Acohol_Icon.png")) ;
+					break ;
+
+				case CMember::ORIGINAL_DRINK :
+					m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Original_Drink_Icon.png")) ;
+					break ;
+
+				case CMember::NARCOTIC :
+					m_pItemList[i][j]->setTexture(CCTextureCache::sharedTextureCache()->addImage("Image/UI/BuyMenu/Narcotic_Icon.png")) ;
+					break ;
+				}
+			}
+			else
+			{
+				m_pItemList[i][j]->setVisible(false) ;
+			}
+		}
+	}
+
+	for(i=n; i<3; i++)
+	{
+		for(j=0; j<3; j++)
+		{
+			m_pItemList[i][j]->setVisible(false) ;
+		}
+	}
 }
 
 void CMemberControlPopup::SetMemberEnabled()
@@ -166,8 +218,8 @@ void CMemberControlPopup::MemberEnabled(int nIndex, bool bEnabled)
 void CMemberControlPopup::Menu_Click(CCObject *pSender)
 {
 	CCDirector *pDirector = CCDirector::sharedDirector() ;
-	CCMenuItem *Item = (CCMenuItem *)pSender ;
-	const int tag = Item->getTag() ;
+	CCMenuItem *pItem = (CCMenuItem *)pSender ;
+	const int tag = pItem->getTag() ;
 	const int index = tag/3 ;
 	CArea *pArea ;
 
@@ -192,6 +244,10 @@ void CMemberControlPopup::Menu_Click(CCObject *pSender)
 	case 2 :
 	case 5 :
 	case 8 :
+		g_pItemBuyPopup->SetMemberData(&m_pMemberIcon->m_Member[index]) ;
+
+		pDirector->popScene() ;
+		pDirector->pushScene(g_pItemBuyPopup) ;
 		break ;
 
 	case 9 :

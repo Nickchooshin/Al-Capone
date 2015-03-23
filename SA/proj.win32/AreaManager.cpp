@@ -25,7 +25,7 @@ bool CAreaManager::init()
 	// 배경 화면 초기화
 	CCSprite *pBackground = CCSprite::create("Image/Area/All_Background.png") ;
 	pBackground->setAnchorPoint(ccp(0, 0)) ;
-	this->addChild(pBackground) ;
+	this->addChild(pBackground, 0) ;
 
 	// 정기 검문 초기화
 	for(i=1; i<=4; i++)
@@ -60,7 +60,7 @@ bool CAreaManager::init()
 			m_Area[i][j]->setPosition(AreaCoord[i][j]) ;
 			m_Area[i][j]->SetBaseInspection(Inspection[i+1][j+1]) ;
 			m_Area[i][j]->setTag(i*4+j) ;
-			this->addChild(m_Area[i][j]) ;
+			this->addChild(m_Area[i][j], 1) ;
 		}
 	}
 
@@ -81,12 +81,12 @@ bool CAreaManager::init()
 			m_SmugglingRoute[i][j][0] = CSmugglingRoute::create() ;
 			//m_SmugglingRoute[i][j][0]->setPosition(ccp( i * 200 + 250, visibleSize.height - (j * 150) - 100 )) ;
 			m_SmugglingRoute[i][j][0]->setPosition(RouteCoord[i][j][0]) ;
-			this->addChild(m_SmugglingRoute[i][j][0]) ;
+			this->addChild(m_SmugglingRoute[i][j][0], 1) ;
 
 			m_SmugglingRoute[i][j][1] = CSmugglingRoute::create() ;
 			//m_SmugglingRoute[i][j][1]->setPosition(ccp( j * 200 + 150, visibleSize.height - (i * 150) - 175 )) ;
 			m_SmugglingRoute[i][j][1]->setPosition(RouteCoord[i][j][1]) ;
-			this->addChild(m_SmugglingRoute[i][j][1]) ;
+			this->addChild(m_SmugglingRoute[i][j][1], 1) ;
 		}
 	}
 

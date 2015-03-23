@@ -34,6 +34,9 @@
     <Filter Include="Classes\Object\Member">
       <UniqueIdentifier>{fb9d9beb-08dd-4be5-b25b-8d54e0aa363f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\UI\Popup">
+      <UniqueIdentifier>{36682129-ee2b-4065-b954-d07faa9a224c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -94,7 +97,10 @@
       <Filter>Classes\Object\Member</Filter>
     </ClCompile>
     <ClCompile Include="MemberControlPopup.cpp">
-      <Filter>Classes\UI</Filter>
+      <Filter>Classes\UI\Popup</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBuyPopup.cpp">
+      <Filter>Classes\UI\Popup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="UserData.h">
       <Filter>Classes\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="PopupMenu.h">
-      <Filter>Classes\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Classes\UI</Filter>
@@ -164,8 +167,14 @@
     <ClInclude Include="MemberIcon.h">
       <Filter>Classes\Object\Member</Filter>
     </ClInclude>
+    <ClInclude Include="ItemBuyPopup.h">
+      <Filter>Classes\UI\Popup</Filter>
+    </ClInclude>
     <ClInclude Include="MemberControlPopup.h">
-      <Filter>Classes\UI</Filter>
+      <Filter>Classes\UI\Popup</Filter>
+    </ClInclude>
+    <ClInclude Include="PopupMenu.h">
+      <Filter>Classes\UI\Popup</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

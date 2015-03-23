@@ -75,8 +75,8 @@ void CBusinessBuilding::Click_Building(CCObject *pSender)
 
 void CBusinessBuilding::Click_Menu(CCObject *pSender)
 {
-	CCMenuItem *Item = (CCMenuItem *)pSender ;
-	const int tag = Item->getTag() ;
+	CCMenuItem *pItem = (CCMenuItem *)pSender ;
+	const int tag = pItem->getTag() ;
 	bool bRelease=false ;
 
 	switch(tag)
