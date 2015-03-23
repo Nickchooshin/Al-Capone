@@ -10,6 +10,8 @@ public :
 	int m_nMaxCapacity ;
 	int m_nPayBuilding, m_nPayMember ;
 	int m_nMaintenance, m_nProduction ;
+private :
+	enum DATA_TYPE { NOTHING=0, MAX_CAPACITY, PAY_BUILDING, PAY_MEMBER, MAINTENANCE, PRODUCTION, MONEY, STANDBY_MEMBER } ;
 
 private :
 	CData() : m_nMaxCapacity(5),
@@ -23,6 +25,8 @@ public :
 
 		return &Data ;
 	}
+
+	bool init() ;
 } ;
 
 #define g_pData CData::GetInstance()

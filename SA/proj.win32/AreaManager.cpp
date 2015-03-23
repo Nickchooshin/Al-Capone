@@ -5,6 +5,8 @@
 #include "Data.h"
 #include "MemberControlPopup.h"
 
+#include "LoadManager.h"
+
 CAreaManager::CAreaManager()
 {
 }
@@ -362,21 +364,9 @@ bool CAreaManager::LoadAreaCoord(CCPoint AreaCoord[][4])
 	//FilePath.append("Data\\AreaCoord.dat") ;
 	std::string FilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename("Data/AreaCoord.dat") ;
 
-	FILE *File = fopen(FilePath.c_str(), "r") ;
-	if(File==NULL)	// 파일을 성공적으로 불러오지 못하면, 종료한다
-	{
-		//
-		std::string Message = "Can not find " ;
-		Message.append(FilePath) ;
-
-		CCMessageBox(Message.c_str(), "Error");
-		CCDirector::sharedDirector()->end() ;
-		#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		exit(0) ;
-		#endif
-
+	FILE *File = CLoadManager::LoadFile(FilePath.c_str()) ;
+	if(File==NULL)
 		return false ;
-	}
 
 	std::string data="" ;
 	char key=NULL ;
@@ -432,21 +422,9 @@ bool CAreaManager::LoadRouteCoord(CCPoint RouteCoord[][4][2])
 
 	std::string FilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename("Data/RouteCoord.dat") ;
 
-	FILE *File = fopen(FilePath.c_str(), "r") ;
-	if(File==NULL)	// 파일을 성공적으로 불러오지 못하면, 종료한다
-	{
-		//
-		std::string Message = "Can not find " ;
-		Message.append(FilePath) ;
-
-		CCMessageBox(Message.c_str(), "Error");
-		CCDirector::sharedDirector()->end() ;
-		#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		exit(0) ;
-		#endif
-
+	FILE *File = CLoadManager::LoadFile(FilePath.c_str()) ;
+	if(File==NULL)
 		return false ;
-	}
 
 	std::string data="" ;
 	char key=NULL ;

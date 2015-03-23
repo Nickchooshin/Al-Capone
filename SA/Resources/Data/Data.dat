@@ -1,0 +1,24 @@
+#생활 건물 조직원 수
+#MaxCapacity = 5
+MaxCapacity = 4
+
+#건물 가격
+#PayBuilding = 1
+PayBuilding = 10
+
+#조직원 가격
+#PayMember = 1
+PayMember = 2
+
+#유지비
+Maintenance = 3
+
+#사업 건물 소득
+Production = 2
+
+#초기 소지금
+#Money = 5
+Money = 10000
+
+#초기 조직원
+StandbyMember = 0

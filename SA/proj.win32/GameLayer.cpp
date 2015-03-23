@@ -42,6 +42,8 @@ bool GameLayer::init()
 
 	//m_AreaManager = CAreaManager::create() ;
 	//this->addChild(m_AreaManager, 1) ;
+	g_pData->init() ;
+
 	g_pAreaManager->init() ;
 	this->addChild(g_pAreaManager, 1) ;
 

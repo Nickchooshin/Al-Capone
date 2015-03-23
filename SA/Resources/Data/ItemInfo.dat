@@ -1,0 +1,17 @@
+#술
+Acohol
+Buy = 0
+Sell = 0
+Attention = 0
+
+#술 원료
+Original_Drink
+Buy = 0
+Sell = 0
+Attention = 0
+
+#마약
+Narcotic
+Buy = 0
+Sell = 0
+Attention = 0

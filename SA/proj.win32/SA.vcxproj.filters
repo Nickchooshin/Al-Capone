@@ -102,6 +102,12 @@
     <ClCompile Include="ItemBuyPopup.cpp">
       <Filter>Classes\UI\Popup</Filter>
     </ClCompile>
+    <ClCompile Include="Data.cpp">
+      <Filter>Classes\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadManager.cpp">
+      <Filter>Classes\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -175,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="PopupMenu.h">
       <Filter>Classes\UI\Popup</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadManager.h">
+      <Filter>Classes\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
